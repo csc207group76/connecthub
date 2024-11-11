@@ -10,7 +10,7 @@ public class CommentFactory {
         String entryID = generateID();
         List<Comment> replies = new ArrayList<Comment>();
         Comment comment = new Comment(entryID, author, commentContent, LocalDateTime.now(), null, 
-                             0, 0, replies);
+                                0, 0, replies);
         return comment;
     }
 
