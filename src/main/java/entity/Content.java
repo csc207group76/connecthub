@@ -1,6 +1,6 @@
 package entity;
 
-public class Content {
+public abstract class Content {
     private String body;
     private String attachmentPath;
     private String fileType;
