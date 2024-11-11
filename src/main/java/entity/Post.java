@@ -1,15 +1,16 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Post extends ForumEntry {
     private String postTitle;
-    private Comment[] comments;
+    private List<Comment> comments;
     private String category;
 
     public Post(String entryID, User author, Content content, LocalDateTime postedDate,
                 LocalDateTime editDate, int likes, int dislikes, String postTitle, 
-                Comment[] comments, String category) {
+                List<Comment> comments, String category) {
         super(entryID, author, content, postedDate, editDate, likes, dislikes);
         this.postTitle = postTitle;
         this.comments = comments;
@@ -24,11 +25,11 @@ public class Post extends ForumEntry {
         this.postTitle = postTitle;
     }
 
-    public Comment[] getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Comment[] comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 

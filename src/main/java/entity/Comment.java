@@ -1,21 +1,22 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Comment extends ForumEntry {
-    private Comment[] replies;
+    private List<Comment> replies;
 
     public Comment(String entryID, User author, Content content, LocalDateTime postedDate,
-                   LocalDateTime editDate, int likes, int dislikes, Comment[] replies) {
+                   LocalDateTime editDate, int likes, int dislikes, List<Comment> replies) {
         super(entryID, author, content, postedDate, editDate, likes, dislikes);
         this.replies = replies;
     }
 
-    public Comment[] getReplies() {
+    public List<Comment> getReplies() {
         return replies;
     }
 
-    public void setReplies(Comment[] replies) {
+    public void setReplies(List<Comment> replies) {
         this.replies = replies;
     }
 }
