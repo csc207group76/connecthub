@@ -9,9 +9,9 @@ public class PostFactory {
                            String postTitle, String category) {
         Content postContent = new PostContent(content, attachmentPath, fileType);
         String entryID = generateID();
-        List<Comment> replies = new ArrayList<Comment>();
+        List<Comment> comments = new ArrayList<Comment>();
         Post post = new Post(entryID, author, postContent, LocalDateTime.now(), null, 
-                             0, 0, postTitle, replies, category);
+                             0, 0, postTitle, comments, category);
         return post;
     }
 
