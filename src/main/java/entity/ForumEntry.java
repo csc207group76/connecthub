@@ -2,7 +2,7 @@ package entity;
 
 import java.time.LocalDateTime; 
 
-public class ForumEntry {
+public abstract class ForumEntry {
     private String entryID;
     private User author;
     private Content content;
