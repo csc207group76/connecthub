@@ -39,6 +39,4 @@ public class Post extends ForumEntry {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    
 }
