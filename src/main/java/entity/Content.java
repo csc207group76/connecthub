@@ -1,10 +1,19 @@
 package entity;
 
+/**
+ * Holds contents of an forum entry. This is an abstract class.
+ */
 public abstract class Content {
     private String body;
     private String attachmentPath;
     private String fileType;
 
+    /**
+     * Stores information of contents.
+     * @param body - the text contents itself.
+     * @param attachmentPath - the path to the attachment.
+     * @param fileType - the type of file the attachment.
+     */
     public Content(String body, String attachmentPath, String fileType) {
         this.body = body;
         this.attachmentPath = attachmentPath;
