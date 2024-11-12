@@ -2,6 +2,9 @@ package entity;
 
 import java.time.LocalDateTime; 
 
+/**
+ * Represents a forum entry. This is an abstract class.
+ */
 public abstract class ForumEntry {
     private String entryID;
     private User author;
@@ -11,6 +14,16 @@ public abstract class ForumEntry {
     private int likes;
     private int dislikes;
 
+    /**
+     * Stores information of a forum entry.
+     * @param entryID - an unique id to identify an entry.
+     * @param author - the user who posted the entry.
+     * @param content - the content of the entry.
+     * @param postedDate - the date the entry was posted.
+     * @param lastModifiedDate - the date the entry was last modified.
+     * @param likes - the number of likes in this entry.
+     * @param dislikes - the number of dislikes in this entry.
+     */
     public ForumEntry(String entryID, User author, Content content, LocalDateTime postedDate,
                       LocalDateTime lastModifiedDate, int likes, int dislikes) {
         this.entryID = entryID;
