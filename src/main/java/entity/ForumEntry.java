@@ -7,17 +7,17 @@ public abstract class ForumEntry {
     private User author;
     private Content content;
     private LocalDateTime postedDate;
-    private LocalDateTime editDate; 
+    private LocalDateTime lastModifiedDate; 
     private int likes;
     private int dislikes;
 
     public ForumEntry(String entryID, User author, Content content, LocalDateTime postedDate,
-                      LocalDateTime editDate, int likes, int dislikes) {
+                      LocalDateTime lastModifiedDate, int likes, int dislikes) {
         this.entryID = entryID;
         this.author = author;
         this.content = content;
         this.postedDate = postedDate;
-        this.editDate = editDate;
+        this.lastModifiedDate = lastModifiedDate;
         this.likes = likes;
         this.dislikes = dislikes;
     }
@@ -54,12 +54,12 @@ public abstract class ForumEntry {
         this.postedDate = postedDate;
     }
 
-    public LocalDateTime getEditDate() {
-        return editDate;
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setEditDate(LocalDateTime editDate) {
-        this.editDate = editDate;
+    public void setEditDate(LocalDateTime getLastModifiedDate) {
+        this.lastModifiedDate = getLastModifiedDate;
     }
 
     public int getLikes() {

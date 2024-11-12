@@ -7,8 +7,8 @@ public class Comment extends ForumEntry {
     private List<Comment> replies;
 
     public Comment(String entryID, User author, Content content, LocalDateTime postedDate,
-                   LocalDateTime editDate, int likes, int dislikes, List<Comment> replies) {
-        super(entryID, author, content, postedDate, editDate, likes, dislikes);
+                   LocalDateTime getLastModifiedDate, int likes, int dislikes, List<Comment> replies) {
+        super(entryID, author, content, postedDate, getLastModifiedDate, likes, dislikes);
         this.replies = replies;
     }
 
