@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import db.InMemoryUserDataAccessObject;
+import db.DBUserDataAccessObject;
 import controller.ViewManagerModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
@@ -52,7 +52,7 @@ public class ConnectHub {
 		final SignupViewModel signupViewModel = new SignupViewModel();
 
 		// TODO Task 1.1 in a copy of this file, change this line to use the in-memory DAO.
-		final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, userDataAccessObject);
