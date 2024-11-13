@@ -22,6 +22,8 @@ public class CreateCommentOutputData {
     private final ArrayList<NormalComment> comments = new ArrayList<NormalComment>();
     private Boolean CreationFailed;
 
+    //COMMENTID WILL HAVE TO BE IMPLEMENTED LATER BUT I WILL LEAVE IT AS THIS
+    // FOR NOW UNTIL IT HAS BEEN CHANGED
 
     public CreateCommentOutputData(String commentId,
                                    String entryId, User author, String content,
@@ -50,6 +52,7 @@ public class CreateCommentOutputData {
     String getCommentId() {
         return commentId;
     }
+    // this will have to be changed
 
     String getEntryId() {
         return entryId;

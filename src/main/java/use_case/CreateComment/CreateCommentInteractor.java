@@ -29,7 +29,8 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
             return;
         }
 
-        if (createCommentInputData.getCommentId() == null || createCommentInputData.getCommentId().isEmpty()) {
+        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+        if (createCommentInputData.getCommentId() == null ) {
             commentPresenter.prepareFailView("Comment ID cannot be empty.");
             return;
         }
@@ -44,6 +45,8 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
             return;
         }
 
+        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+        // talking about getCommentId()
         NormalComment comment = new NormalComment(
                 createCommentInputData.getCommentId(),
                 createCommentInputData.getEntryId(),
@@ -54,7 +57,8 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
 
         commentDataAccessObject.save(comment);
 
-
+        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+        // talking about getCommentId()
         CreateCommentOutputData createCommentOutputData = new CreateCommentOutputData(
                 comment.getCommentId(),
                 comment.getEntryId(),

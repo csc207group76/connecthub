@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class CreateCommentInputData {
     private final String commentId;
-    private final String entryId;
+    private final String entryId; // entryId is the reply / post in which you are commenting on
     private final User author;
     private final String content;
     private final Date timestamp;
@@ -18,7 +18,9 @@ public class CreateCommentInputData {
     private final ModeratorUser moderator;
     private final ArrayList<NormalComment> comments = new ArrayList<NormalComment>();
 
-    // dont pass in id
+    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+    // talking about getCommentId()
+    // when database is done I will take out the commentID
     public CreateCommentInputData(String username, String password,
                                   String repeatPassword, String commentId,
                                   String entryId, User author, String content,
@@ -39,6 +41,8 @@ public class CreateCommentInputData {
         return this.content;
     }
 
+    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+    // talking about getCommentId()
     String getCommentId() {
         return commentId;
     }

@@ -9,6 +9,8 @@ public interface CreateCommentDataAccessInterface {
      * @param commentId the Id to look for
      * @return true if the comment by this Id exists; false otherwise
      */
+    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
+    // talking about getCommentId()
     boolean existsById(String commentId);
 
 
