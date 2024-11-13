@@ -1,6 +1,8 @@
 package use_case.CreateComment;
 
+import entity.ModeratorUser;
 import entity.NormalComment;
+import entity.User;
 
 /**
  * The Creation Comment Interactor.
@@ -17,18 +19,38 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
 
     @Override
     public void execute(CreateCommentInputData createCommentInputData) {
-        // Validate the input data (e.g., ensure content and author are not empty)
         if (createCommentInputData.getContent() == null || createCommentInputData.getContent().isEmpty()) {
             commentPresenter.prepareFailView("Content cannot be empty.");
             return;
         }
 
-        if (createCommentInputData.getAuthor() == null || createCommentInputData.getAuthor().isEmpty()) {
+        if (createCommentInputData.getAuthor() == null) {
             commentPresenter.prepareFailView("Author cannot be empty.");
             return;
         }
 
-        NormalComment comment = new NormalComment(createCommentInputData.getContent(), createCommentInputData.getAuthor());
+        if (createCommentInputData.getCommentId() == null || createCommentInputData.getCommentId().isEmpty()) {
+            commentPresenter.prepareFailView("Comment ID cannot be empty.");
+            return;
+        }
+
+        if (createCommentInputData.getEntryId() == null || createCommentInputData.getEntryId().isEmpty()) {
+            commentPresenter.prepareFailView("Entry ID cannot be empty.");
+            return;
+        }
+
+        if (createCommentInputData.getModerator() == null) {
+            commentPresenter.prepareFailView("Moderator cannot be empty.");
+            return;
+        }
+
+        NormalComment comment = new NormalComment(
+                createCommentInputData.getCommentId(),
+                createCommentInputData.getEntryId(),
+                createCommentInputData.getContent(),
+                createCommentInputData.getAuthor(),
+                createCommentInputData.getModerator()
+        );
 
         commentDataAccessObject.save(comment);
 
@@ -50,6 +72,6 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
      * Switches to the comment view.
      */
     public void switchToCommentView() {
-        commentPresenter.switchToCommentView();
+        commentPresenter.switchToCreateCommentView();
     }
 }

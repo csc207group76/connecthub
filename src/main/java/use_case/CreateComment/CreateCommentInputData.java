@@ -18,6 +18,7 @@ public class CreateCommentInputData {
     private final ModeratorUser moderator;
     private final ArrayList<NormalComment> comments = new ArrayList<NormalComment>();
 
+    // dont pass in id
     public CreateCommentInputData(String username, String password,
                                   String repeatPassword, String commentId,
                                   String entryId, User author, String content,
@@ -45,8 +46,8 @@ public class CreateCommentInputData {
     String getEntryId() {
         return entryId;
     }
-    String getAuthor() {
-        return author.getName();
+    User getAuthor() {
+        return author;
     }
     Date getTimestamp() {
         return timestamp;

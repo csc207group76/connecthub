@@ -18,7 +18,8 @@ public interface CreateCommentOutputBoundary {
     void prepareFailView(String errorMessage);
 
     /**
-     * Switches to the Comment View.
+     * Switches to the create Comment View.
      */
-    void switchToCommentView();
+    void switchToCreateCommentView();
+    // for doing at a later date
 }

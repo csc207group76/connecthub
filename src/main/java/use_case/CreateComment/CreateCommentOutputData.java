@@ -54,18 +54,23 @@ public class CreateCommentOutputData {
     String getEntryId() {
         return entryId;
     }
-    String getAuthor() {
-        return author.getName();
+
+    User getAuthor() {
+        return author;
     }
+
     LocalDateTime getTimestamp() {
         return timestamp;
     }
+
     int getLikes() {
         return likes;
     }
+
     int getDislikes() {
         return dislikes;
     }
+
     ModeratorUser getModerator() {
         return moderator;
     }
