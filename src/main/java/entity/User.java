@@ -23,4 +23,11 @@ public interface User {
      */
     int getAccessLevel();
 
+    String getID();
+
+    String getEmail();
+
+    String getBirthDate();
+
+    String getFullName();
 }
