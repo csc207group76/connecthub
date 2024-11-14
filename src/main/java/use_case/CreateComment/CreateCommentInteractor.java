@@ -37,7 +37,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
         );
 
         // TODO :will have to fix later because you will need to access database
-        // commentDataAccessObject.save(comment);
+        commentDataAccessObject.save(comment);
 
         CreateCommentOutputData createCommentOutputData = new CreateCommentOutputData(
                 comment.getEntryID(),
