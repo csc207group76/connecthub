@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- *  Output data for the CreateComment use case
+ *  Output data for the CreateComment use case.
  */
 public class CreateCommentOutputData {
     private final String commentId;
