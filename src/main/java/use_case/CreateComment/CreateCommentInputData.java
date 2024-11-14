@@ -18,7 +18,7 @@ public class CreateCommentInputData {
     private final List<Comment> comments = new ArrayList<>();
 
     /**
-     * Constructor for CreateCommentInputData.
+     * Constructor for CreateCommentInputData
      * Note: commentId generation might be handled in the database layer later.
      */
     public CreateCommentInputData(String commentId, User author,
