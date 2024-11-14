@@ -7,6 +7,9 @@ import entity.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ *  Output data for the CreateComment use case
+ */
 public class CreateCommentOutputData {
     private final String commentId;
     private final User author;

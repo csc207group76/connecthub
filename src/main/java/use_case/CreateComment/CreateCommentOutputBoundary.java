@@ -7,7 +7,7 @@ public interface CreateCommentOutputBoundary {
 
     /**
      * Prepares the success view for the Create Comment Use Case.
-     * @param outputData the output data
+     * @param outputData the output data.
      */
     void prepareSuccessView(CreateCommentOutputData outputData);
 

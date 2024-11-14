@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * The Creation Comment Interactor.
+ * The Creation Comment Interactor
  */
 public class CreateCommentInteractor implements CreateCommentInputBoundary {
     private final CreateCommentDataAccessInterface commentDataAccessObject;
