@@ -1,73 +1,75 @@
 package use_case.CreateComment;
 
-import entity.ModeratorUser;
+import entity.Content;
 import entity.User;
-import entity.NormalComment;
+import entity.Comment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CreateCommentInputData {
     private final String commentId;
-    private final String entryId; // entryId is the reply / post in which you are commenting on
     private final User author;
-    private final String content;
+    private final Content content;
     private final Date timestamp;
     private final int likes;
     private final int dislikes;
-    private final ModeratorUser moderator;
-    private final ArrayList<NormalComment> comments = new ArrayList<NormalComment>();
+    private final List<Comment> comments = new ArrayList<>();
 
-    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-    // talking about getCommentId()
-    // when database is done I will take out the commentID
-    public CreateCommentInputData(String username, String password,
-                                  String repeatPassword, String commentId,
-                                  String entryId, User author, String content,
-                                  Date timestamp, int likes, int dislikes,
-                                  ModeratorUser moderator) {
+    /**
+     * Constructor for CreateCommentInputData.
+     * Note: commentId generation might be handled in the database layer later.
+     */
+    public CreateCommentInputData(String commentId, User author,
+                                  Content content, Date timestamp, int likes,
+                                  int dislikes) {
         this.commentId = commentId;
-        this.entryId = entryId;
         this.author = author;
-
         this.content = content;
         this.timestamp = timestamp;
         this.likes = likes;
         this.dislikes = dislikes;
-        this.moderator = moderator;
+
     }
 
-    String getContent() {
-        return this.content;
+    public String getContent() {
+        return this.content.getBody();
     }
 
-    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-    // talking about getCommentId()
-    String getCommentId() {
+    public String getAttachmentPath() {
+    return this.content.getAttachmentPath();
+    }
+
+    public String getFileType() {
+        return this.content.getFileType();
+    }
+
+    // TODO :check if our implementation of comment works for this
+    public String getCommentId() {
         return commentId;
     }
 
-    String getEntryId() {
-        return entryId;
-    }
-    User getAuthor() {
+    public User getAuthor() {
         return author;
     }
-    Date getTimestamp() {
+
+    public Date getTimestamp() {
         return timestamp;
     }
-    int getLikes() {
+
+    public int getLikes() {
         return likes;
     }
-    int getDislikes() {
+
+    public int getDislikes() {
         return dislikes;
     }
-    ModeratorUser getModerator() {
-        return moderator;
-    }
 
-    ArrayList<NormalComment> getComments() {
+
+    public List<Comment> getComments() {
         return comments;
     }
+
 
 }

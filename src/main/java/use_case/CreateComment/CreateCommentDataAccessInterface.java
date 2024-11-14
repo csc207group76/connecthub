@@ -1,6 +1,6 @@
 package use_case.CreateComment;
 
-import entity.NormalComment;
+import entity.Comment;
 
 public interface CreateCommentDataAccessInterface {
 
@@ -9,10 +9,10 @@ public interface CreateCommentDataAccessInterface {
      * @param commentId the Id to look for
      * @return true if the comment by this Id exists; false otherwise
      */
-    // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-    // talking about getCommentId()
+    // TODO :check if our implementation of comment works for this as in we
+    //  will have to access the database to find this
     boolean existsById(String commentId);
 
 
-    void save(NormalComment comment);
+    void save(Comment comment);
 }

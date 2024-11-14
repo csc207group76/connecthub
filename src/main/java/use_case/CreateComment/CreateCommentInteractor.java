@@ -1,8 +1,9 @@
 package use_case.CreateComment;
 
-import entity.ModeratorUser;
-import entity.NormalComment;
-import entity.User;
+import entity.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * The Creation Comment Interactor.
@@ -10,66 +11,45 @@ import entity.User;
 public class CreateCommentInteractor implements CreateCommentInputBoundary {
     private final CreateCommentDataAccessInterface commentDataAccessObject;
     private final CreateCommentOutputBoundary commentPresenter;
+    private final CommentFactory commentFactory;
 
     public CreateCommentInteractor(CreateCommentDataAccessInterface commentDataAccessObject,
-                                   CreateCommentOutputBoundary commentPresenter) {
+                                   CreateCommentOutputBoundary commentPresenter,
+                                   CommentFactory commentFactory) {
         this.commentDataAccessObject = commentDataAccessObject;
         this.commentPresenter = commentPresenter;
+        this.commentFactory = commentFactory;
     }
 
     @Override
     public void execute(CreateCommentInputData createCommentInputData) {
-        if (createCommentInputData.getContent() == null || createCommentInputData.getContent().isEmpty()) {
-            commentPresenter.prepareFailView("Content cannot be empty.");
-            return;
-        }
-
-        if (createCommentInputData.getAuthor() == null) {
-            commentPresenter.prepareFailView("Author cannot be empty.");
-            return;
-        }
-
-        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-        if (createCommentInputData.getCommentId() == null ) {
-            commentPresenter.prepareFailView("Comment ID cannot be empty.");
-            return;
-        }
-
-        if (createCommentInputData.getEntryId() == null || createCommentInputData.getEntryId().isEmpty()) {
-            commentPresenter.prepareFailView("Entry ID cannot be empty.");
-            return;
-        }
-
-        if (createCommentInputData.getModerator() == null) {
-            commentPresenter.prepareFailView("Moderator cannot be empty.");
-            return;
-        }
-
-        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-        // talking about getCommentId()
-        NormalComment comment = new NormalComment(
-                createCommentInputData.getCommentId(),
-                createCommentInputData.getEntryId(),
+        CommentContent content = new CommentContent(
                 createCommentInputData.getContent(),
-                createCommentInputData.getAuthor(),
-                createCommentInputData.getModerator()
+                createCommentInputData.getAttachmentPath(),
+                createCommentInputData.getFileType()
         );
 
-        commentDataAccessObject.save(comment);
+        Comment comment = commentFactory.createComment(
+                createCommentInputData.getAuthor(),
+                content.getBody(),
+                content.getAttachmentPath(),
+                content.getFileType()
+        );
 
-        // THIS WILL HAVE TO BE CHANGED LATER BUT FOR NOW IT WILL BE LIKE THIS
-        // talking about getCommentId()
+        // TODO :will have to fix later because you will need to access database
+        // commentDataAccessObject.save(comment);
+
         CreateCommentOutputData createCommentOutputData = new CreateCommentOutputData(
-                comment.getCommentId(),
-                comment.getEntryId(),
+                comment.getEntryID(),
                 comment.getAuthor(),
                 comment.getContent(),
-                comment.getTimestamp(),
+                comment.getPostedDate(),
                 comment.getLikes(),
                 comment.getDislikes(),
-                comment.getModerator(),
-                false
+                true
         );
+
+        commentPresenter.prepareSuccessView(createCommentOutputData);
     }
 
     /**

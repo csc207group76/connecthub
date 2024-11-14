@@ -1,87 +1,64 @@
 package use_case.CreateComment;
 
-import entity.NormalComment;
-import entity.ModeratorUser;
+import entity.Comment;
+import entity.Content;
 import entity.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-/**
- * Output Data for the Signup Use Case.
- */
 public class CreateCommentOutputData {
     private final String commentId;
-    private final String entryId;
     private final User author;
-    private final String content;
+    private final Content content;
     private final LocalDateTime timestamp;
     private final int likes;
     private final int dislikes;
-    private final ModeratorUser moderator;
-    private final ArrayList<NormalComment> comments = new ArrayList<NormalComment>();
-    private Boolean CreationFailed;
+    private final ArrayList<Comment> comments = new ArrayList<>();
+    private final boolean creationSuccessful;
 
-    //COMMENTID WILL HAVE TO BE IMPLEMENTED LATER BUT I WILL LEAVE IT AS THIS
-    // FOR NOW UNTIL IT HAS BEEN CHANGED
-
-    public CreateCommentOutputData(String commentId,
-                                   String entryId, User author, String content,
+    public CreateCommentOutputData(String commentId, User author, Content content,
                                    LocalDateTime timestamp, int likes, int dislikes,
-                                   ModeratorUser moderator, boolean useCaseFailed) {
+                                   boolean creationSuccessful) {
         this.commentId = commentId;
-        this.entryId = entryId;
         this.author = author;
         this.content = content;
         this.timestamp = timestamp;
         this.likes = likes;
         this.dislikes = dislikes;
-        this.moderator = moderator;
-        this.CreationFailed = useCaseFailed;
+        this.creationSuccessful = creationSuccessful;
     }
-
 
     public boolean isCreationSuccessful() {
-        return CreationFailed;
+        return !creationSuccessful;
     }
 
-    String getContent() {
+    public Content getContent() {
         return this.content;
     }
 
-    String getCommentId() {
+    // TODO :check if our implementation of comment works for this
+    public String getCommentId() {
         return commentId;
     }
-    // this will have to be changed
 
-    String getEntryId() {
-        return entryId;
-    }
-
-    User getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    LocalDateTime getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    int getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    int getDislikes() {
+    public int getDislikes() {
         return dislikes;
     }
 
-    ModeratorUser getModerator() {
-        return moderator;
-    }
-
-    ArrayList<NormalComment> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
-
-
-
 }
