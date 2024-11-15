@@ -15,7 +15,7 @@ public class CreateCommentInputData {
     private final Date timestamp;
     private final int likes;
     private final int dislikes;
-    private final List<Comment> comments = new ArrayList<>();
+    private final List<Comment> replies = new ArrayList<>();
 
     /**
      * Constructor for CreateCommentInputData
@@ -30,7 +30,6 @@ public class CreateCommentInputData {
         this.timestamp = timestamp;
         this.likes = likes;
         this.dislikes = dislikes;
-
     }
 
     public String getContent() {
@@ -38,7 +37,7 @@ public class CreateCommentInputData {
     }
 
     public String getAttachmentPath() {
-    return this.content.getAttachmentPath();
+        return this.content.getAttachmentPath();
     }
 
     public String getFileType() {
@@ -68,7 +67,7 @@ public class CreateCommentInputData {
 
 
     public List<Comment> getComments() {
-        return comments;
+        return replies;
     }
 
 

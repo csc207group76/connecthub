@@ -23,17 +23,11 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
 
     @Override
     public void execute(CreateCommentInputData createCommentInputData) {
-        CommentContent content = new CommentContent(
+        Comment comment = commentFactory.createComment(
+                createCommentInputData.getAuthor(),
                 createCommentInputData.getContent(),
                 createCommentInputData.getAttachmentPath(),
                 createCommentInputData.getFileType()
-        );
-
-        Comment comment = commentFactory.createComment(
-                createCommentInputData.getAuthor(),
-                content.getBody(),
-                content.getAttachmentPath(),
-                content.getFileType()
         );
 
         // TODO :will have to fix later because you will need to access database

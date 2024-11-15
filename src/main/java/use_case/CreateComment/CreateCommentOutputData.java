@@ -17,7 +17,7 @@ public class CreateCommentOutputData {
     private final LocalDateTime timestamp;
     private final int likes;
     private final int dislikes;
-    private final ArrayList<Comment> comments = new ArrayList<>();
+    private ArrayList<Comment> replies;
     private final boolean creationSuccessful;
 
     public CreateCommentOutputData(String commentId, User author, Content content,
@@ -30,10 +30,11 @@ public class CreateCommentOutputData {
         this.likes = likes;
         this.dislikes = dislikes;
         this.creationSuccessful = creationSuccessful;
+        this.replies = new ArrayList<>();
     }
 
     public boolean isCreationSuccessful() {
-        return !creationSuccessful;
+        return creationSuccessful;
     }
 
     public Content getContent() {
@@ -62,6 +63,6 @@ public class CreateCommentOutputData {
     }
 
     public ArrayList<Comment> getComments() {
-        return comments;
+        return replies;
     }
 }
