@@ -6,7 +6,7 @@ package use_case.CreateComment;
 public interface CreateCommentOutputBoundary {
 
     /**
-     * Prepares the success view for the Create Comment Use Case.
+     * Prepares the success view for the Create Comment Use Case
      * @param outputData the output data.
      */
     void prepareSuccessView(CreateCommentOutputData outputData);
