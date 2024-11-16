@@ -1,4 +1,4 @@
-package db;
+package daos;
 
 import entity.User;
 import use_case.signup.SignupDataAccessInterface;
