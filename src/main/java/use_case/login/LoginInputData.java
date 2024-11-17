@@ -4,44 +4,27 @@ import use_case.logout.LogoutInputBoundary;
 
 public class LoginInputData {
 
-    private String userID;
-    private String userName;
-    private String password;
     private String email;
-    private String birthData;
-    private String fullName;
+    private String password;
 
-    public LoginInputData(String userID, String userName, String password,
-                          String email, String birthData, String fullName) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
+    public LoginInputData(String email, String password) {
         this.email = email;
-        this.birthData = birthData;
-        this.fullName = fullName;
+        this.password = password;
     }
 
-    public String getUsername() {
-        return userName;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
+    /**
+     * Get the current Email
+     * @return the current Email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Get the current password
+     * @return the current password
+     */
     public String getPassword() {
         return password;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getBirthData() {
-        return birthData;
     }
 }
