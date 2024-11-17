@@ -6,13 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import db.InMemoryUserDataAccessObject;
+import controller.logged_in.LoggedInViewModel;
+import controller.login.LoginViewModel;
+import db.DBUserDataAccessObject;
 import controller.ViewManagerModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
 //import view.LoggedInView;
 //import view.LoginView;
+import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 
@@ -47,21 +50,21 @@ public class ConnectHub {
 		// This information will be changed by a presenter object that is reporting the
 		// results from the use case. The ViewModels are "observable", and will
 		// be "observed" by the Views.
-//		final LoginViewModel loginViewModel = new LoginViewModel();
-//		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+		final LoginViewModel loginViewModel = new LoginViewModel();
+		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
 
 		// TODO Task 1.1 in a copy of this file, change this line to use the in-memory DAO.
-		final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
-				signupViewModel, userDataAccessObject);
+				loginViewModel, signupViewModel, userDataAccessObject);
 		views.add(signupView, signupView.getViewName());
 
-//		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,
-//				loggedInViewModel, userDataAccessObject);
-//		views.add(loginView, loginView.getViewName());
-//
+		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,
+				loggedInViewModel, userDataAccessObject);
+		views.add(loginView, loginView.getViewName());
+
 //		final LoggedInView loggedInView = ChangePasswordUseCaseFactory.create(viewManagerModel,
 //				loggedInViewModel, userDataAccessObject);
 //		views.add(loggedInView, loggedInView.getViewName());

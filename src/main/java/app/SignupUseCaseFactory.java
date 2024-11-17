@@ -3,7 +3,7 @@ package app;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import controller.ViewManagerModel;
-//import controller.login.LoginViewModel;
+import controller.login.LoginViewModel;
 import controller.signup.SignupController;
 import controller.signup.SignupPresenter;
 import controller.signup.SignupViewModel;
@@ -26,25 +26,29 @@ public final class SignupUseCaseFactory {
     /**
      * Factory function for creating the SignupView.
      * @param viewManagerModel the ViewManagerModel to inject into the SignupView
+     * @param loginViewModel the LoginViewModel to inject into the SignupView
      * @param signupViewModel the SignupViewModel to inject into the SignupView
      * @param userDataAccessObject the SignupUserDataAccessInterface to inject into the SignupView
      * @return the LoginView created for the provided input classes
      */
     public static SignupView create(
-            ViewManagerModel viewManagerModel,
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
             SignupViewModel signupViewModel, SignupDataAccessInterface userDataAccessObject) {
 
-        final SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, userDataAccessObject);
+        final SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel,
+                loginViewModel,userDataAccessObject);
         return new SignupView(signupController, signupViewModel);
 
     }
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel,
                                                             SignupViewModel signupViewModel,
+                                                            LoginViewModel loginViewModel,
                                                             SignupDataAccessInterface userDataAccessObject) {
 
         // Notice how we pass this method's parameters to the Presenter.
-        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, viewManagerModel);
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel,
+                viewManagerModel, loginViewModel);
 
         final UserFactory userFactory = new CommonUserFactory();
 
