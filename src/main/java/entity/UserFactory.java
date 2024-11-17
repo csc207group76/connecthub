@@ -10,6 +10,5 @@ public interface UserFactory {
      * @param password the password of the new user
      * @return the new user
      */
-    User create(String name, String password, String email, String userID, String birthdate, String fullname);
-
+    User create(String name, String password);
 }

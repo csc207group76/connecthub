@@ -22,12 +22,4 @@ public interface User {
      * @return the access level of the user.
      */
     int getAccessLevel();
-
-    String getID();
-
-    String getEmail();
-
-    String getBirthDate();
-
-    String getFullName();
 }
