@@ -56,4 +56,9 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface, LoginD
     public void setCurrentUser(User user) {
 
     }
+
+    @Override
+    public String getCurrentUserEmail() {
+        return "";
+    }
 }

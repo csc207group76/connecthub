@@ -28,4 +28,10 @@ public interface LoginDataAccessInterface {
      * @param user the current user.
      */
     void setCurrentUser(User user);
+
+    /**
+     * get the currentUser Email
+     * @return the current User email
+     */
+    String getCurrentUserEmail();
 }
