@@ -22,7 +22,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
     }
 
     @Override
-    public void execute(CreateCommentInputData createCommentInputData) {
+    public void createComment(CreateCommentInputData createCommentInputData) {
         Comment comment = commentFactory.createComment(
                 createCommentInputData.getAuthor(),
                 createCommentInputData.getContent(),
