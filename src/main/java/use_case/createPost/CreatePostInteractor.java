@@ -17,7 +17,8 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
     @Override
     public void createPost(CreatePostInputData inputData) {
         // TODO: more logic and database?
-        if (inputData.getPostTitle() == null || inputData.getPostTitle().isEmpty()) {
+        // shoudl i add null here
+        if (inputData.getPostTitle().isEmpty()) {
             userPresenter.prepareFailView("Please add title!");
         } else if (inputData.getCategory() == null) {
             userPresenter.prepareFailView("Please choose category!");

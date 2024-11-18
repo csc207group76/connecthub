@@ -8,5 +8,4 @@ public interface CreatePostInputBoundary {
      * @param createPostInputData the input data
      */
     void createPost(CreatePostInputData createPostInputData);
-
 }

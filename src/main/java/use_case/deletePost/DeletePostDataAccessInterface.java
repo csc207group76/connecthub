@@ -1,36 +1,21 @@
-package use_case.signup;
+package use_case.deletePost;
 
-import entity.User;
+import entity.Post;
 
-/**
- * DAO for the Signup Use Case.
- */
-public interface SignupDataAccessInterface {
+public interface DeletePostDataAccessInterface {
 
     /**
-     * Checks if the given username exists.
-     * @param username the username to look for
-     * @return true if a user with the given username exists; false otherwise
+     * Deletes a post using ID.
+     *
+     * @param postID The ID of the post
      */
-    boolean existsByUsername(String username);
+    void deleteComment(String postID);
 
     /**
-     * Checks if the given userID exists.
-     * @param userID the username to look for
-     * @return true if a user with the given userID exists; false otherwise
+     * Finds post by its ID
+     *
+     * @param postID The ID of the post
+     * @return The post if found, or null if not.
      */
-    boolean existsByID(String userID);
-
-    /**
-     * Checks if the given email exists.
-     * @param email the email to look for
-     * @return true if a user with the given email exists; false otherwise
-     */
-    boolean existsByEmail(String email);
-
-    /**
-     * Saves the user.
-     * @param user the user to save
-     */
-    void save(User user);
+    Post existsCommentById(String postID);
 }
