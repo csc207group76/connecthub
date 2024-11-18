@@ -1,5 +1,6 @@
 package use_case.EditPost;
 
+
 public interface EditPostInputBoundary {
 
     // Method to edit a post by passing EditPostInputData
