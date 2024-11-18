@@ -20,7 +20,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
         if (inputData.getPostTitle() == null || inputData.getPostTitle().isEmpty()) {
             userPresenter.prepareFailView("Please add title!");
         } else if (inputData.getCategory() == null) {
-            userPresenter.prepareFailView("Please choose category");
+            userPresenter.prepareFailView("Please choose category!");
         } else {
             final Post post = new Post(inputData.getEntryID(), inputData.getAuthor(), inputData.getContent(), inputData.getTimestamp(),
                     inputData.getLastModified(), inputData.getLikes(), inputData.getDislikes(), inputData.getPostTitle(),
