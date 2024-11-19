@@ -7,8 +7,6 @@ public class SignupOutputData {
 
     private final String username;
     private final String userID;
-
-
     private final boolean SignupSuccessful;
 
     public SignupOutputData(String username, boolean useCaseFailed) {

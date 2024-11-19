@@ -1,5 +1,7 @@
 package controller.signup;
 
+import java.util.ArrayList;
+
 /**
  * The state for the Signup View Model.
  */
@@ -18,6 +20,10 @@ public class SignupState {
     private String birthdateError;
     private String fullName = "";
     private String fullNameError;
+    private  ArrayList<String> moderators;
+    private  ArrayList<String> posts;
+    private  ArrayList<String> moderatorsError;
+    private  ArrayList<String> postsError;
 
     public String getUsername() {
         return username;
@@ -138,5 +144,37 @@ public class SignupState {
 
     public void setFullNameError(String fullNameError) {
         this.fullNameError = fullNameError;
+    }
+
+    public ArrayList<String> getModerators() {
+        return moderators;
+    }
+
+    public void setModerators(ArrayList<String> moderators) {
+        this.moderators = moderators;
+    }
+
+    public ArrayList<String> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(ArrayList<String> posts) {
+        this.posts = posts;
+    }
+
+    public ArrayList<String> getModeratorsError() {
+        return moderatorsError;
+    }
+
+    public void setModeratorsError(ArrayList<String> moderatorsError) {
+        this.moderatorsError = moderatorsError;
+    }
+
+    public ArrayList<String> getPostsError() {
+        return postsError;
+    }
+
+    public void setPostsError(ArrayList<String> postsError) {
+        this.postsError = postsError;
     }
 }

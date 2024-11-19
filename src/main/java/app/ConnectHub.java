@@ -6,7 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import db.DBUserDataAccessObject;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+import daos.DBUserDataAccessObject;
 import controller.ViewManagerModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
@@ -26,6 +29,13 @@ public class ConnectHub {
 	 * @param args input to main
 	 */
 	public static void main(String[] args) {
+		Repositories repositories = new Repositories();
+		MongoCollection<Document> userRepository = repositories.getUserRepository();
+		MongoCollection<Document> postRepository = repositories.getPostRepository();
+		MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
+
+		// TODO the repositories will be passed into DAOs
+
 		// Build the main program window, the main panel containing the
 		// various cards, and the layout, and stitch them together.
 
