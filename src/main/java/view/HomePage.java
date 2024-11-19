@@ -134,7 +134,7 @@ public class HomePage {
 
         homepage.add(navigationPanel, BorderLayout.WEST);
 
-        // Content area
+        // Content area where we actually populate posts
         final JPanel contentArea = new JPanel();
         contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));
         contentArea.setBackground(Color.WHITE);
