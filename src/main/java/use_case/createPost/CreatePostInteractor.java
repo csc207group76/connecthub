@@ -22,6 +22,8 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
             userPresenter.prepareFailView("Please add title!");
         } else if (inputData.getCategory() == null) {
             userPresenter.prepareFailView("Please choose category!");
+        } else if (dataAccess.existsByTitle(inputData.getPostTitle())) {
+            throw new IllegalArgumentException("Post with the same title already exists.");
         } else {
             final Post post = new Post(inputData.getEntryID(), inputData.getAuthor(), inputData.getContent(), inputData.getTimestamp(),
                     inputData.getLastModified(), inputData.getLikes(), inputData.getDislikes(), inputData.getPostTitle(),
@@ -31,7 +33,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
             dataAccess.create(post);
 
 
-            final CreatePostOutputData outputData = new CreatePostOutputData(inputData.getEntryID(), true);
+            final CreatePostOutputData outputData = new CreatePostOutputData(inputData.getEntryID(), inputData.getAuthor(), inputData.getContent(), inputData.getTimestamp(), inputData.getDislikes(), inputData.getLikes(), inputData.getPostTitle(), inputData.getModerators(), inputData.getComments(), inputData.getCategory(), true);
             userPresenter.prepareSuccessView(outputData);
         }
     }

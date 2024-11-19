@@ -18,12 +18,12 @@ public class CreatePostInputData {
     private final int dislikes;
     private final int likes;
     private final String postTitle;
-    private final User[] moderators;
+    private final List<User> moderators;
     private final List<Comment> comments;
     private final String category;
 
 
-    public CreatePostInputData(String entryID, User author, PostContent content, LocalDateTime timestamp, LocalDateTime lastModified, int dislikes, int likes, String postTitle, User[] moderators, List<Comment> comments, String category) {
+    public CreatePostInputData(String entryID, User author, PostContent content, LocalDateTime timestamp, LocalDateTime lastModified, int dislikes, int likes, String postTitle, List<User> moderators, List<Comment> comments, String category) {
         this.entryID = entryID;
         this.author = author;
         this.content = content;
@@ -65,7 +65,7 @@ public class CreatePostInputData {
         return postTitle;
     }
 
-    public User[] getModerators() {
+    public List<User> getModerators() {
         return moderators;
     }
 
