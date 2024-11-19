@@ -1,58 +1,68 @@
-package use_case;
+package com.CSC207.connecthub;
 
+import daos.InMemoryPostDataAccessObject;
+import daos.InMemoryUserDataAccessObject;
 import entity.*;
-//import exception.PostNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import use_case.createPost.*;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
-class CreatePostTests {
-
-    private CreatePostDataAccessInterface mockPostDB;
-    private CreatePostOutputBoundary mockPresenter;
-    private CreatePostInteractor interactor;
-
-    @BeforeEach
-    void setUp() {
-        mockPostDB = Mockito.mock(CreatePostDataAccessInterface.class);
-        mockPresenter = Mockito.mock(CreatePostOutputBoundary.class);
-    }
+public class CreatePostTests {
 
     @Test
-    void GetPostSuccessTest() throws Exception {
-        String entryID = "123";
-        User author = new CommonUser("User1", "password","123", "12/2/2004", "User1 Name", "user@email.com");
-        Content content = new PostContent("This is a sample post content.", null, null);
-        LocalDateTime postedDate = LocalDateTime.now();
-        LocalDateTime lastModifiedDate = LocalDateTime.now();
-        Post expectedPost = new Post(
-                entryID,
-                author,
-                content,
-                postedDate,
-                lastModifiedDate,
-                10,
-                2,
-                "Sample Post Title",
-                Collections.emptyList(),
-                "General"
-        );
+    public void successPostCreationTest() {
+        InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject(); // For user signup
+       ; // For post creation
 
-        when(mockPostDB.getPostByEntryID(entryID)).thenReturn(expectedPost);
+        // creating a user
+        User user = new CommonUserFactory().create("izabelle", "1234", "abc", "12/12/12", "Izabelle marianne", "izabelle@gmail.com");
+        userRepository.save(user);
+        // check they have been saved
+        assertTrue(userRepository.existsByUsername("izabelle"));
+        // now create the post
+        InMemoryPostDataAccessObject postRepository = new InMemoryPostDataAccessObject(userRepository);
+        PostContent content = new PostContent("hello world!", "excel", "text");
+        CreatePostInputData inputData = new CreatePostInputData("1234", user, content, LocalDateTime.now(), LocalDateTime.now(), 0, 0, "First post!", new ArrayList<>(), new ArrayList<>(), "sports");
 
-        GetPostInputData inputData = new GetPostInputData(entryID);
-        interactor = new GetPostInteractor(inputData, mockPostDB, mockPresenter);
+//        // Input data for creating a post
+//        Post post = new Post("1234", user , content , LocalDateTime.now(),
+//                LocalDateTime.now(),0, 0, "First post!",
+//                new ArrayList<>(), "sports");
 
-        Post result = interactor.getPost(inputData);
+        // Mock presenter
+        CreatePostOutputBoundary successPresenter = new CreatePostOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreatePostOutputData outputData) {
+                // Check output data is as expected
+                assertEquals("1234", outputData.getEntryID());
+                assertEquals(content.getBody(), outputData.getContent().getBody());
+                assertEquals(user.getUserID(), outputData.getAuthor().getUserID());
+                // Ensure the post is saved in the repository
+                assertTrue(postRepository.existsByTitle("First post!"));
+            }
 
-        assertEquals(expectedPost, result);
-        verify(mockPostDB).getPostByEntryID(entryID);
+            @Override
+            public void prepareFailView(String error) {
+                fail("Use case failure is unexpected.");
+            }
+        };
+
+        // Create the interactor and execute the use case
+        CreatePostInputBoundary interactor = new CreatePostInteractor(postRepository, successPresenter);
+        interactor.createPost(inputData);
+
+
+//        assertTrue(postRepository.existsByTitle("First post!"));
+//        Post createdPost = postRepository.getPostByTitle("First post!");
+//        assertNotNull(createdPost);
+//        assertEquals("hello world!", createdPost.getContent().getBody());
+//        assertEquals("izabelle", createdPost.getAuthor().getName());
     }
+}
+
+
 
