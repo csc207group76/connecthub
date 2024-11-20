@@ -18,15 +18,16 @@ import java.beans.PropertyChangeListener;
  */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "sign up";
-
     private final SignupViewModel signupViewModel;
+    private final SignupController signupController;
+
     private final JTextField fullnameInputField = new JTextField(15);
     private final JTextField emailInputField = new JTextField(15);
     private final JTextField birthdateInputField = new JTextField(15);
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final SignupController signupController;
+
 
     private final JButton signUp;
     private final JButton cancel;
@@ -38,40 +39,115 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.setBackground(new Color(30, 30, 30));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        final LabelTextPanel fullnameInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.NAME_LABEL), fullnameInputField);
-        final LabelTextPanel emailInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.EMAIL_LABEL), emailInputField);
-        final LabelTextPanel birthdateInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.BIRTHDATE), birthdateInputField);
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
-        final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
-//        final JButton signupbutton = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        // Full name panel
+        JLabel fullnameInfo = new JLabel((SignupViewModel.NAME_LABEL));
+        fullnameInfo.setForeground(Color.WHITE);
+        fullnameInputField.setBackground(new Color(50, 50, 60));
+        fullnameInputField.setForeground(Color.GRAY);
+        fullnameInputField.setText("e.g. Arjun Singh");
+        JPanel fullNamePanel = new JPanel();
+        fullNamePanel.setLayout(new BoxLayout(fullNamePanel, BoxLayout.Y_AXIS));
+        fullNamePanel.setBackground(new Color(50, 50, 60));
+        fullNamePanel.add(fullnameInfo);
+        fullNamePanel.add(fullnameInputField);
 
-        final JPanel buttons = new JPanel();
 
-        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-//        buttons.add(signUp);
-        // Create the label
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // Email name panel
+        JLabel emailInfo = new JLabel(SignupViewModel.EMAIL_LABEL);
+        emailInfo.setForeground(Color.WHITE);
+        emailInputField.setBackground(new Color(50, 50, 60));
+        emailInputField.setForeground(Color.GRAY);
+        emailInputField.setText("izabelle@gmail.com");
+        JPanel emailPanel = new JPanel();
+        emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.Y_AXIS));
+        emailPanel.setBackground(new Color(50, 50, 60));
+        emailPanel.add(emailInfo);
+        emailPanel.add(emailInputField);
 
+        // Birthdate name panel
+        JLabel birthdateInfo = new JLabel(SignupViewModel.BIRTHDATE);
+        birthdateInfo.setForeground(Color.WHITE);
+        birthdateInputField.setBackground(new Color(50, 50, 60));
+        birthdateInputField.setForeground(Color.GRAY);
+        birthdateInputField.setText("12/12/23");
+        JPanel bdayPanel = new JPanel();
+        bdayPanel.setLayout(new BoxLayout(bdayPanel, BoxLayout.Y_AXIS));
+        bdayPanel.setBackground(new Color(50, 50, 60));
+        bdayPanel.add(birthdateInfo);
+        bdayPanel.add(birthdateInputField);
+
+
+        // username  panel
+        JLabel usernameInfo = new JLabel(SignupViewModel.USERNAME_LABEL);
+        usernameInfo.setForeground(Color.WHITE);
+        usernameInputField.setBackground(new Color(50, 50, 60));
+        usernameInputField.setForeground(Color.GRAY);
+        usernameInputField.setText("e.g. dennis_ivy");
+        JPanel usernamePanel = new JPanel();
+        usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.Y_AXIS));
+        usernamePanel.setBackground(new Color(50, 50, 60));
+        usernamePanel.add(usernameInfo);
+        usernamePanel.add(usernameInputField);
+
+        // password  panel
+        JLabel passwordInfo = new JLabel(SignupViewModel.PASSWORD_LABEL);
+        passwordInfo.setForeground(Color.WHITE);
+        passwordInputField.setBackground(new Color(50, 50, 60));
+        passwordInputField.setForeground(Color.blue);
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.Y_AXIS));
+        passwordPanel.setBackground(new Color(50, 50, 60));
+        passwordPanel.add(passwordInfo);
+        passwordPanel.add(passwordInputField);
+
+
+        // repeat password panel
+        JLabel repeatPasswordInfo = new JLabel("Password:");
+        repeatPasswordInfo.setForeground(Color.WHITE);
+        repeatPasswordInputField.setBackground(new Color(50, 50, 60));
+        repeatPasswordInputField.setForeground(Color.blue);
+        JPanel repeatPasswordPanel = new JPanel();
+        repeatPasswordPanel.setLayout(new BoxLayout(repeatPasswordPanel, BoxLayout.Y_AXIS));
+        repeatPasswordPanel.setBackground(new Color(50, 50, 60));
+        repeatPasswordPanel.add(repeatPasswordInfo);
+        repeatPasswordPanel.add(repeatPasswordInputField);
+
+        // SIGN UP TITLE:
+
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(new Color(19, 19, 223));
+        JLabel headerLabel = new JLabel(SignupViewModel.TITLE_LABEL);
+        headerLabel.setForeground(Color.WHITE);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        headerPanel.add(headerLabel);
+
+        // sign up button
+        signUp = new JButton("SignUp");
+        signUp.setBackground(new Color(0, 123, 255));
+        signUp.setForeground(Color.BLUE);
+        signUp.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        // switch to login
         JLabel signedUpLabel = new JLabel("Already signed up?");
-        toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
+        signedUpLabel.setForeground(Color.LIGHT_GRAY);
+        signedUpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        panel.add(signedUpLabel);
-        panel.add(toLogin);
-        buttons.add(panel);
+        toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
+        toLogin.setForeground(Color.BLUE);
+
+        // cancel button
 
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        cancel.setForeground(Color.BLUE);
+
+        // Create the label
+
+
+        // TODO: loginLink.setCurosr - what is that?
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -87,38 +163,94 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName()
+                                    currentState.getFullName(), currentState.getModerators(), currentState.getPosts()
                             );
                         }
                     }
                 }
         );
 
+        //TODO: more to add here?
         toLogin.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        signupController.switchToLoginView();
-                    }
-                }
+                evt -> signupController.switchToLoginView()
         );
 
+        // TODO: this is required?
         cancel.addActionListener(this);
 
+        // All action listersns added as helper methods
         addUsernameListener();
         addPasswordListener();
         addRepeatPasswordListener();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // buttons panel
 
-        this.add(title);
-        this.add(fullnameInfo);
-        this.add(emailInfo);
-        this.add(birthdateInfo);
-        this.add(usernameInfo);
-        this.add(passwordInfo);
-        this.add(repeatPasswordInfo);
-        this.add(signUp);
-        this.add(buttons);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS)); // Stack buttons vertically
+        buttonsPanel.setBackground(new Color(50, 50, 60));
+
+        // Add the "Sign Up" button to the panel
+        buttonsPanel.add(signUp);
+
+        // Add a space between "Sign Up" and the next buttons
+        buttonsPanel.add(Box.createVerticalStrut(10));
+
+        // Create a sub-panel for the "Go to Login" and "Cancel" buttons
+        JPanel horizontalPanel = new JPanel();
+        horizontalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Align buttons horizontally with gaps
+        horizontalPanel.setBackground(new Color(50, 50, 60));
+
+        // Add "Go to Login" and "Cancel" buttons to the sub-panel
+        horizontalPanel.add(toLogin);
+        horizontalPanel.add(cancel);
+
+        // Add the horizontal panel to the main button panel
+        buttonsPanel.add(horizontalPanel);
+
+
+
+        // Signup panel
+        final JPanel loginPanel = new JPanel();
+        loginPanel.setBackground(new Color(50, 50, 60));
+        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
+        loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        headerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(fullNamePanel);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(bdayPanel);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(emailPanel);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(usernamePanel);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(passwordPanel);
+
+        loginPanel.add(Box.createVerticalStrut(10));
+        loginPanel.add(repeatPasswordPanel);
+
+        loginPanel.add(Box.createVerticalStrut(20));
+        loginPanel.add(buttonsPanel);
+
+        // mainPanel based on Lucas's:
+
+        final JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(new Color(30, 30, 30));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        mainPanel.add(headerPanel);
+        mainPanel.add(loginPanel);
+
+        this.setLayout(new GridBagLayout());
+        this.add(mainPanel);
+
+
+
     }
 
     private void addUsernameListener() {
@@ -212,7 +344,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         }
     }
 
+    // TODO: What is this for?
+//    private void setFields(LoginState state) {
+//        emailErrorField.setText(state.getUsername());
+//    }
+
     public String getViewName() {
         return viewName;
     }
 }
+
+
