@@ -8,7 +8,6 @@ public class EditPostOutputData {
 
     private String entryID;
     private String editor;
-    private Content content;
     private LocalDateTime editDate;
     private String postTitle;
     private Content postContent;
@@ -16,11 +15,10 @@ public class EditPostOutputData {
     private boolean editSuccessful;
 
     // Constructor to initialize all fields
-    public EditPostOutputData(String entryID, String editor, Content content, LocalDateTime editDate,
+    public EditPostOutputData(String entryID, String editor, LocalDateTime editDate,
                               String postTitle, Content postContent, String category, boolean editSuccessful) {
         this.entryID = entryID;
         this.editor = editor;
-        this.content = content;
         this.editDate = editDate;
         this.postTitle = postTitle;
         this.postContent = postContent;
@@ -34,10 +32,6 @@ public class EditPostOutputData {
 
     public String getEditor() {
         return editor;
-    }
-
-    public Content getContent() {
-        return content;
     }
 
     public LocalDateTime getEditDate() {
@@ -59,6 +53,4 @@ public class EditPostOutputData {
     public boolean isEditSuccessful() {
         return editSuccessful;
     }
-
-    
 }

@@ -8,18 +8,23 @@ public class EditPostInputData {
 
     private String entryID;
     private String editor;
-    private Content content;
+    private String editedContent;
+    private String attachmentPath;
+    private String fileType;
     private LocalDateTime editDate;
     private String postTitle;
     private Content postContent;
     private String category;
 
     // Constructor to initialize all fields
-    public EditPostInputData(String entryID, String editor, Content content, LocalDateTime editDate,
-                             String postTitle, Content postContent, String category) {
+    public EditPostInputData(String entryID, String editor, String editedContent, String attachmentPath, 
+                             String fileType, LocalDateTime editDate, String postTitle, Content postContent, 
+                             String category) {
         this.entryID = entryID;
         this.editor = editor;
-        this.content = content;
+        this.editedContent = editedContent;
+        this.attachmentPath = attachmentPath;
+        this.fileType = fileType;
         this.editDate = editDate;
         this.postTitle = postTitle;
         this.postContent = postContent;
@@ -34,8 +39,16 @@ public class EditPostInputData {
         return editor;
     }
 
-    public Content getContent() {
-        return content;
+    public String getEditedContent() {
+        return editedContent;
+    }
+
+    public String getAttachmentPath() {
+        return attachmentPath;
+    }
+
+    public String getFileType() {
+        return fileType;
     }
 
     public LocalDateTime getEditDate() {
@@ -54,5 +67,5 @@ public class EditPostInputData {
         return category;
     }
 
-    
+       
 }

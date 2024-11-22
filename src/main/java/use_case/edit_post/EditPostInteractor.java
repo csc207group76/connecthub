@@ -1,15 +1,20 @@
 package use_case.edit_post;
 
+import daos.DBUserDataAccessObject;
+import entity.Content;
 import entity.Post;
+import entity.PostContent;
 import entity.User;
 
 public class EditPostInteractor implements EditPostInputBoundary {
 
-    private EditPostDataAccess editPostDB;  // Interface to access data (edit post in DB)
+    private EditPostDataAccessInterface editPostDB;  // Interface to access data (edit post in DB)
+    private DBUserDataAccessObject userRepo; // To get the current user
     private EditPostOutputBoundary editPostOutput;  // Interface to handle output (views for success/fail)
 
     // Constructor to initialize dependencies
-    public EditPostInteractor(EditPostDataAccess editPostDB, EditPostOutputBoundary editPostOutput) {
+    public EditPostInteractor(EditPostDataAccessInterface editPostDB, DBUserDataAccessObject userRepo, 
+                              EditPostOutputBoundary editPostOutput) {
         this.editPostDB = editPostDB;
         this.editPostOutput = editPostOutput;
     }
@@ -17,29 +22,35 @@ public class EditPostInteractor implements EditPostInputBoundary {
     // Implementing editPost method from EditPostInputBoundary
     @Override
     public void editPost(EditPostInputData editPostInputData) {
-        try {
-            // Check if the user can edit the post
-            if (canEdit(editPostInputData.getEditor())) {
-                // If user can edit, attempt to edit the post in the database
-                editPostDB.editPost(new Post(editPostInputData));  // Assuming Post constructor takes EditPostInputData
-                editPostOutput.prepareSuccessView();  // Prepare the success view
-            } else {
-                // If user cannot edit, prepare the failure view
-                editPostOutput.prepareFailView();
-                System.out.println("User does not have permission to edit this post.");
-            }
-        } catch (EditPostFailed e) {
-            // If an error occurs, prepare the failure view
-            editPostOutput.prepareFailView();
-            System.err.println("Error: " + e.getMessage());  // Log the error message
-        }
+        boolean userCanEdit = this.canEdit(editPostInputData.getEditor());
+
+        if (!userCanEdit) {
+            editPostOutput.prepareFailView("User does not have permission to edit this post.");
+        } 
+
+        Content postContent = new PostContent(editPostInputData.getEditedContent(),
+                                              editPostInputData.getAttachmentPath(),
+                                              editPostInputData.getFileType());
+
+        EditPostOutputData editPostOutputData = new EditPostOutputData(
+            editPostInputData.getEntryID(), 
+            editPostInputData.getEditor(), 
+            editPostInputData.getEditDate(), 
+            editPostInputData.getPostTitle(), 
+            editPostInputData.getPostContent(),
+            editPostInputData.getCategory(),
+            userCanEdit
+        );
+
+        editPostDB.updatePost(); 
+        editPostOutput.prepareSuccessView();  
     }
 
     // Implementing canEdit method from EditPostInputBoundary
     @Override
-    public boolean canEdit(User user) {
+    public boolean canEdit(String userId) {
         // Implement logic to check if the user can edit the post
         // For example, check if the user is the author of the post or has admin privileges
-        return user.hasEditPermission();  // This is a placeholder logic
+        return userId.equals(this.userRepo.getCurrentUser().getUserID());  
     }
 }
