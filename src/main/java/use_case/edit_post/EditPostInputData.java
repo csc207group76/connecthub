@@ -27,31 +27,59 @@ public class EditPostInputData {
         this.category = category;
     }
 
-    // Setters
+    public String getEntryID() {
+        return entryID;
+    }
+
     public void setEntryID(String entryID) {
         this.entryID = entryID;
+    }
+
+    public User getEditor() {
+        return editor;
     }
 
     public void setEditor(User editor) {
         this.editor = editor;
     }
 
+    public Content getContent() {
+        return content;
+    }
+
     public void setContent(Content content) {
         this.content = content;
+    }
+
+    public LocalDateTime getEditDate() {
+        return editDate;
     }
 
     public void setEditDate(LocalDateTime editDate) {
         this.editDate = editDate;
     }
 
+    public String getPostTitle() {
+        return postTitle;
+    }
+
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
+    }
+
+    public Content getPostContent() {
+        return postContent;
     }
 
     public void setPostContent(Content postContent) {
         this.postContent = postContent;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public void setCategory(String category) {
         this.category = category;
-    }}
+    }
+}
