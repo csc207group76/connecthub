@@ -1,4 +1,4 @@
-package use_case.EditPost;
+package use_case.edit_post;
 
 import entity.Content;
 import entity.User;

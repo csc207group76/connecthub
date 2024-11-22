@@ -1,4 +1,4 @@
-package use_case.EditPost;
+package use_case.edit_post;
 
 public class EditPostFailed extends Exception {
 
