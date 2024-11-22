@@ -18,14 +18,13 @@ public class EditPostInputData {
 
     // Constructor to initialize all fields
     public EditPostInputData(String entryID, String editor, String editedContent, String attachmentPath, 
-                             String fileType, LocalDateTime editDate, String postTitle, Content postContent, 
-                             String category) {
+                             String fileType, String postTitle, Content postContent, String category) {
         this.entryID = entryID;
         this.editor = editor;
         this.editedContent = editedContent;
         this.attachmentPath = attachmentPath;
         this.fileType = fileType;
-        this.editDate = editDate;
+        this.editDate = LocalDateTime.now();
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.category = category;
@@ -66,6 +65,4 @@ public class EditPostInputData {
     public String getCategory() {
         return category;
     }
-
-       
 }

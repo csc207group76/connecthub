@@ -1,9 +1,12 @@
 package use_case.edit_post;
 
+import org.json.JSONObject;
+
 import entity.Post;
 
 public interface EditPostDataAccessInterface {
 
-    // Method to edit a post
-    void editPost(Post post) throws EditPostFailed;
+    void updatePost(Post post);
+
+    JSONObject getPostByID(String postID);
 }
