@@ -3,6 +3,7 @@ package app;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import controller.ViewManagerModel;
+import controller.login.LoginViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupController;
 import controller.signup.SignupPresenter;
@@ -32,19 +33,22 @@ public final class SignupUseCaseFactory {
      */
     public static SignupView create(
             ViewManagerModel viewManagerModel,
-            SignupViewModel signupViewModel, SignupDataAccessInterface userDataAccessObject) {
+            SignupViewModel signupViewModel, 
+            LoginViewModel loginViewModel,
+            SignupDataAccessInterface userDataAccessObject) {
 
-        final SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, userDataAccessObject);
+        final SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
         return new SignupView(signupController, signupViewModel);
 
     }
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel,
                                                             SignupViewModel signupViewModel,
+                                                            LoginViewModel loginViewModel,
                                                             SignupDataAccessInterface userDataAccessObject) {
 
         // Notice how we pass this method's parameters to the Presenter.
-        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(signupViewModel, viewManagerModel);
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         final UserFactory userFactory = new CommonUserFactory();
 

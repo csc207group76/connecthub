@@ -10,10 +10,12 @@ const presets = [
 module.exports = {
   mode: "development",
   entry: {
+    "js/styles/app": "./styles/style.css",
+    "js/sign_up/app": "./js/sign_up/main.js",
+    "/js/login/app": "/js/login/main.js",
   },
   output: {
-    path: path.resolve(__dirname, "public"),
-    publicPath: "./public",
+    path: path.resolve(__dirname, path.resolve(__dirname, 'src/main/resources/static')),
     filename: "[name].js",
   },
   module: {
@@ -33,6 +35,13 @@ module.exports = {
           options: { presets },
         },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource',  
+        generator: {
+          filename: 'assets/[name][hash][ext][query]',  
+        },
       },
       {
         test: /\.css$/i,

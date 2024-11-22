@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The representation of a user in our program.
@@ -33,7 +33,7 @@ public interface User {
 
     String getFullName();
 
-    public ArrayList<String> getModerating();
+    public List<String> getModerating();
 
-    public ArrayList<String> getPosts();
+    public List<String> getPosts();
 }

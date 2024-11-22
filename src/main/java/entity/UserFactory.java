@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Factory for creating users.
@@ -16,6 +16,6 @@ public interface UserFactory {
      * @return the new user
      */
     User create(String name, String password, String userID, String birthDate, String fullName, 
-                String email, ArrayList<String> moderating, ArrayList<String> posts);
+                String email, List<String> moderating, List<String> posts);
 
 }

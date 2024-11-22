@@ -13,6 +13,7 @@ import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import controller.ViewManagerModel;
+import controller.login.LoginViewModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
@@ -72,9 +73,10 @@ public class ConnectHub {
 //		final LoginViewModel loginViewModel = new LoginViewModel();
 //		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
+		final LoginViewModel loginViewModel = new LoginViewModel();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
-				signupViewModel, userDataAccessObject);
+				signupViewModel, loginViewModel, userDataAccessObject);
 		views.add(signupView, signupView.getViewName());
 
 //		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,

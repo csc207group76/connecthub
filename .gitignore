@@ -1,8 +1,7 @@
 HELP.md
 target/
-public/
 node_modules
-src/main/resources/static/js/
+src/main/resources/static/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

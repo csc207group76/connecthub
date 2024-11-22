@@ -33,7 +33,7 @@ class GetPostInteractorTest {
         LocalDateTime lastModifiedDate = LocalDateTime.now();
         Post expectedPost = new Post(
                 entryID,
-                author,
+                author.getUserID(),
                 content,
                 postedDate,
                 lastModifiedDate,
@@ -92,7 +92,7 @@ class GetPostInteractorTest {
         LocalDateTime lastModifiedDate = LocalDateTime.now();
         Post expectedPost = new Post(
                 entryID,
-                author,
+                author.getUserID(),
                 content,
                 postedDate,
                 lastModifiedDate,

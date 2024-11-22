@@ -4,6 +4,7 @@ import entity.User;
 import entity.UserFactory;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * The Signup Interactor.
@@ -22,15 +23,25 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     @Override
-    public void SignupUser(SignupInputData signupInputData) {
-        if (SignupDB.existsByUsername(signupInputData.getUsername())) {
+    public void signupUser(SignupInputData signupInputData) {
+        if (SignupDB.existsByEmail(signupInputData.getEmail())) {
             userPresenter.prepareFailView("User already exists.");
+            throw new UserExistsException("User already exists");
         }
         else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
         }
         else {
-            final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getUserID(), signupInputData.getBirthDate(), signupInputData.getFullName(), signupInputData.getEmail(), new ArrayList<String>(), new ArrayList<String>() );
+            final User user = userFactory.create(
+                signupInputData.getUsername(), 
+                signupInputData.getPassword(), 
+                generateUserID(), 
+                signupInputData.getBirthDate(), 
+                signupInputData.getFullName(), 
+                signupInputData.getEmail(), 
+                new ArrayList<String>(), 
+                new ArrayList<String>() 
+            );
             SignupDB.save(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
@@ -41,5 +52,10 @@ public class SignupInteractor implements SignupInputBoundary {
     @Override
     public void switchToLoginView() {
         userPresenter.switchToLoginView();
+    }
+
+    private String generateUserID() {
+        UUID uniqueID = UUID.randomUUID(); 
+        return uniqueID.toString();
     }
 }

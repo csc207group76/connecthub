@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="${style}">
     <title th:text="${page_title}"></title>
 </head>
 <body>
-    <div id="root"></div>
-    <script th:src="@{script}"></script>
+    <div th:id="${div_id}"></div>
+    <script th:src="${script}"></script>
+    <!-- <script th:src="${style}"></script> -->
 </body>
 </html>
