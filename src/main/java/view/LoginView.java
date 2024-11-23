@@ -169,6 +169,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         headerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginPanel.add(Box.createVerticalStrut(10));
         loginPanel.add(emailPanel);
+        loginPanel.add(emailErrorField);
         loginPanel.add(Box.createVerticalStrut(10));
         loginPanel.add(passwordPanel);
         loginPanel.add(Box.createVerticalStrut(20));
@@ -197,7 +198,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         final LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
-        emailErrorField.setText(state.getLoginError());
+        emailErrorField.setText(state.getEmailError());
     }
 
     private void setFields(LoginState state) {
