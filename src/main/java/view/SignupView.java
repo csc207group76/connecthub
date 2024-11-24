@@ -30,7 +30,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
     private final JButton signUp;
-    private final JButton cancel;
     private final JButton toLogin;
 
     public SignupView(SignupController controller, SignupViewModel signupViewModel) {
@@ -140,15 +139,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         toLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         toLogin.setForeground(Color.BLUE);
 
-        // cancel button
 
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        cancel.setForeground(Color.BLUE);
-
-        // Create the label
-
-
-        // TODO: loginLink.setCurosr - what is that?
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -171,13 +162,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        //TODO: more to add here?
         toLogin.addActionListener(
                 evt -> signupController.switchToLoginView()
         );
 
-        // TODO: this is required?
-        cancel.addActionListener(this);
 
         // All action listersns added as helper methods
         addUsernameListener();
@@ -206,7 +194,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         loginSwitch.add(signedUpLabel);
         loginSwitch.add(toLogin);
         horizontalPanel.add(loginSwitch);
-        horizontalPanel.add(cancel);
 
         // Add the horizontal panel to the main button panel
         buttonsPanel.add(horizontalPanel);
@@ -359,7 +346,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
 
-    // TODO: prepare sucesss view
+    // TODO: prepare sucesss view EDIT:don't think its needed here
 
     public String getViewName() {
         return viewName;
