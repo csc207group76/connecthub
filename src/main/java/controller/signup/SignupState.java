@@ -21,10 +21,6 @@ public class SignupState {
     private String birthdateError;
     private String fullName = "";
     private String fullNameError;
-    private List<String> moderators;
-    private List<String> moderatorsError;
-    private List<String> posts;
-    private List<String> postsError;
 
 
     public String getUsername() {
@@ -148,35 +144,5 @@ public class SignupState {
         this.fullNameError = fullNameError;
     }
 
-    public List<String> getModerators() {
-        return moderators;
-    }
 
-    public void setModerators(List<String> moderators) {
-        this.moderators = moderators;
-    }
-
-    public List<String> getModeratorsError() {
-        return moderatorsError;
-    }
-
-    public void setModeratorsError(List<String> moderatorsError) {
-        this.moderatorsError = moderatorsError;
-    }
-
-    public List<String> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<String> posts) {
-        this.posts = posts;
-    }
-
-    public List<String> getPostsError() {
-        return postsError;
-    }
-
-    public void setPostsError(List<String> postsError) {
-        this.postsError = postsError;
-    }
 }
