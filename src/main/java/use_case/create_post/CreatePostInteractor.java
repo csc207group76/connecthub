@@ -2,6 +2,7 @@ package use_case.create_post;
 
 import entity.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import daos.DBUserDataAccessObject;
@@ -24,6 +25,12 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
 
     @Override
     public void createPost(CreatePostInputData inputData) {
+        User currentUser = this.userRepo.getCurrentUser();
+        if (currentUser == null) {
+            userPresenter.prepareFailView("Please sign in first!");
+            throw new RuntimeException("Please sign in first!");
+        }
+
         if (inputData.getPostTitle().isEmpty()) {
             userPresenter.prepareFailView("Please add title!");
             throw new PostCreationFailedException("Please add title!");
@@ -37,7 +44,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
         } else {
             final Post post = this.postFactory.createPost(
                 UUID.randomUUID().toString(),
-                userRepo.getCurrentUser(),
+                currentUser,
                 inputData.getPostCotent(),
                 inputData.getAttachmentPath(),
                 inputData.getFileType(),
@@ -46,6 +53,9 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
             );
 
             dataAccess.createPost(post);
+            List<String> userPosts = currentUser.getPosts();
+            userPosts.add(post.getEntryID()); // Aliases user's post list
+            this.userRepo.updateUserPosts(currentUser);
 
             final CreatePostOutputData outputData = new CreatePostOutputData(
                 post.getEntryID(),

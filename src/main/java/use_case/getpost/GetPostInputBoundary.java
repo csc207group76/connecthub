@@ -1,5 +1,7 @@
 package use_case.getpost;
 
+import java.util.List;
+
 import entity.Post;
 
 /**
@@ -13,4 +15,10 @@ public interface GetPostInputBoundary {
      * @throws Exception if post not found
      */
     Post getPost(GetPostInputData getPostInputData) throws Exception;
+
+    List<Post> getAllPosts();
+
+    void switchToPostView();
+
+    void switchToHomePageView();
 }

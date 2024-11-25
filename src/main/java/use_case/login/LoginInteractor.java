@@ -44,7 +44,7 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
             else {
                 loginDB.setCurrentUser(user);
                 final LoginOutputData loginOutputData = new LoginOutputData(
-                        user.getUsername(), user.getPassword(), true);
+                        user.getEmail(), user.getPassword(), true);
                 loginOutput.prepareSuccessView(loginOutputData);
             }
         }

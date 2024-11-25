@@ -6,11 +6,15 @@ import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+
 import static com.mongodb.client.model.Filters.eq;
 
 /**
@@ -84,6 +88,32 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     @Override 
     public void logoutUser() {
         this.setCurrentUser(null);
+    }
+
+    // @Override
+    public void updateUserPosts(User updatedContent) {
+        Document query = new Document().append(USER_ID, updatedContent.getUserID());
+
+        // Probably not be neccessary to replace the entire thing, will test them 
+        Bson updates = Updates.combine(
+            Updates.set(USER_ID, updatedContent.getUserID()),
+            Updates.set(USER_NAME, updatedContent.getUsername()),
+            Updates.set(PASSWORD, updatedContent.getPassword()),
+            Updates.set(EMAIL, updatedContent.getEmail()),
+            Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
+            Updates.set(FULL_NAME, updatedContent.getFullName()),
+            Updates.set(MODERATING, updatedContent.getModerating()),
+            Updates.set(POSTS, updatedContent.getPosts()) // TODO type conversion? need testing
+        );
+
+        // Instructs the driver to insert a new document if none match the query
+        UpdateOptions insertNewDoc = new UpdateOptions().upsert(true);
+
+        try {
+            this.userRepository.updateOne(query, updates, insertNewDoc);
+        } catch (MongoException error) {
+            // throw err?
+        }
     }
 
     /**

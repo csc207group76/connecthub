@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 /**
  * Holds contents of an forum entry. This is an abstract class.
  */
@@ -42,5 +44,20 @@ public abstract class Content {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Reference equality
+        if (o == null || getClass() != o.getClass()) return false; // Null or different class
+        Content content = (Content) o;
+        return Objects.equals(body, content.body) &&
+                Objects.equals(attachmentPath, content.attachmentPath) &&
+                Objects.equals(fileType, content.fileType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, attachmentPath, fileType);
     }
 }

@@ -1,6 +1,7 @@
 package entity;
 
-import java.time.LocalDateTime; 
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Represents a forum entry. This is an abstract class.
@@ -89,5 +90,24 @@ public abstract class ForumEntry {
 
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;  // Check for reference equality
+        if (obj == null || getClass() != obj.getClass()) return false;  // Null or different class
+        ForumEntry that = (ForumEntry) obj;
+        return likes == that.likes &&
+                dislikes == that.dislikes &&
+                Objects.equals(entryID, that.entryID) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(postedDate, that.postedDate) &&
+                Objects.equals(lastModifiedDate, that.lastModifiedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(entryID, author, content, postedDate, lastModifiedDate, likes, dislikes);
     }
 }

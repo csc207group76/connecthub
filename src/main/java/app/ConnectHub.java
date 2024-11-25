@@ -2,24 +2,26 @@ package app;
 
 import java.awt.CardLayout;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
+import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.UserFactory;
 import controller.ViewManagerModel;
+import controller.homepage.HomepageViewModel;
 import controller.login.LoginViewModel;
+import controller.post.PostViewModel;
 //import controller.logged_in.LoggedInViewModel;
 //import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
+import view.HomePageView;
+import view.PostView;
 //import view.LoggedInView;
 //import view.LoginView;
 import view.SignupView;
+import view.StyleConstants;
 import view.ViewManager;
 
 /**
@@ -38,7 +40,7 @@ public class ConnectHub {
 		final MongoCollection<Document> commentRepositroy = repositories.getCommentRepository();
 
 		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository);
-		System.out.println(userDataAccessObject.existsByEmail("a@gmail.com"));
+		final DBPostDataAccessObject postDataAccessObject = new DBPostDataAccessObject(postRepository);
 
 		// Closes the connection with the database when the program terminates
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -54,15 +56,21 @@ public class ConnectHub {
 
 		// The main application window.
 		final JFrame application = new JFrame("ConnectHub");
+
+		// Close the app when clicking X
 		application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		final CardLayout cardLayout = new CardLayout();
+		// Set window size
+		application.setSize(StyleConstants.APP_WIDTH, StyleConstants.APP_HEIGHT);
 
-		// The various View objects. Only one view is visible at a time.
+		// cardLayout is assigned to views which manages different views
+		final CardLayout cardLayout = new CardLayout();
 		final JPanel views = new JPanel(cardLayout);
+
+		// Add views to the main application frame
 		application.add(views);
 
-		// This keeps track of and manages which view is currently showing.
+		// View manager manages the current view
 		final ViewManagerModel viewManagerModel = new ViewManagerModel();
 		new ViewManager(views, cardLayout, viewManagerModel);
 
@@ -74,6 +82,8 @@ public class ConnectHub {
 //		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
 		final LoginViewModel loginViewModel = new LoginViewModel();
+		final PostViewModel postViewModel = new PostViewModel();
+		final HomepageViewModel homepageViewModel = new HomepageViewModel();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, loginViewModel, userDataAccessObject);
@@ -86,8 +96,18 @@ public class ConnectHub {
 //		final LoggedInView loggedInView = ChangePasswordUseCaseFactory.create(viewManagerModel,
 //				loggedInViewModel, userDataAccessObject);
 //		views.add(loggedInView, loggedInView.getViewName());
+		
+		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
+				postViewModel, postDataAccessObject);
+		views.add(homepageView, homepageView.getViewName());
+		
+		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel,
+				homepageViewModel, postDataAccessObject);
+		views.add(postView, postView.getViewName());
 
-		viewManagerModel.setState(signupView.getViewName());
+
+		// viewManagerModel.setState(signupView.getViewName());
+		viewManagerModel.setState(homepageView.getViewName());
 		viewManagerModel.firePropertyChanged();
 
 		application.pack();
