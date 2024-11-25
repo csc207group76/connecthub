@@ -9,7 +9,7 @@ import java.util.List;
 public class CreatePostInputData {
 
     private final String author;
-    private final String postCotent;
+    private final String postContent;
     private final String attachmentPath;
     private final String fileType;
     private final int dislikes;
@@ -24,7 +24,7 @@ public class CreatePostInputData {
                                String fileType, int dislikes, int likes, String postTitle, 
                                List<User> moderators, List<Comment> comments, String category) {
         this.author = author;
-        this.postCotent = postContent;
+        this.postContent = postContent;
         this.attachmentPath = attachmentPath;
         this.fileType = fileType;
         this.dislikes = dislikes;
@@ -41,8 +41,8 @@ public class CreatePostInputData {
     }
 
 
-    public String getPostCotent() {
-        return postCotent;
+    public String getPostContent() {
+        return postContent;
     }
 
 

@@ -3,8 +3,8 @@ package controller.createPost;
 import entity.Comment;
 import entity.PostContent;
 import entity.User;
-import use_case.createPost.CreatePostInputBoundary;
-import use_case.createPost.CreatePostInputData;
+import use_case.create_post.CreatePostInputBoundary;
+import use_case.create_post.CreatePostInputData;
 
 
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public class createPostController {
         this.createPostInputBoundary = createPostInteractor;
     }
 
-    public void execute(String author, PostContent content, String attachmentPath,
+    public void execute(String author, String content, String attachmentPath,
                         String fileType, int dislikes, int likes, String postTitle,
                         List<User> moderators, List<Comment> comments, String category) {
         final CreatePostInputData createInputData = new CreatePostInputData(author, content,

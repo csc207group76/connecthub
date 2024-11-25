@@ -2,6 +2,7 @@ package use_case.create_post;
 
 import entity.Comment;
 import entity.Content;
+import entity.PostContent;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class CreatePostOutputData {
     private String entryID;
     private String author;
-    private Content content;
+    private PostContent content;
     private LocalDateTime postedDate;
     private LocalDateTime lastModifiedDate; 
     private int likes;
@@ -19,7 +20,7 @@ public class CreatePostOutputData {
     private final String category;
     private final boolean creationSuccessful;
 
-    public CreatePostOutputData(String entryID, String author, Content content, LocalDateTime postedDate, 
+    public CreatePostOutputData(String entryID, String author, PostContent content, LocalDateTime postedDate,
                                 LocalDateTime lastModified, int dislikes, int likes, String postTitle, 
                                 List<Comment> comments, String category, boolean creationSuccessful) {
         this.entryID = entryID;
@@ -43,7 +44,7 @@ public class CreatePostOutputData {
         return author;
     }
 
-    public Content getContent() {
+    public PostContent getContent() {
         return content;
     }
 

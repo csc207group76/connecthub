@@ -37,7 +37,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
         } else if (inputData.getCategory() == null || inputData.getCategory().equals("")) {
             userPresenter.prepareFailView("Please choose category!");
             throw new PostCreationFailedException("Please choose category!");
-        } else if (inputData.getPostCotent() == null || inputData.getPostCotent().equals("")) {
+        } else if (inputData.getPostContent() == null || inputData.getPostContent().equals("")) {
             // post content is the body text of the post, not the entire content with attachment path and file type
             userPresenter.prepareFailView("Please fill in post contents!");
             throw new PostCreationFailedException("Please fill in post contents!");
@@ -45,7 +45,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
             final Post post = this.postFactory.createPost(
                 UUID.randomUUID().toString(),
                 currentUser,
-                inputData.getPostCotent(),
+                inputData.getPostContent(),
                 inputData.getAttachmentPath(),
                 inputData.getFileType(),
                 inputData.getPostTitle(),
@@ -60,7 +60,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
             final CreatePostOutputData outputData = new CreatePostOutputData(
                 post.getEntryID(),
                 post.getAuthor(),
-                post.getContent(),
+                    (PostContent) post.getContent(),
                 post.getPostedDate(),
                 post.getLastModifiedDate(),
                 post.getLikes(),

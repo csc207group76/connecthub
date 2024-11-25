@@ -2,8 +2,8 @@ package controller.createPost;
 
 import controller.ViewManagerModel;
 import controller.signup.SignupState;
-import use_case.createPost.CreatePostOutputBoundary;
-import use_case.createPost.CreatePostOutputData;
+import use_case.create_post.CreatePostOutputBoundary;
+import use_case.create_post.CreatePostOutputData;
 ;
 
 public class createPostPresenter implements CreatePostOutputBoundary {
