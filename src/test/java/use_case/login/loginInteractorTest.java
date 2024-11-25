@@ -25,6 +25,7 @@ public class loginInteractorTest {
             @Override
             public void prepareSuccessView(LoginOutputData loginOutputData) {
                 assertEquals("sam@gmail.com", loginOutputData.getUserEmail());
+                assertEquals("sam123", loginOutputData.getPassword());
             }
 
             @Override
