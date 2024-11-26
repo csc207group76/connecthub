@@ -42,8 +42,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         mainContent.add(navBar, BorderLayout.NORTH);
 
         // Add navigation pane
-        final JPanel navigationPanel = NavigationPane.createNavigationPane(homepage);
-        homepage.add(navigationPanel, BorderLayout.WEST);
+        final JPanel navigationPanel = new NavigationPane(homepage, this.homepageViewModel, this.homepageController).getNavigationPane();        homepage.add(navigationPanel, BorderLayout.WEST);
 
         // Add center panel to display post previews
         this.contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));

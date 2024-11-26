@@ -71,21 +71,21 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    // TODO used for filtering posts, not implemented yet
-    // @Override
-    // public List<JSONObject> getPostsByCategory(String category) {
-    //     List<JSONObject> posts = new ArrayList<>();
-    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    @Override
+    public List<JSONObject> getPostsByCategory(String category) {
+        List<JSONObject> posts = new ArrayList<>();
+        MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+        try {
+            while (retrievedPosts.hasNext()) {
+                String jsonStr = retrievedPosts.next().toJson();
+                posts.add(new JSONObject(jsonStr));
+            }
+        } finally {
+            retrievedPosts.close();
+        }
+        return posts;
+    }
 
-    //     try {
-    //         while (retrievedPosts.hasNext()) {
-    //             String jsonStr = retrievedPosts.next().toJson();
-    //             posts.add(new JSONObject(jsonStr));
-    //         }
-    //     } finally {
-    //         retrievedPosts.close();
-    //     }
-    // }
 
     @Override
     public List<JSONObject> getAllPostsByUserID(String userID) {

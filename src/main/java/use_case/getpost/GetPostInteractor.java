@@ -66,6 +66,19 @@ public class GetPostInteractor implements GetPostInputBoundary {
     }
 
     @Override
+    public List<Post> getPostsByCategory(String category) {
+        List<JSONObject> postDatas = this.postDB.getPostsByCategory(category);
+        List<Post> posts = new ArrayList<>();
+
+        for (JSONObject postData : postDatas) {
+            posts.add(this.jsonToPost(postData));
+        }
+        final GetPostOutputData retrievedFilteredPostOutputData = new GetPostOutputData(posts);
+        getPostPresenter.prepareSuccessView(retrievedFilteredPostOutputData);
+        return posts;
+    }
+
+    @Override
     public void switchToPostView() {
         getPostPresenter.switchToPostView();
     }
@@ -74,6 +87,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
     public void switchToHomePageView() {
         getPostPresenter.switchToHomePageView();
     }
+
 
     private Post jsonToPost(JSONObject postData) {
         Content postContent = new PostContent(postData.getString("content_body"),

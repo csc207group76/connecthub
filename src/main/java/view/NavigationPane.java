@@ -2,8 +2,6 @@ package view;
 
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
-import entity.Post;
-import use_case.getpost.GetPostInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,16 +31,17 @@ public class NavigationPane {
 
         JButton[] categoryButtons = {
                 new JButton("All Posts"),
-                new JButton("Category 1"),
+                new JButton("java"),
                 new JButton("Category 2"),
                 new JButton("Category 3")
         };
         for (JButton button : categoryButtons) {
-//            button.addActionListener(e -> {
-//                String category = button.getText(); // Map button text to actual category if needed
-//                List<> filteredPosts = GetPostInteractor.getPostsByCategory(category);
-//                    // Update the UI to display `filteredPosts`
-//                });
+            button.addActionListener(e -> {
+                String category = button.getText(); // Map button text to actual category if needed
+                System.out.println(category);
+                homepageController.getPostsByCategory(category);
+                homepageController.switchToHomePageView();
+                });
             button.setBackground(StyleConstants.BUTTON_COLOR);
             button.setForeground(StyleConstants.TEXT_COLOR);
             button.setFocusPainted(false);
