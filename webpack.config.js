@@ -2,7 +2,7 @@ const path = require("path")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const webpack = require("webpack")
 
-const presets = [ 
+const presets = [
   ["@babel/preset-env", { useBuiltIns: "usage", corejs: 3 }],
   ["@babel/preset-react", { runtime: "automatic" }],
 ]
@@ -12,7 +12,9 @@ module.exports = {
   entry: {
     "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
-    "/js/login/app": "/js/login/main.js",
+    "js/login/app": "/js/login/main.js",
+    "js/home_page/app": "/js/home_page/main.js",
+    "js/create_post/app": "/js/create_post/main.js",
   },
   output: {
     path: path.resolve(__dirname, path.resolve(__dirname, 'src/main/resources/static')),
@@ -38,14 +40,22 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        type: 'asset/resource',  
+        type: 'asset/resource',
         generator: {
-          filename: 'assets/[name][hash][ext][query]',  
+          filename: 'assets/[name][hash][ext][query]',
         },
       },
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },

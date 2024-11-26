@@ -1,14 +1,13 @@
-package controller.createPost;
+package controller.create_post;
 
 import entity.Comment;
-import entity.PostContent;
+import entity.Content;
 import entity.User;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class createPostState{
+public class CreatePostState{
 
     private String entryID = "";
     private String entryIDError = "";
@@ -16,7 +15,7 @@ public class createPostState{
     private String author = "";
     private String authorError = "";
 
-    private PostContent content;
+    private Content content;
     private String contentError = "";
 
     // Since these are generated using the database I thought they woudln't be necessary
@@ -78,11 +77,11 @@ public class createPostState{
         this.authorError = authorError;
     }
 
-    public PostContent getContent() {
+    public Content getContent() {
         return content;
     }
 
-    public void setContent(PostContent content) {
+    public void setContent(Content content) {
         this.content = content;
     }
 

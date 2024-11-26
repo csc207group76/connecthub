@@ -76,4 +76,8 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
 
         return currentUser;
     }
+
+    public void switchToSignupView(){loginOutput.switchToSignupView();}
+
+    public void switchToHomePage(){loginOutput.switchToHomePage();}
 }

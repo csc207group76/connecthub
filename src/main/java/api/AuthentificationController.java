@@ -17,11 +17,11 @@ import use_case.signup.SignupInputData;
 import use_case.signup.UserExistsException;
 
 @RestController
-public class Authentification {
+public class AuthentificationController {
     private SignupInputBoundary signUpInteractor;
     private LoginInputBoundary loginInteractor;
 
-    public Authentification(SignupInputBoundary signUpInteractor, LoginInputBoundary loginInteractor) {
+    public AuthentificationController(SignupInputBoundary signUpInteractor, LoginInputBoundary loginInteractor) {
         this.signUpInteractor = signUpInteractor;
         this.loginInteractor = loginInteractor;
     }
@@ -29,7 +29,7 @@ public class Authentification {
     @PostMapping("/signup")
     public ResponseEntity<String> createUser(@RequestBody Map<String, String> requestBody) {
         final SignupInputData signupInputData = new SignupInputData(
-            requestBody.get("username"), 
+            requestBody.get("username"),
             requestBody.get("password"),
             requestBody.get("confirmation"),
             requestBody.get("email"),
@@ -45,12 +45,12 @@ public class Authentification {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong...");
         }
-    } 
+    }
 
     @PostMapping("/login")
     public ResponseEntity<String> logInUser(@RequestBody Map<String, String> requestBody) {
         final LoginInputData loginInputData = new LoginInputData(
-            requestBody.get("email"), 
+            requestBody.get("email"),
             requestBody.get("password")
         );
 

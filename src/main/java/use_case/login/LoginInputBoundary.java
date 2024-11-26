@@ -10,4 +10,8 @@ public interface LoginInputBoundary {
      * @param loginInputData the input data
      */
     void LoginUser(LoginInputData loginInputData);
+
+    void switchToSignupView();
+
+    void switchToHomePage();
 }

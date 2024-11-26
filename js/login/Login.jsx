@@ -14,7 +14,7 @@ export default function Login() {
 function LoginForm() {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
-  
+
   const logIn = (e) => {
     e.preventDefault()
 
@@ -24,19 +24,18 @@ function LoginForm() {
     if (email === "" || password === "") {
       window.alert("Please fill in all data")
       return
-    } 
+    }
 
     const loginData = {
       "email": email,
       "password": password
     }
 
-    logInUser(LOGIN_URL, loginData)
-    navigateTo(HOME_URL)
+    logInUser(LOGIN_URL, loginData, HOME_URL)
   }
-    
+
   return (
-    <form className="form">
+    <form className="entry-form">
       <div id="email-input" className="input-group">
         <label>Email: </label>
         <input name="email" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />

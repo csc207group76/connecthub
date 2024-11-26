@@ -1,24 +1,26 @@
-package controller.createPost;
+package controller.create_post;
 
 import controller.ViewManagerModel;
+import use_case.create_post.CreatePostOutputBoundary;
+import use_case.create_post.CreatePostOutputData;
 import controller.signup.SignupState;
 import use_case.create_post.CreatePostOutputBoundary;
 import use_case.create_post.CreatePostOutputData;
 ;
 
-public class createPostPresenter implements CreatePostOutputBoundary {
+public class CreatePostPresenter implements CreatePostOutputBoundary {
 
-    private final createPostViewModel createPostViewModel;
+    private final CreatePostViewModel createPostViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public createPostPresenter(controller.createPost.createPostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
+    public CreatePostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
         this.createPostViewModel = createPostViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(CreatePostOutputData response) {
-        final createPostState createPostState = createPostViewModel.getState();
+        final CreatePostState createPostState = createPostViewModel.getState();
         createPostState.setContent(response.getContent());
         this.createPostViewModel.setState(createPostState);
         createPostViewModel.firePropertyChanged();
@@ -30,7 +32,7 @@ public class createPostPresenter implements CreatePostOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-        final createPostState createPostState = createPostViewModel.getState();
+        final CreatePostState createPostState = createPostViewModel.getState();
         createPostState.setPostTitleError(errorMessage);
         createPostViewModel.firePropertyChanged();
     }

@@ -31,4 +31,8 @@ public class LoginController {
             //System.out.println("Error: Incorrect password");
         }
     }
+
+    public void switchToSignupView(){loginInputBoundary.switchToSignupView();}
+
+    public void switchToHomePage(){loginInputBoundary.switchToHomePage();}
 }
