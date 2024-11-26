@@ -11,7 +11,7 @@ public class loginOutputDataTest {
     private LoginOutputData loginOutputData;
 
     @Before
-    public void testSetUp() {
+    public void SetUp() {
         loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
     }
 
