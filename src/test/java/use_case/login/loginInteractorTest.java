@@ -1,104 +1,114 @@
 package use_case.login;
 
-import daos.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
-import entity.UserFactory;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
-import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class loginInteractorTest {
 
-    @Test
-    public void loginSuccessTest(){
-        LoginInputData inputData = new LoginInputData("sam@gmail.com", "sam123");
-        InMemoryUserDataAccessObject inMemoryUserDataAccessObject = new InMemoryUserDataAccessObject();
+    private LoginDataAccessInterface mockDataAccess;
+    private LoginOutputBoundary mockPresenter;
+    private LoginInteractor interactor;
+    private JSONObject jsonUser;
 
-        UserFactory userFactory = new CommonUserFactory();
-        User user = userFactory.create("Sam", "sam123", "Sam456", "11/11/11",
+    @Before
+    public void setUp() throws JSONException {
+        this.mockPresenter = Mockito.mock(LoginOutputBoundary.class);
+        this.mockDataAccess = Mockito.mock(LoginDataAccessInterface.class);
+        this.interactor = new LoginInteractor(mockDataAccess, mockPresenter, new CommonUserFactory());
+
+        User testUser = new CommonUserFactory().create(
+                "Sam", "sam123", "Sam456", "11/11/11",
                 "Sam Sam", "sam@gmail.com", new ArrayList<>(), new ArrayList<>());
-        inMemoryUserDataAccessObject.save(user);
-
-        LoginOutputBoundary loginSuccessPresenter = new LoginOutputBoundary() {
-            @Override
-            public void prepareSuccessView(LoginOutputData loginOutputData) {
-                assertEquals("sam@gmail.com", loginOutputData.getUserEmail());
-                assertEquals("sam123", loginOutputData.getPassword());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case is failed");
-            }
-        };
-        LoginInputBoundary interactor = new LoginInteractor(inMemoryUserDataAccessObject,
-                loginSuccessPresenter, userFactory);
-        interactor.LoginUser(inputData);
+        this.jsonUser = getJsonObject(testUser);
     }
 
     @Test
-    public void wrongPasswordTest(){
-        LoginInputData inputData = new LoginInputData("sam@gmail.com", "0000");
-        InMemoryUserDataAccessObject inMemoryUserDataAccessObject = new InMemoryUserDataAccessObject();
+    public void loginSuccessTest(){
 
-        UserFactory userFactory = new CommonUserFactory();
-        User user = userFactory.create("Sam", "sam123", "Sam456", "11/11/11",
-                "Sam Sam", "sam@gmail.com", new ArrayList<>(), new ArrayList<>());
-        inMemoryUserDataAccessObject.save(user);
+        when(mockDataAccess.existsByEmail("sam@gmail.com")).thenReturn(true);
+        when(mockDataAccess.getUserByEmail("sam@gmail.com")).thenReturn(jsonUser);
 
-        LoginOutputBoundary loginFailedPresenter = new LoginOutputBoundary() {
-            @Override
-            public void prepareSuccessView(LoginOutputData loginOutputData) {
-                fail("Use case is failed");
-            }
+        LoginInputData inputData = new LoginInputData("sam@gmail.com", "sam123");
+        interactor.LoginUser(inputData);
 
-            @Override
-            public void prepareFailView(String errorMessage) {
-                assertEquals("Incorrect password for \"sam@gmail.com\".",errorMessage);
-            }
-        };
-        LoginInputBoundary interactor = new LoginInteractor(inMemoryUserDataAccessObject, loginFailedPresenter,
-                userFactory);
+        ArgumentCaptor<LoginOutputData> captor = ArgumentCaptor.forClass(LoginOutputData.class);
+        verify(mockPresenter).prepareSuccessView(captor.capture());
+
+        LoginOutputData capturedData = captor.getValue();
+        assertEquals("sam@gmail.com", capturedData.getUserEmail());
+        assertEquals("sam123", capturedData.getPassword());
+
+        // Ensure no failure methods were called
+        verify(mockPresenter, never()).prepareFailView(anyString());
+    }
+
+    @Test
+    public void wrongPasswordTest() throws JSONException {
+
+        when(mockDataAccess.getUserByEmail("sam@gmail.com")).thenReturn(jsonUser);
+        when(mockDataAccess.existsByEmail("sam@gmail.com")).thenReturn(true);
+
+        LoginInputData inputData = new LoginInputData("sam@gmail.com", "WrongPassword");
         try {
             interactor.LoginUser(inputData);
             fail("Expected IncorrectPasswordException was not thrown.");
-        }catch (IncorrectPasswordException e){
+        } catch (IncorrectPasswordException e) {
             assertEquals("Incorrect password for \"sam@gmail.com\".", e.getMessage());
         }
-        // Remember to commit the loginInteractor file after changing it
+
+        verify(mockPresenter, never()).prepareSuccessView(any());
+        verify(mockPresenter).prepareFailView("Incorrect password for \"sam@gmail.com\".");
     }
 
     @Test
-    public void wrongEmailTest(){
+    public void wrongEmailTest() {
+
+        when(mockDataAccess.existsByEmail("david@gmail.com")).thenReturn(false);
         LoginInputData inputData = new LoginInputData("david@gmail.com", "0000");
-        InMemoryUserDataAccessObject inMemoryUserDataAccessObject = new InMemoryUserDataAccessObject();
 
-        UserFactory userFactory = new CommonUserFactory();
-        User user = userFactory.create("Sam", "sam123", "Sam456", "11/11/11",
-                "Sam Sam", "sam@gmail.com", new ArrayList<>(), new ArrayList<>());
-        inMemoryUserDataAccessObject.save(user);
-
-        LoginOutputBoundary loginFailedPresenter = new LoginOutputBoundary() {
-            public void prepareSuccessView(LoginOutputData loginOutputData) {
-                fail("Use case is failed");
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                assertEquals("david@gmail.com: Account does not exist.",errorMessage);
-            }
-        };
-
-        LoginInputBoundary interactor = new LoginInteractor(inMemoryUserDataAccessObject, loginFailedPresenter,
-                userFactory);
         try {
             interactor.LoginUser(inputData);
             fail("Expected AccountDoesNotExistException was not thrown.");
-        }catch (AccountDoesNotExistException e){
+        } catch (AccountDoesNotExistException e) {
             assertEquals("david@gmail.com: Account does not exist.", e.getMessage());
         }
+
+        verify(mockPresenter).prepareFailView("david@gmail.com: Account does not exist.");
+        verify(mockPresenter, never()).prepareSuccessView(any(LoginOutputData.class));
     }
 
+    private static JSONObject getJsonObject(User testUser) throws JSONException {
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("username", testUser.getUsername());
+        jsonUser.put("password", testUser.getPassword());
+        jsonUser.put("userId", testUser.getUserID());
+        jsonUser.put("birth_date", testUser.getBirthDate());
+        jsonUser.put("full_name", testUser.getFullName());
+        jsonUser.put("email", testUser.getEmail());
+
+        JSONArray moderatingData = new JSONArray();
+        moderatingData.put("1");
+        moderatingData.put("2");
+        moderatingData.put("3");
+        jsonUser.put("moderating", moderatingData);
+
+        JSONArray postsData = new JSONArray();
+        postsData.put("1");
+        postsData.put("2");
+        postsData.put("3");
+        jsonUser.put("posts", postsData);
+        return jsonUser;
+    }
 }

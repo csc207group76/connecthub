@@ -41,6 +41,9 @@ public class LoginOutputData {
         this.password = password;
     }
 
+    /**
+     * Indicate login successfully or not
+     */
     public boolean isLoginSuccessful() {
         return loginSuccessful;
     }

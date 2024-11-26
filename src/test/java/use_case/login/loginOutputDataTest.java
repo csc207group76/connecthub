@@ -1,39 +1,38 @@
 package use_case.login;
 
-import daos.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.User;
-import entity.UserFactory;
 import org.junit.Test;
-import java.util.ArrayList;
+import org.junit.Before;
+
 
 import static org.junit.Assert.*;
 
 public class loginOutputDataTest {
 
-    // Test if the get password is working properly
+    private LoginOutputData loginOutputData;
+
+    @Before
+    public void testSetUp() {
+        loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
+    }
+
     @Test
-    public void getPasswordTest(){
-        LoginOutputData loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
+    public void testGetPasswordTest(){
         assertEquals("sam123", loginOutputData.getPassword());
     }
 
     @Test
-    public void isLoginSuccessfulTest(){
-        LoginOutputData loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
+    public void testIsLoginSuccessfulTest(){
         assertEquals(true, loginOutputData.isLoginSuccessful());
     }
 
     @Test
-    public void setUserEmailTest(){
-        LoginOutputData loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
+    public void testSetUserEmailTest(){
         loginOutputData.setUserEmail("david@gmail.com");
         assertEquals("david@gmail.com", loginOutputData.getUserEmail());
     }
 
     @Test
-    public void setPasswordTest(){
-        LoginOutputData loginOutputData = new LoginOutputData("sam@gmail.com", "sam123", true);
+    public void testSetPasswordTest(){
         loginOutputData.setPassword("111");
         assertEquals("111", loginOutputData.getPassword());
     }
