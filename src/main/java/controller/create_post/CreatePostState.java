@@ -15,7 +15,7 @@ public class CreatePostState{
     private String author = "";
     private String authorError = "";
 
-    private Content content;
+    private String content;
     private String contentError = "";
 
     // Since these are generated using the database I thought they woudln't be necessary
@@ -77,11 +77,11 @@ public class CreatePostState{
         this.authorError = authorError;
     }
 
-    public Content getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Content content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
