@@ -38,12 +38,12 @@ function LoginForm() {
     <form className="authentification-form">
       <div id="email-input" className="input-group">
         <label>Email: </label>
-        <input name="email" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />
+        <input name="email" type="text" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />
       </div>
 
       <div id="password-input" className="input-group">
         <label>Password: </label>
-        <input name="password" id="password-input" placeholder="" ref={passwordRef} />
+        <input name="password" type="password" id="password-input" placeholder="" ref={passwordRef} />
       </div>
 
       <button onClick={logIn}>Log In</button>
