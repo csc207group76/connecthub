@@ -61,7 +61,7 @@ function PostBox(props) {
   }, [])
 
   return (
-    <div className="post-box" onClick={() => navigateTo(`/post/${props.postId}`)}>
+    <div className="post-box preserve-line-breaks" onClick={() => navigateTo(`/post/${props.postId}`)}>
       <div className="post-box-info">
         <img className="pfp" src={props.authorPfp} alt=" " />
         <div className="post-box-author">{author}</div>

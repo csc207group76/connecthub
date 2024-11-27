@@ -68,7 +68,7 @@ export default function Post() {
       <div id="post-content">
         <div id="post-title">{postData.postTitle}</div>
         <div id="post-topic">{postData.topic}</div>
-        <div id="post-body">{postData.postBody}</div>
+        <div id="post-body" className="preserve-line-breaks">{postData.postBody}</div>
       </div>
       <div id="post-interaction">
         <button id="like-post">{postData.likes}</button>
