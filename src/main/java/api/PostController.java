@@ -29,7 +29,7 @@ public class PostController {
     private final CreatePostInputBoundary createPostInteractor;
     private final GetUserInputBoundary getUserInteractor;
 
-    public PostController(GetUserInputBoundary getUserInteractor, // Change when there's a get user use case
+    public PostController(GetUserInputBoundary getUserInteractor,
                           GetPostInputBoundary homePageInteractor,
                           GetPostInputBoundary getPostInteractor,
                           CreatePostInputBoundary createPostInteractor) {
