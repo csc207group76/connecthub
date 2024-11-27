@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class loginInteractorTest {
+public class LoginInteractorTest {
 
     private LoginDataAccessInterface mockDataAccess;
     private LoginOutputBoundary mockPresenter;
