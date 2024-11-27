@@ -107,6 +107,8 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
                 post.getPostTitle(), post.getContent().getBody(), 
                 post.getEntryID(), homepage, homepageController, postController).getPostBox());
         }
+        revalidate();
+        repaint();
     }
     // For testing purposes
     private void addDummyPost() {
