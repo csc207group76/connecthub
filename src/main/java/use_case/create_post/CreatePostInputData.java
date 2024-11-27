@@ -1,6 +1,7 @@
 package use_case.create_post;
 
 import entity.Comment;
+import entity.Content;
 import entity.User;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class CreatePostInputData {
     private final String category;
 
 
-    public CreatePostInputData(String author, String postContent, String attachmentPath, 
+    public CreatePostInputData(String author, String postContent, String attachmentPath,
                                String fileType, int dislikes, int likes, String postTitle, 
                                List<User> moderators, List<Comment> comments, String category) {
         this.author = author;

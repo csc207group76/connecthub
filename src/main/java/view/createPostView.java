@@ -3,9 +3,7 @@ package view;
 import controller.create_post.CreatePostController;
 import controller.create_post.CreatePostState;
 import controller.create_post.CreatePostViewModel;
-import controller.signup.SignupController;
-import controller.signup.SignupState;
-import controller.signup.SignupViewModel;
+import controller.homepage.HomepageController;
 import entity.Comment;
 import entity.User;
 
@@ -15,28 +13,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
-public class createPostView extends JDialog implements ActionListener, PropertyChangeListener {
+public class createPostView extends JDialog implements PropertyChangeListener {
+
+    private final String viewName = "create post";
+
     private JTextField titleField;
     private JTextArea contentField;
-    private JTextField categoryField;
+    private JComboBox<String> categoryDropdown;
     private JButton saveButton;
     private JButton cancelButton;
+
     private final CreatePostViewModel createPostViewModel;
     private final CreatePostController createPostController;
+    private final HomepageController homepageController;
 
 
-    public createPostView(JFrame parentFrame, CreatePostViewModel createPostViewModel, CreatePostController createPostController) {
-        super(parentFrame, "Create Post", true);
+    public createPostView(CreatePostViewModel createPostViewModel, CreatePostController createPostController, HomepageController homepageController) {
         this.createPostViewModel = createPostViewModel;
         this.createPostController = createPostController;
+        this.homepageController = homepageController;
 
         createPostViewModel.addPropertyChangeListener(this);
 
-
         setSize(400, 300);
         setLayout(new BorderLayout());
+        setBackground(StyleConstants.BACKGROUND_COLOR);
 
         final JLabel title = new JLabel("Creating Post");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -44,12 +46,19 @@ public class createPostView extends JDialog implements ActionListener, PropertyC
         // Input Fields
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(2, 2));
+
         inputPanel.add(new JLabel("Title: "));
         titleField = new JTextField();
         inputPanel.add(titleField);
+
+        inputPanel.add(new JLabel("Category: "));
+        categoryDropdown = new JComboBox<>(new String[]{"Education", "Politics", "Sports", "Random"});
+        inputPanel.add(categoryDropdown);
+
         inputPanel.add(new JLabel("Content: "));
         contentField = new JTextArea(5, 20);
         inputPanel.add(new JScrollPane(contentField));
+
         add(inputPanel, BorderLayout.CENTER);
 
         // Buttons
@@ -61,36 +70,27 @@ public class createPostView extends JDialog implements ActionListener, PropertyC
         add(buttonPanel, BorderLayout.SOUTH);
 
         saveButton.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(saveButton)) {
-                            final CreatePostState currentState = createPostViewModel.getState();
+                evt -> {
+                    if (evt.getSource().equals(saveButton)) {
+                        final CreatePostState currentState = createPostViewModel.getState();
 
-                            createPostController.execute(currentState.getAuthor(), currentState.getContent(), null,
-                                    null, currentState.getDislikes(), currentState.getLikes(), currentState.getPostTitle(),
-                                    currentState.getModerators(), currentState.getComments(), currentState.getCategory());
-                            // TODO change null to the actual values
-                        }
+                        createPostController.execute(currentState.getAuthor(), currentState.getContent(), null,
+                                null, currentState.getDislikes(), currentState.getLikes(), currentState.getPostTitle(),
+                                currentState.getModerators(), currentState.getComments(), currentState.getCategory());
+                        // TODO change null to the actual values
                     }
                 }
         );
-        cancelButton.addActionListener(this);
 
         addSaveButtonListener();
         addCancelButtonListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-//        this.add(title);
-//        this.add(fullnameInfo);
-//        this.add(emailInfo);
-//        this.add(birthdateInfo);
-//        this.add(usernameInfo);
-//        this.add(passwordInfo);
-//        this.add(repeatPasswordInfo);
-//        this.add(signUp);
-//        this.add(buttons);
+        this.add(title);
+        this.add(inputPanel);
+        this.add(saveButton);
+        this.add(cancelButton);
     }
 
     public String getTitleInput() {
@@ -105,27 +105,25 @@ public class createPostView extends JDialog implements ActionListener, PropertyC
     private void addSaveButtonListener() {
         saveButton.addActionListener(e -> {
             // Gather input data from the user interface
-//            String author = authorInputField.getText(); // TODO: not sure how to get this
+            String author = homepageController.fetchUser().getUsername(); // TODO: username not name right?
             String content = contentField.getText();
-            String attachmentPath = null; // TODO: What do we do here
+            String attachmentPath = null; // TODO: What do we use here
             String fileType = "text"; // Assume fileType is determined elsewhere
             int dislikes = 0; // Default value
             int likes = 0; // Default value
             String postTitle = titleField.getText();
             List moderators = new List(); // TODO: Are these two correct
             List comments = new List();
-            String category = categoryField.getText();
+            String category = (String) categoryDropdown.getSelectedItem();
 
             // Validate required inputs
-            // TODO: add the fact that author coudl be empty or null
-            if (postTitle.isEmpty() || content.isEmpty() ) {
+            if (postTitle.isEmpty() || content.isEmpty() || author.isEmpty() ) {
                 JOptionPane.showMessageDialog(this, "Title, content, and author are required!");
                 return;
             }
 
             // Pass the input data to the controller
-            // TODO: not sure how to get author
-            createPostController.execute(author, content, attachmentPath, fileType, dislikes, likes, postTitle, moderators, comments, category);
+            createPostController.execute(homepageController.fetchUser().getUserID(), content, attachmentPath, fileType, dislikes, likes, postTitle, (java.util.List<User>) moderators, (java.util.List<Comment>) comments, category);
             // Provide user feedback and switch to the homepage
             JOptionPane.showMessageDialog(this, "Post created successfully!");
             createPostController.switchToHomePageview();
@@ -144,7 +142,7 @@ public class createPostView extends JDialog implements ActionListener, PropertyC
 
         if (option == JOptionPane.YES_OPTION) {
             // Close the current CreatePostView and show the HomePageView
-            this.setVisible(false);  // Hide CreatePostView
+            this.setVisible(false);
             // TODO: How to show homepage here?
         }
     }
@@ -154,10 +152,6 @@ public class createPostView extends JDialog implements ActionListener, PropertyC
         contentField.setText("");
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

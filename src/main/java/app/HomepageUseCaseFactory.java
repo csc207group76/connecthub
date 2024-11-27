@@ -23,6 +23,7 @@ public class HomepageUseCaseFactory {
     ) {
         final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO);
         final PostController postController = GetPostUseCaseFactory.createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
+        // TODO: chnage the signature here
         return new HomePageView(homepageController, postController, homepageViewModel);
     }
 

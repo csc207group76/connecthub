@@ -1,9 +1,12 @@
 package controller.homepage;
 
+import entity.User;
+import use_case.get_user.GetUserInteractor;
 import use_case.getpost.GetPostInputBoundary;
 
 public class HomepageController {
     private final GetPostInputBoundary getPostInteractor;
+    private GetUserInteractor getUserInteractor;
 
     public HomepageController(GetPostInputBoundary getPostInteractor) {
         this.getPostInteractor = getPostInteractor;
@@ -20,4 +23,10 @@ public class HomepageController {
     public void switchToHomePageView() {
         this.getPostInteractor.switchToHomePageView();
     }
+
+    public User fetchUser() {
+        return this.getUserInteractor.getCurrentUser();
+    }
+
+
 }
