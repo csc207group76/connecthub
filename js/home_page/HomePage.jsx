@@ -21,7 +21,7 @@ function HomeContent() {
     api
     .get("/all-posts")
     .then(response => {
-      setPosts(response.data)
+      setPosts([...response.data].reverse())
     })
     .catch(() => {
       window.alert("Error fetching posts")

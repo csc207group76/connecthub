@@ -1,7 +1,10 @@
-import { navigateTo } from "../api/utils"
+import api from "../api/axios.config.js"
+import { navigateTo, REQ_HEADER } from "../api/utils"
 import { useEffect, useState } from "react"
 
 const CREATE_POST_URL = "/create-post"
+const GET_USER_URL = "/user-info"
+
 export default function Contents(props) {
   const [displayedPosts, setDisplayedPosts] = useState([])
 
@@ -37,7 +40,7 @@ export default function Contents(props) {
 
       <div id="post-box-container">
         {displayedPosts.map((post, index) => {
-          // TODO get user use case, or edit the post entity to return a User entity
+          // TODO make the post entity to return a User entity and use that instead of fetching for user
           return <PostBox
             key={index}
             postId={post.entryID}
@@ -55,11 +58,24 @@ export default function Contents(props) {
 }
 
 function PostBox(props) {
+  // see the todo on top
+  const [author, setAuthor] = useState(null)
+
+  useEffect(() => {
+    api
+      .get(`${GET_USER_URL}?user_id=${props.author}`)
+      .then(response => {
+        setAuthor(response.data.username)
+      })
+      .catch(error => {
+      })
+  }, [])
+
   return (
     <div className="post-box" onClick={() => navigateTo(`/post/${props.postId}`)}>
       <div className="post-box-info">
         <img className="post-box-author-pfp" src={props.authorPfp} alt=" " />
-        <div className="post-box-author">{props.author}</div>
+        <div className="post-box-author">{author}</div>
         <div className="post-box-timestamp">{props.timeStamp}</div>
       </div>
 

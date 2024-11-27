@@ -41,6 +41,10 @@ public class LoginOutputData {
         this.password = password;
     }
 
+    /**
+     * Get the loginSuccessful
+     * @return true if loginSuccessful, false otherwise
+     */
     public boolean isLoginSuccessful() {
         return loginSuccessful;
     }

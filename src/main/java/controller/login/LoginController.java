@@ -26,13 +26,14 @@ public class LoginController {
         try {
             loginInputBoundary.LoginUser(loginInputData);
         } catch (AccountDoesNotExistException e){
-            //System.out.print("Error: Account doesn't exist");
+            System.out.print("Error: Account doesn't exist");
         } catch (IncorrectPasswordException e) {
-            //System.out.println("Error: Incorrect password");
+            System.out.println("Error: Incorrect password");
         }
     }
 
+    /**
+     * Switch to the Signup View
+     */
     public void switchToSignupView(){loginInputBoundary.switchToSignupView();}
-
-    public void switchToHomePage(){loginInputBoundary.switchToHomePage();}
 }

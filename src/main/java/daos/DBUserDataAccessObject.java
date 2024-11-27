@@ -2,6 +2,7 @@ package daos;
 
 import entity.User;
 import use_case.signup.SignupDataAccessInterface;
+import use_case.get_user.GetUserDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
 
@@ -18,11 +19,12 @@ import com.mongodb.client.result.InsertOneResult;
 import static com.mongodb.client.model.Filters.eq;
 
 /**
- * MongoDB implementation of the DAO for storing user data. 
+ * MongoDB implementation of the DAO for storing user data.
  */
 public class DBUserDataAccessObject implements SignupDataAccessInterface,
                                                LoginDataAccessInterface,
-                                               LogoutDataAccessInterface {
+                                               LogoutDataAccessInterface,
+                                               GetUserDataAccessInterface {
     private final String USER_ID = "userId";
     private final String USER_NAME = "username";
     private final String PASSWORD = "password";
@@ -43,7 +45,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     public void save(User user) {
         this.insertUserToDB(user);
     }
-    
+
     @Override
     public boolean existsByID(String userID) {
         return this.queryOneUserBy(USER_ID, userID) != null;
@@ -64,7 +66,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     public JSONObject getUserById(String userID) {
         return new JSONObject(this.queryOneUserBy(USER_ID, userID).toJson());
     }
-    
+
     @Override
     public JSONObject getUserByUsername(String username) {
         return new JSONObject(this.queryOneUserBy(USER_NAME, username).toJson());
@@ -74,7 +76,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     public JSONObject getUserByEmail(String email) {
         return new JSONObject(this.queryOneUserBy(EMAIL, email).toJson());
     }
-    
+
     @Override
     public User getCurrentUser() {
         return this.currentUser;
@@ -85,7 +87,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
         this.currentUser = currentUser;
     }
 
-    @Override 
+    @Override
     public void logoutUser() {
         this.setCurrentUser(null);
     }
@@ -94,7 +96,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     public void updateUserPosts(User updatedContent) {
         Document query = new Document().append(USER_ID, updatedContent.getUserID());
 
-        // Probably not be neccessary to replace the entire thing, will test them 
+        // Probably not be neccessary to replace the entire thing, will test them
         Bson updates = Updates.combine(
             Updates.set(USER_ID, updatedContent.getUserID()),
             Updates.set(USER_NAME, updatedContent.getUsername()),

@@ -4,11 +4,9 @@ package use_case.logout;
  */
 public class LogoutInteractor implements LogoutInputBoundary {
     private LogoutDataAccessInterface logoutDB;
-    private LogoutOutputBoundary logoutOutput;
 
-    public LogoutInteractor(LogoutDataAccessInterface logoutDB, LogoutOutputBoundary logoutOutput) {
+    public LogoutInteractor(LogoutDataAccessInterface logoutDB) {
         this.logoutDB = logoutDB;
-        this.logoutOutput = logoutOutput;
     }
 
     @Override
@@ -20,6 +18,8 @@ public class LogoutInteractor implements LogoutInputBoundary {
         final String userID = logoutInputData.getUserID();
         logoutDB.logoutUser();
         LogoutOutputData logoutOutputData = new LogoutOutputData(userID, true);
-        logoutOutput.prepareSuccessView(logoutOutputData);
+
+        // This is not needed unless we want to prepare a log out view
+        // logoutOutput.prepareSuccessView(logoutOutputData);
     }
 }

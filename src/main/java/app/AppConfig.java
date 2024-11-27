@@ -26,12 +26,16 @@ import entity.UserFactory;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInteractor;
 import use_case.create_post.CreatePostOutputBoundary;
+import use_case.get_user.GetUserInputBoundary;
+import use_case.get_user.GetUserInteractor;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -131,7 +135,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CreatePostPresenter createPostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
+    public CreatePostOutputBoundary createPostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
         return new CreatePostPresenter(createPostViewModel, viewManagerModel);
     }
 
@@ -164,11 +168,23 @@ public class AppConfig {
         return new CreatePostInteractor(postDAO, userDAO, createPostOutputBoundary, postFactory);
     }
 
+    @Bean
+    public GetUserInputBoundary getUserInteractor(DBUserDataAccessObject userDAO,
+                                                  UserFactory userFactory) {
+        return new GetUserInteractor(userDAO, userFactory);
+    }
+
+    @Bean
+    public LogoutInputBoundary logoutInteractor(DBUserDataAccessObject userDAO) {
+        return new LogoutInteractor(userDAO);
+    }
+
     // RestAPIs
     @Bean
     public AuthentificationController authentificationController(SignupInputBoundary signupInteractor,
-                                                                 LoginInputBoundary loginInteractor) {
-        return new AuthentificationController(signupInteractor, loginInteractor);
+                                                                 LoginInputBoundary loginInteractor,
+                                                                 LogoutInputBoundary logoutInteractor) {
+        return new AuthentificationController(signupInteractor, loginInteractor, logoutInteractor);
     }
 
     @Bean

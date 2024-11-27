@@ -146,7 +146,7 @@ button:hover {
   width: 100%;
 }
 
-.form {
+.authentification-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -171,7 +171,7 @@ button:hover {
   font-style: italic;
 }
 
-.entry-form button {
+.authentification-form button {
   background-image: url("../js/assets/lock.svg");
   background-position: 4px;
   background-size: 20px;
@@ -179,7 +179,7 @@ button:hover {
   padding-left: 30px;
 }
 
-.entry-form button:hover {
+.authentification-form button:hover {
   opacity: 0.8;
 }
 
@@ -240,8 +240,8 @@ button:hover {
   /* grid-template-columns: repeat(2, 1fr); */
   /* grid-template-rows: 0.1fr 1fr; */
   grid-template-areas:
-    "pfp username"
-    "pfp handle";
+    "pfp username username"
+    "pfp handle logout";
 }
 
 #nav-bar-user-container img {
@@ -260,6 +260,13 @@ button:hover {
   grid-area: handle;
   font-weight: var(--WEIGHT_LIGHT);
   font-size: var(--TEXT_SAMLL);
+}
+
+#log-out-btn {
+  grid-area: logout;
+  font-size: 10px;
+  padding: 0 4px;
+  margin-left: 0.5rem;
 }
 
 #search-bar {

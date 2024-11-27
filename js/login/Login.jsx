@@ -35,7 +35,7 @@ function LoginForm() {
   }
 
   return (
-    <form className="entry-form">
+    <form className="authentification-form">
       <div id="email-input" className="input-group">
         <label>Email: </label>
         <input name="email" id="email-input" placeholder="doctor.giggle.touch@gmail.com" ref={emailRef} />
