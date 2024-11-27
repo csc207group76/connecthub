@@ -5,7 +5,7 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class logoutInteractorTest {
+public class LogoutInteractorTest {
     @Test
     public void LogOutSuccessTest(){
 
