@@ -50,6 +50,11 @@ export default function Post() {
     fetchData().catch(() => {})
   }, [])
 
+  const sharePost = () => {
+    navigator.clipboard.writeText(window.location)
+    alert("Post link copied!")
+  }
+
   return (
     <>
       <NavBar />
@@ -66,9 +71,9 @@ export default function Post() {
         <div id="post-body">{postData.postBody}</div>
       </div>
       <div id="post-interaction">
-        <button id="like-post">Like</button>
-        <button id="dislike-post">Dislike</button>
-        <button id="share-post">{"."}</button>
+        <button id="like-post">{postData.likes}</button>
+        <button id="dislike-post">{postData.dislikes}</button>
+        <button id="share-post" onClick={() => sharePost()}>{"."}</button>
       </div>
       <Comments comments={postData.comments} />
     </>
