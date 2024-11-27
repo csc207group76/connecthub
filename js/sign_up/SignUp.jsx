@@ -80,16 +80,19 @@ function SignUpForm() {
         <input name="birthDate" type="text" id="birth-date-input" placeholder="20241120" ref={birthDateRef} />
       </div>
 
+      {/* TODO make authentification secure if there's a chance. Remove autocomplete and readonly and use password managers */}
       <div id="password-input" className="input-group">
         <label>Password: </label>
-        <input name="password" type="password" id="password-input" placeholder="" ref={passwordRef} onChange={handlePasswordChange} />
+        <input name="password" type="password" id="password-input" placeholder="" ref={passwordRef} onChange={handlePasswordChange}
+          autocomplete="off" readonly />
       </div>
 
       <div id="confirm-password-input" className="input-group">
         <label>Confirm Password:
           <span className="password-match" ref={matchMessage}></span>
         </label>
-        <input name="confirmPassword" type="password" id="confirm-password-input" placeholder="" ref={confirmPasswordRef} onChange={handlePasswordChange} />
+        <input name="confirmPassword" type="password" id="confirm-password-input" placeholder="" ref={confirmPasswordRef} onChange={handlePasswordChange}
+          autocomplete="off" readonly />
       </div>
 
       <button onClick={signUp}>Sign up</button>

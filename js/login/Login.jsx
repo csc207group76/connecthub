@@ -43,7 +43,9 @@ function LoginForm() {
 
       <div id="password-input" className="input-group">
         <label>Password: </label>
-        <input name="password" type="password" id="password-input" placeholder="" ref={passwordRef} />
+        {/* TODO make authentification secure if there's a chance. Remove autocomplete and readonly and use password managers */}
+        <input name="password" type="password" id="password-input" placeholder="" ref={passwordRef}
+          autocomplete="off" readonly />
       </div>
 
       <button onClick={logIn}>Log In</button>
