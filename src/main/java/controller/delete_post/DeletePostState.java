@@ -6,7 +6,7 @@ package controller.delete_post;
 public class DeletePostState {
     private String postId = "";
     private String deleteError = "";
-    private String successMessage = "";
+    private String successMessage = "This post has been deleted";
 
     public String getPostId() {
         return postId;
