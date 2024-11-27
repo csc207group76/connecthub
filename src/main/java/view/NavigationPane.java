@@ -31,17 +31,24 @@ public class NavigationPane {
 
         JButton[] categoryButtons = {
                 new JButton("All Posts"),
-                new JButton("java"),
+                new JButton("Java"),
                 new JButton("Category 2"),
                 new JButton("Category 3")
         };
         for (JButton button : categoryButtons) {
-            button.addActionListener(e -> {
-                String category = button.getText(); // Map button text to actual category if needed
-                System.out.println(category);
-                homepageController.getPostsByCategory(category);
-                homepageController.switchToHomePageView();
+            if (button.getText().equals("All Posts")) {
+                button.addActionListener(e -> {
+                    homepageController.fetchAllPosts();
+                    homepageController.switchToHomePageView();
                 });
+            } else {
+                button.addActionListener(e -> {
+                    String category = button.getText();
+                    System.out.println(category);
+                    homepageController.getPostsByCategory(category);
+                    homepageController.switchToHomePageView();
+                });
+            }
             button.setBackground(StyleConstants.BUTTON_COLOR);
             button.setForeground(StyleConstants.TEXT_COLOR);
             button.setFocusPainted(false);

@@ -96,7 +96,7 @@ class GetPostInteractorTest {
     @Test
     void GetPostInvalidInputTest() {
         GetPostInputData inputData = new GetPostInputData(null);
-        String expectedErrorMessage = "Unable to retrieve post with entryID: null";
+        String expectedErrorMessage = "Unable to retrieve post with null entryID";
 
         Post result = interactor.getPost(inputData);
 

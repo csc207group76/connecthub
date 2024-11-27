@@ -30,7 +30,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
         final String entryID = postInputData.getEntryID();
 
         if (entryID == null) {
-            getPostPresenter.prepareFailView("Unable to retrieve post with entryID: " + entryID);
+            getPostPresenter.prepareFailView("Unable to retrieve post with null entryID");
             return null;
         }
 
