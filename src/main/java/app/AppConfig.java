@@ -200,10 +200,10 @@ public class AppConfig {
     }
 
     @Bean
-    public PostController postController(DBUserDataAccessObject userDAO,
+    public PostController postController(GetUserInputBoundary getUserInteractor,
                                          GetPostInputBoundary homePageInteractor,
                                          GetPostInputBoundary getPostInteractor,
                                          CreatePostInputBoundary createPostInteractor) {
-        return new PostController(userDAO, homePageInteractor, getPostInteractor, createPostInteractor);
+        return new PostController(getUserInteractor, homePageInteractor, getPostInteractor, createPostInteractor);
     }
 }

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import daos.DBUserDataAccessObject;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInputData;
 import use_case.create_post.PostCreationFailedException;
+import use_case.get_user.GetUserInputBoundary;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInputData;
 import entity.Post;
@@ -27,16 +27,16 @@ public class PostController {
     private final GetPostInputBoundary homePageInteractor;
     private final GetPostInputBoundary getPostInteractor;
     private final CreatePostInputBoundary createPostInteractor;
-    private final DBUserDataAccessObject userDAO;
+    private final GetUserInputBoundary getUserInteractor;
 
-    public PostController(DBUserDataAccessObject userDAO, // Change when there's a get user use case
+    public PostController(GetUserInputBoundary getUserInteractor, // Change when there's a get user use case
                           GetPostInputBoundary homePageInteractor,
                           GetPostInputBoundary getPostInteractor,
                           CreatePostInputBoundary createPostInteractor) {
         this.homePageInteractor = homePageInteractor;
         this.getPostInteractor = getPostInteractor;
         this.createPostInteractor = createPostInteractor;
-        this.userDAO = userDAO;
+        this.getUserInteractor = getUserInteractor;
     }
 
     @GetMapping("/post")
@@ -61,7 +61,7 @@ public class PostController {
 
     @PostMapping("/create-post")
     public ResponseEntity<String> createPost(@RequestBody Map<String, Object> requestBody) {
-        User currentUser = this.userDAO.getCurrentUser();
+        User currentUser = this.getUserInteractor.getCurrentUser();
         String currentUserID = currentUser == null ? null : currentUser.getUserID();
 
         final CreatePostInputData createPostInputData = new CreatePostInputData(
