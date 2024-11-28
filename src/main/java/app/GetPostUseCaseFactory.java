@@ -1,15 +1,20 @@
 package app;
 
+import com.mongodb.client.MongoCollection;
 import controller.ViewManagerModel;
+import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostViewModel;
 import daos.DBPostDataAccessObject;
+import daos.DBUserDataAccessObject;
+import org.bson.Document;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
+import app.DeletePostUseCaseFactory;
 import view.PostView;
 
 public class GetPostUseCaseFactory {
@@ -18,11 +23,14 @@ public class GetPostUseCaseFactory {
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO) {
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO,
+                                  DBUserDataAccessObject userDAO) {
         final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
                 homepageViewModel, postViewModel, postDAO);
-        return new PostView(postController, postViewModel, homepageViewModel, homepageController);
+        final DeletePostController deletePostController =
+                DeletePostUseCaseFactory.create(postDAO, userDAO);
+        return new PostView(postController, postViewModel, homepageViewModel, homepageController, deletePostController);
     }
 
     public static PostController createGetPostUseCase(

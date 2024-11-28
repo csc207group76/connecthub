@@ -1,7 +1,7 @@
 package use_case.delete_post;
 
 /**
- * This interface for the DeletePost use case.
+ * This is the interface for the DeletePost use case.
  */
 public interface DeletePostInputBoundary {
 
