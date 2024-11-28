@@ -68,7 +68,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.rightPaddingPanel.setPreferredSize(new Dimension(147, homepage.getHeight()));
         homepage.add(rightPaddingPanel, BorderLayout.EAST);
 
-        // Add nav bar
+        // Add createpost button
         final JButton createpostbutton = new CreatePostButton(homepage, this.homepageViewModel, this.homepageController).getCreatePostButton();
         createpostbutton.addActionListener(e -> openCreatePostView());
         rightPaddingPanel.add(createpostbutton, BorderLayout.SOUTH);
@@ -93,10 +93,9 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         // });
     }
 
+    // Seperate dialog hopefully thats okay
     private void openCreatePostView() {
-        // Create an instance of the CreatePostView and show it
         createPostView createPostView = new createPostView(createPostViewModel,createPostController,homepageController);
-        // Add it to the main content or open in a new dialog, for example
         JOptionPane.showMessageDialog(this, createPostView, "Create New Post", JOptionPane.PLAIN_MESSAGE);
     }
 

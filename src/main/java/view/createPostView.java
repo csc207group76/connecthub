@@ -8,6 +8,8 @@ import entity.Comment;
 import entity.User;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,27 +63,10 @@ public class createPostView extends JDialog implements PropertyChangeListener {
 
         add(inputPanel, BorderLayout.CENTER);
 
-        // Buttons
-        JPanel buttonPanel = new JPanel();
-        saveButton = new JButton("Save");
-        cancelButton = new JButton("Cancel");
-        buttonPanel.add(saveButton);
-        buttonPanel.add(cancelButton);
-        add(buttonPanel, BorderLayout.SOUTH);
-
-        saveButton.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(saveButton)) {
-                        final CreatePostState currentState = createPostViewModel.getState();
-
-                        createPostController.execute(currentState.getAuthor(), currentState.getContent(), null,
-                                null, currentState.getDislikes(), currentState.getLikes(), currentState.getPostTitle(),
-                                currentState.getModerators(), currentState.getComments(), currentState.getCategory());
-                        // TODO change null to the actual values
-                    }
-                }
-        );
-
+        // TODO: Correct order here?, I added the button listeners as
+        //  seperate functions because it got really messy here
+        addPostTitleListener();
+        addPostContentListener();
         addSaveButtonListener();
         addCancelButtonListener();
 
@@ -101,6 +86,61 @@ public class createPostView extends JDialog implements PropertyChangeListener {
         return contentField.getText();
     }
 
+    // Real time updating the title and content, took it from the signup view
+
+    private void addPostTitleListener() {
+        titleField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final CreatePostState currentState = createPostViewModel.getState();
+                currentState.setPostTitle(titleField.getText());  // Update the title in the state
+                createPostViewModel.setState(currentState);  // Set the updated state back
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called when text is inserted
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called when text is removed
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called for attribute changes (rarely needed for plain text input)
+            }
+        });
+    }
+
+    // Similarly, add for content field or other input fields
+    private void addPostContentListener() {
+        contentField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final CreatePostState currentState = createPostViewModel.getState();
+                currentState.setContent(contentField.getText());  // Update content in the state
+                createPostViewModel.setState(currentState);  // Set the updated state back
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called when text is inserted
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called when text is removed
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();  // Called for attribute changes (rarely needed for plain text input)
+            }
+        });
+    }
+
 
     private void addSaveButtonListener() {
         saveButton.addActionListener(e -> {
@@ -117,6 +157,7 @@ public class createPostView extends JDialog implements PropertyChangeListener {
             String category = (String) categoryDropdown.getSelectedItem();
 
             // Validate required inputs
+            // TODO: Not sure how to test if category is null is it categoryDropdown.getSelectedItem() = null?
             if (postTitle.isEmpty() || content.isEmpty() || author.isEmpty() ) {
                 JOptionPane.showMessageDialog(this, "Title, content, and author are required!");
                 return;
@@ -143,21 +184,26 @@ public class createPostView extends JDialog implements PropertyChangeListener {
         if (option == JOptionPane.YES_OPTION) {
             // Close the current CreatePostView and show the HomePageView
             this.setVisible(false);
-            // TODO: How to show homepage here?
+            // TODO: Is this correct.
+            createPostController.switchToHomePageview();
         }
     }
 
-    public void resetFields() {
-        titleField.setText("");
-        contentField.setText("");
-    }
+//    public void resetFields() {
+//        titleField.setText("");
+//        contentField.setText("");
+//    }
 
-
+    // TODO: Should I use author/user here instead
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final CreatePostState state = (CreatePostState) evt.getNewValue();
         if (state.getPostTitle() != null) {
             JOptionPane.showMessageDialog(this, state.getPostTitleError());
         }
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }

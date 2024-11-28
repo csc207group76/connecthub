@@ -6,6 +6,8 @@ import controller.create_post.CreatePostPresenter;
 import controller.create_post.CreatePostViewModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.post.PostController;
+import controller.post.PostViewModel;
 import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
 import entity.PostFactory;
@@ -16,37 +18,20 @@ import view.createPostView;
 
 public class CreatePostUseCaseFactory {
     public CreatePostUseCaseFactory() {
-        // Prevent instantiation
+
     }
 
-    /**
-     * Factory function for creating the CreatePostView.
-     * @param viewManagerModel the ViewManagerModel for UI state management
-     * @param createPostViewModel the CreatePostViewModel to inject into the CreatePostView
-     * @param homepageViewModel the HomepageViewModel to inject into the HomepageController
-     * @param postDAO the DBPostDataAccessObject to handle database operations
-     * @return the CreatePostView with its dependencies injected
-     */
-    public static createPostView create(ViewManagerModel viewManagerModel,
-                                        CreatePostViewModel createPostViewModel,
-                                        HomepageViewModel homepageViewModel,
-                                        DBPostDataAccessObject postDAO,
-                                        DBUserDataAccessObject userRepo,
+    public static createPostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel, CreatePostViewModel createPostViewModel,
+                                        HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo,
                                         PostFactory postFactory) {
+
+        final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
+                homepageViewModel, postViewModel, postDAO);
         final CreatePostController createPostController = createCreatePostUseCase(viewManagerModel,
                 createPostViewModel, postDAO, userRepo, postFactory);
-        final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
-                homepageViewModel, createPostViewModel, postDAO);
         return new createPostView(createPostViewModel,createPostController, homepageController);
     }
 
-    /**
-     * Creates the CreatePostController and sets up the use case.
-     * @param viewManagerModel the ViewManagerModel for UI state management
-     * @param createPostViewModel the CreatePostViewModel to manage create post view state
-     * @param postDAO the DBPostDataAccessObject to handle database operations
-     * @return the configured CreatePostController
-     */
     public static CreatePostController createCreatePostUseCase(
             ViewManagerModel viewManagerModel,
             CreatePostViewModel createPostViewModel,
