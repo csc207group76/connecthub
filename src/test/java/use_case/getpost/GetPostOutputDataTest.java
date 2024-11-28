@@ -33,7 +33,7 @@ public class GetPostOutputDataTest {
 
     @Test
     public void testGetPostTitle() {
-        assertEquals(postContent, getPostOutputData.getPostTitle(), "Post title should match.");
+        assertEquals("Test", getPostOutputData.getPostTitle(), "Post title should match.");
     }
 
     // Test hashCode()

@@ -25,15 +25,14 @@ public final class DeletePostUseCaseFactory {
     public static DeletePostController create(DeletePostDataAccessInterface postDataAccessObject,
                                               DBUserDataAccessObject userRepo) {
 
-        final DeletePostController deletePostController = createDeletePostUseCase(postDataAccessObject, userRepo);
-        return deletePostController;
+        return createDeletePostUseCase(postDataAccessObject, userRepo);
     }
 
     private static DeletePostController createDeletePostUseCase(DeletePostDataAccessInterface postDataAccessObject,
                                                                 DBUserDataAccessObject userRepo) {
 
         final DeletePostInputBoundary deletePostInteractor = new DeletePostInteractor(
-                postDataAccessObject, null, userRepo); // Pass `null` for the presenter as it's not used
+                postDataAccessObject, null, userRepo);
 
         return new DeletePostController(deletePostInteractor);
     }

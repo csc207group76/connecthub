@@ -1,6 +1,7 @@
 import api from "../api/axios.config.js"
 import { navigateTo, REQ_HEADER } from "../api/utils"
 import { useEffect, useState } from "react"
+import { parseDate } from "../common/utils.js"
 
 const CREATE_POST_URL = "/create-post"
 const GET_USER_URL = "/user-info"
@@ -18,18 +19,6 @@ export default function Contents(props) {
   }, [props.posts])
 
   const perPage = 20
-
-  const parseDate = (localDateTimeString) => {
-    const date = new Date(localDateTimeString);
-
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-
-    return `${month}, ${day}, ${year}`;
-  }
 
   return (
     <div id="contents-container">
@@ -74,7 +63,7 @@ function PostBox(props) {
   return (
     <div className="post-box" onClick={() => navigateTo(`/post/${props.postId}`)}>
       <div className="post-box-info">
-        <img className="post-box-author-pfp" src={props.authorPfp} alt=" " />
+        <img className="pfp" src={props.authorPfp} alt=" " />
         <div className="post-box-author">{author}</div>
         <div className="post-box-timestamp">{props.timeStamp}</div>
       </div>

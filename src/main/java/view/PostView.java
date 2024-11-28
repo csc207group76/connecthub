@@ -38,7 +38,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
 
 
     public PostView(PostController postController, PostViewModel postViewModel,
-                    HomepageViewModel homePageViewModel, HomepageController homepageController) {
+                    HomepageViewModel homePageViewModel, HomepageController homepageController, DeletePostController deletePostController) {
         this.postController = postController;
         this.homepageController = homepageController;
         this.postViewModel = postViewModel;
@@ -107,11 +107,8 @@ public class PostView extends JPanel implements PropertyChangeListener {
         JButton optionsButton = new JButton("⋮");
         JPopupMenu optionsMenu = new JPopupMenu();
         JMenuItem deletePostItem = new JMenuItem("Delete Post");
-        // I am adding the edit post for when it is done
-        JMenuItem editPostItem = new JMenuItem("Edit Post");
 
         optionsMenu.add(deletePostItem);
-        optionsMenu.add(editPostItem);
 
         int buttonWidth = 50;
         int buttonHeight = 30;
@@ -133,16 +130,21 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 // perform the delete action
                 PostState state = postViewModel.getState();
                 String postId = state.getPostID();
-                String userId = state.getAuthorID(); // where to get current userid
-                deletePostController.deletePost(postId, userId);
+                String userId = state.getAuthorID();
+
+                if (postId == null || postId.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Post ID is missing. Cannot delete post.");
+                    return;
+                }
+                if (userId == null || userId.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Author ID is missing. Cannot delete post.");
+                    return;
+                }
+
+                this.deletePostController.deletePost(postId, userId);
             } else {
                 System.out.println("Deletion cancelled.");
             }
-        });
-
-        editPostItem.addActionListener(e -> {
-            System.out.println("Edit Post clicked.");
-            // edit functionality to be done later
         });
 
     }

@@ -15,6 +15,7 @@ import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginPresenter;
 import controller.login.LoginViewModel;
+import controller.post.PostPresenter;
 import controller.post.PostViewModel;
 import controller.signup.SignupPresenter;
 import controller.signup.SignupViewModel;
@@ -134,6 +135,11 @@ public class AppConfig {
         return new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
     }
 
+    @Bean GetPostOutputBoundary postPresenter(ViewManagerModel viewManagerModel,
+                                              PostViewModel postViewModel) {
+        return new PostPresenter(viewManagerModel, postViewModel);
+    }
+
     @Bean
     public CreatePostOutputBoundary createPostPresenter(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel) {
         return new CreatePostPresenter(createPostViewModel, viewManagerModel);
@@ -155,9 +161,15 @@ public class AppConfig {
     }
 
     @Bean
-    public GetPostInputBoundary getPostInteractor(DBPostDataAccessObject postDAO,
-                                                  GetPostOutputBoundary homepagePresenter) {
+    public GetPostInputBoundary homePageInteractor(DBPostDataAccessObject postDAO,
+                                                   GetPostOutputBoundary homepagePresenter) {
         return new GetPostInteractor(postDAO, homepagePresenter);
+    }
+
+    @Bean
+    public GetPostInputBoundary getPostInteractor(DBPostDataAccessObject postDAO,
+                                                  GetPostOutputBoundary postPresenter) {
+        return new GetPostInteractor(postDAO, postPresenter);
     }
 
     @Bean
@@ -189,8 +201,9 @@ public class AppConfig {
 
     @Bean
     public PostController postController(DBUserDataAccessObject userDAO,
+                                         GetPostInputBoundary homePageInteractor,
                                          GetPostInputBoundary getPostInteractor,
                                          CreatePostInputBoundary createPostInteractor) {
-        return new PostController(userDAO, getPostInteractor, createPostInteractor);
+        return new PostController(userDAO, homePageInteractor, getPostInteractor, createPostInteractor);
     }
 }

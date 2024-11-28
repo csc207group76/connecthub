@@ -19,12 +19,15 @@ public class PostState {
     public String getAuthorID() {
         return authorID;
     }
+
     public void setAuthorID(String authorID) {
         this.authorID = authorID;
     }
+
     public String getAuthorIDError() {
         return authorIDError;
     }
+
     public void setAuthorIDError(String authorIDError) {
         this.authorIDError = authorIDError;
     }

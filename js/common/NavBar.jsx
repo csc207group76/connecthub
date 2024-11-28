@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { navigateTo } from "../api/utils.js"
 import { logOutUser } from "../api/authentification.js"
+import { formatHandle } from "./utils.js"
 import api from "../api/axios.config.js"
 import logo from "../assets/logo.png"
 
@@ -49,10 +50,6 @@ export default function NavBar(props) {
     };
   }, [])
 
-  const formatHandle = (username => {
-    return `@${username.toLowerCase().replace(" ", "_")}`
-  })
-
   const handleLogOut = () => {
     logOutUser(LOG_OUT_URL, {}, LOGIN_URL)
   }
@@ -69,7 +66,7 @@ export default function NavBar(props) {
       </div>
 
       <div id="nav-bar-user-container">
-        <img src="" alt=" " />
+        <img className="pfp" src="" alt=" " />
         <div className="username">{username}</div>
         <div className="handle">{handle}</div>
         {username === "" ? null : <button id="log-out-btn" onClick={() => handleLogOut()}>Log out</button>}

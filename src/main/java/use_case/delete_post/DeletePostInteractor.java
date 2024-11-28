@@ -57,14 +57,14 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
      * @return true if the user can delete the post, false otherwise
      */
     public boolean canDelete(DeletePostInputData post) {
-        final User currentUser = userRepo.getCurrentUser();
+        User currentUser = userRepo.getCurrentUser();
         return currentUser.getUserID().equals(post.getUserId())
                 || currentUser.getModerating().contains(post.getPostId());
     }
 
-    // public static void main(String[] args) {
-    //    final String postId = "97428153-a736-4b85-b50a-fd11b8e1420f";
-    //    final String userId = "306cd795-b9aa-4669-969b-62d82e580ab0";
-    //   final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, userId);}
+     public static void main(String[] args) {
+        final String postId = "97428153-a736-4b85-b50a-fd11b8e1420f";
+        final String userId = "306cd795-b9aa-4669-969b-62d82e580ab0";
+       final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, userId);}
 
 }
