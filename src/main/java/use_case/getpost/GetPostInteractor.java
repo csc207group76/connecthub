@@ -1,16 +1,16 @@
 package use_case.getpost;
 
-import entity.Comment;
-import entity.Content;
-import entity.Post;
-import entity.PostContent;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import entity.Comment;
+import entity.Content;
+import entity.Post;
+import entity.PostContent;
 
 /**
  * The Get Post Interactor.
@@ -28,8 +28,10 @@ public class GetPostInteractor implements GetPostInputBoundary {
     @Override
     public Post getPost(GetPostInputData postInputData) throws IllegalArgumentException {
         final String entryID = postInputData.getEntryID();
+
         if (entryID == null) {
-            throw new IllegalArgumentException();
+            getPostPresenter.prepareFailView("Unable to retrieve post with null entryID");
+            return null;
         }
         try {
             final JSONObject retrievedPostJSON = postDB.getPostByEntryID(entryID);
@@ -47,7 +49,7 @@ public class GetPostInteractor implements GetPostInputBoundary {
             getPostPresenter.prepareSuccessView(retrievedPostOutputData);
             return retrievedPost;
         }
-        catch (Exception ex) {
+        catch (PostNotFoundException ex) {
             getPostPresenter.prepareFailView(ex.getMessage());
             return null;
         }
@@ -55,8 +57,8 @@ public class GetPostInteractor implements GetPostInputBoundary {
 
     @Override
     public List<Post> getAllPosts() {
-        List<JSONObject> postDatas = this.postDB.getAllPosts();
-        List<Post> posts = new ArrayList<>();
+        final List<JSONObject> postDatas = this.postDB.getAllPosts();
+        final List<Post> posts = new ArrayList<>();
 
         for (JSONObject postData : postDatas) {
             posts.add(this.jsonToPost(postData));
@@ -64,6 +66,19 @@ public class GetPostInteractor implements GetPostInputBoundary {
 
         final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(posts);
         getPostPresenter.prepareSuccessView(retrievedPostOutputData);
+        return posts;
+    }
+
+    @Override
+    public List<Post> getPostsByCategory(String category) {
+        final List<JSONObject> postDatas = this.postDB.getPostsByCategory(category);
+        final List<Post> posts = new ArrayList<>();
+
+        for (JSONObject postData : postDatas) {
+            posts.add(this.jsonToPost(postData));
+        }
+        final GetPostOutputData retrievedFilteredPostOutputData = new GetPostOutputData(posts);
+        getPostPresenter.prepareSuccessView(retrievedFilteredPostOutputData);
         return posts;
     }
 
@@ -78,19 +93,19 @@ public class GetPostInteractor implements GetPostInputBoundary {
     }
 
     private Post jsonToPost(JSONObject postData) {
-        Content postContent = new PostContent(postData.getString("content_body"),
+        final Content postContent = new PostContent(postData.getString("content_body"),
                 postData.getString("attachment_path"),
                 postData.getString("file_type"));
 
-        JSONArray commentData = postData.getJSONArray("comments");
-        List<Comment> comments = new ArrayList<>();
-        for (int i = 0; i < commentData.length(); i++){
+        final JSONArray commentData = postData.getJSONArray("comments");
+        final List<Comment> comments = new ArrayList<>();
+        for (int i = 0; i < commentData.length(); i++) {
             // TODO modify when implementing the comment feature. Will likely need to change the DAO implementation
             // Comment comment = new Comment();
             comments.add(null);
         }
 
-        Post post = new Post(
+        final Post post = new Post(
                 postData.getString("post_id"),
                 postData.getString("author"),
                 postContent,

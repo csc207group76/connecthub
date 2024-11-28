@@ -1,5 +1,6 @@
 package daos;
 
+import com.mongodb.client.model.Filters;
 import entity.Post;
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
@@ -71,21 +72,28 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    // TODO used for filtering posts, not implemented yet
-    // @Override
-    // public List<JSONObject> getPostsByCategory(String category) {
-    //     List<JSONObject> posts = new ArrayList<>();
-    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    @Override
+    public List<JSONObject> getPostsByCategory(String category) {
+        List<JSONObject> posts = new ArrayList<>();
 
-    //     try {
-    //         while (retrievedPosts.hasNext()) {
-    //             String jsonStr = retrievedPosts.next().toJson();
-    //             posts.add(new JSONObject(jsonStr));
-    //         }
-    //     } finally {
-    //         retrievedPosts.close();
-    //     }
-    // }
+        // Use filter to query posts with matching category only
+        Bson filter = Filters.eq("category", category);
+        MongoCursor<Document> retrievedPosts = this.postRepository.find(filter).iterator();
+
+        try {
+            while (retrievedPosts.hasNext()) {
+                Document document = retrievedPosts.next();
+                JSONObject postJson = new JSONObject(document.toJson());
+                posts.add(postJson);
+
+                System.out.println("Category: " + postJson.getString("category"));
+            }
+        } finally {
+            retrievedPosts.close();
+        }
+        return posts;
+    }
+
 
     @Override
     public List<JSONObject> getAllPostsByUserID(String userID) {
@@ -149,7 +157,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     
     /**
      * Inserts the given post into the database.
-     * @param user - a user in the application.
+     * @param post - a post to be inserted in the database.
      */
     private void insertPostToDB(Post post) {
         try {
