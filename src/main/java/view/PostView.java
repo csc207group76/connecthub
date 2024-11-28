@@ -1,13 +1,12 @@
 package view;
 
+import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
 import controller.post.PostState;
 import controller.post.PostViewModel;
-import controller.signup.SignupState;
 import entity.Comment;
-import use_case.getpost.GetPostInputBoundary;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -16,11 +15,13 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import java.util.List;
 
+import static view.StyleConstants.POST_WIDTH;
+
 public class PostView extends JPanel implements PropertyChangeListener {
     private final String viewName = "post";
     private final PostController postController;
     private final PostViewModel postViewModel;
-    
+
     private final String FONT_TYPE = "Arial";
     private final JPanel mainContent = new JPanel(new BorderLayout());
     private final JLabel postTitle = new JLabel();
@@ -29,12 +30,20 @@ public class PostView extends JPanel implements PropertyChangeListener {
     private final HomepageViewModel homePageViewModel;
     private final HomepageController homepageController;
 
+    // button for options
+    private final JButton optionsButton = new JButton("⋮");  // had to lookup the three dots thing online
+    private final JPopupMenu optionsMenu = new JPopupMenu();
+    private final DeletePostController deletePostController;
+
+
+
     public PostView(PostController postController, PostViewModel postViewModel,
                     HomepageViewModel homePageViewModel, HomepageController homepageController) {
         this.postController = postController;
         this.homepageController = homepageController;
         this.postViewModel = postViewModel;
         this.homePageViewModel = homePageViewModel;
+        this.deletePostController = deletePostController;
 
         postViewModel.addPropertyChangeListener(this);
 
@@ -77,7 +86,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
         postContent.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        
+
         // Post comment
         commentsPanel.setLayout(new BoxLayout(commentsPanel, BoxLayout.Y_AXIS));
         commentsPanel.setBackground(Color.WHITE);
@@ -88,12 +97,59 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 0,
                 new Font(FONT_TYPE, Font.BOLD, 14),
                 Color.DARK_GRAY));
-            
+
         mainContent.add(titlePanel, BorderLayout.NORTH);
         mainContent.add(new JScrollPane(postContent), BorderLayout.CENTER);
         mainContent.add(new JScrollPane(commentsPanel), BorderLayout.SOUTH);
         add(mainContent);
+
+        // the button for options
+        JButton optionsButton = new JButton("⋮");
+        JPopupMenu optionsMenu = new JPopupMenu();
+        JMenuItem deletePostItem = new JMenuItem("Delete Post");
+        // I am adding the edit post for when it is done
+        JMenuItem editPostItem = new JMenuItem("Edit Post");
+
+        optionsMenu.add(deletePostItem);
+        optionsMenu.add(editPostItem);
+
+        int buttonWidth = 50;
+        int buttonHeight = 30;
+        optionsButton.setBounds(POST_WIDTH - buttonWidth - 10, 10, buttonWidth, buttonHeight);
+        titlePanel.add(optionsButton);
+
+        optionsButton.addActionListener(e -> optionsMenu.show(optionsButton, 0, optionsButton.getHeight()));
+
+        deletePostItem.addActionListener(e -> {
+            int result = JOptionPane.showConfirmDialog(
+                    optionsButton,
+                    "Are you sure you want to delete?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                // perform the delete action
+                PostState state = postViewModel.getState();
+                String postId = state.getPostID();
+                String userId = state.getAuthorID(); // where to get current userid
+                deletePostController.deletePost(postId, userId);
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+        });
+
+        editPostItem.addActionListener(e -> {
+            System.out.println("Edit Post clicked.");
+            // edit functionality to be done later
+        });
+
     }
+
+
+
+
 
     public String getViewName() {
         return viewName;
@@ -110,7 +166,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
             JOptionPane.showMessageDialog(this, state.getPostContentError());
         } else if (state.getCommentsError() != null) {
             JOptionPane.showMessageDialog(this, state.getPostContent());
-        } 
+        }
     }
 
     private void setPostTitle(PostState state) {
