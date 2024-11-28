@@ -13,13 +13,11 @@ import controller.ViewManagerModel;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginViewModel;
 import controller.post.PostViewModel;
-//import controller.logged_in.LoggedInViewModel;
-//import controller.login.LoginViewModel;
+import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
 import view.HomePageView;
 import view.PostView;
-//import view.LoggedInView;
-//import view.LoginView;
+import view.LoginView;
 import view.SignupView;
 import view.StyleConstants;
 import view.ViewManager;
@@ -78,8 +76,6 @@ public class ConnectHub {
 		// This information will be changed by a presenter object that is reporting the
 		// results from the use case. The ViewModels are "observable", and will
 		// be "observed" by the Views.
-//		final LoginViewModel loginViewModel = new LoginViewModel();
-//		final LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
 		final SignupViewModel signupViewModel = new SignupViewModel();
 		final LoginViewModel loginViewModel = new LoginViewModel();
 		final PostViewModel postViewModel = new PostViewModel();
@@ -89,14 +85,10 @@ public class ConnectHub {
 				signupViewModel, loginViewModel, userDataAccessObject);
 		views.add(signupView, signupView.getViewName());
 
-//		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,
-//				loggedInViewModel, userDataAccessObject);
-//		views.add(loginView, loginView.getViewName());
-//
-//		final LoggedInView loggedInView = ChangePasswordUseCaseFactory.create(viewManagerModel,
-//				loggedInViewModel, userDataAccessObject);
-//		views.add(loggedInView, loggedInView.getViewName());
-		
+		final LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel,
+				homepageViewModel, userDataAccessObject, signupViewModel);
+		views.add(loginView, loginView.getViewName());
+
 		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
 				postViewModel, postDataAccessObject);
 		views.add(homepageView, homepageView.getViewName());
@@ -105,9 +97,7 @@ public class ConnectHub {
 				homepageViewModel, postDataAccessObject);
 		views.add(postView, postView.getViewName());
 
-
-		// viewManagerModel.setState(signupView.getViewName());
-		viewManagerModel.setState(homepageView.getViewName());
+		viewManagerModel.setState(loginView.getViewName());
 		viewManagerModel.firePropertyChanged();
 
 		application.pack();

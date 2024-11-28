@@ -31,17 +31,19 @@ public class GetPostInteractor implements GetPostInputBoundary {
         if (entryID == null) {
             throw new IllegalArgumentException();
         }
-
         try {
             final JSONObject retrievedPostJSON = postDB.getPostByEntryID(entryID);
+            if (retrievedPostJSON == null) {
+                getPostPresenter.prepareFailView("Post with entryID " + entryID + " not found.");
+                throw new PostNotFoundException(entryID);
+            }
 
             final Post retrievedPost = jsonToPost(retrievedPostJSON);
-
             final GetPostOutputData retrievedPostOutputData = new GetPostOutputData(
-                    retrievedPost.getEntryID(),
-                    retrievedPost.getPostTitle(),
-                    retrievedPost.getContent(),
-                    retrievedPost.getComments());
+                retrievedPost.getEntryID(),
+                retrievedPost.getPostTitle(),
+                retrievedPost.getContent(),
+                retrievedPost.getComments());
             getPostPresenter.prepareSuccessView(retrievedPostOutputData);
             return retrievedPost;
         }

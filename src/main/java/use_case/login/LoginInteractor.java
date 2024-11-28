@@ -61,6 +61,7 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
         for (int i = 0; i < postsData.length(); i++){ 
             posts.add(postsData.getString(i));
         }
+
         return this.userFactory.create(
             user.getString("username"), 
             user.getString("password"),
@@ -72,4 +73,8 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
             posts
         );
     }
+
+    public void switchToSignupView(){loginOutput.switchToSignupView();}
+
+    public void switchToHomePage(){loginOutput.switchToHomePage();}
 }

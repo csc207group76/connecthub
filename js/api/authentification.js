@@ -1,24 +1,22 @@
 import api from './axios.config.js'
+import { navigateTo, REQ_HEADER } from './utils.js'
 
-const REQ_HEADER = {
-  Accept: "application/json",
-  "Content-Type": "application/json;charset=UTF-8",
-}
-
-export function signUpUser(url, payload) {
+export function signUpUser(url, payload, destination) {
   return api
     .post(url, payload, REQ_HEADER)
     .then(response => {
+      navigateTo(destination)
     })
     .catch(error => {
       window.alert(`ERROR: ${error.response.data}`)
     })
-} 
+}
 
-export function logInUser(url, payload) {
-  return api 
+export function logInUser(url, payload, destination) {
+  return api
     .post(url, payload, REQ_HEADER)
     .then(response => {
+      navigateTo(destination)
     })
     .catch(error => {
       if (error.response) {
@@ -28,5 +26,16 @@ export function logInUser(url, payload) {
       } else {
         window.alert('Error setting up the request: ' + error.message);
       }
+    })
+}
+
+export function logOutUser(url, payload, destination) {
+  return api
+    .post(url, payload, REQ_HEADER)
+    .then(response => {
+      window.alert("Logged out")
+      navigateTo(destination)
+    })
+    .catch(error => {
     })
 }

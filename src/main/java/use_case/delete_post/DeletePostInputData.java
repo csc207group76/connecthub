@@ -11,10 +11,10 @@ public class DeletePostInputData {
         this.postId = PostId;
         this.userId = UserId;
     }
-    String getPostId() {
+    public String getPostId() {
         return postId;
     }
-    String getUserId() {
+    public String getUserId() {
         return userId;
     }
 

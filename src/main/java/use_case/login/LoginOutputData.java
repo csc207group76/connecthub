@@ -42,7 +42,8 @@ public class LoginOutputData {
     }
 
     /**
-     * Indicate login successfully or not
+     * Get the loginSuccessful status
+     * @return true if loginSuccessful, false otherwise
      */
     public boolean isLoginSuccessful() {
         return loginSuccessful;

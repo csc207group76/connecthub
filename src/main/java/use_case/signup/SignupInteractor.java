@@ -10,21 +10,21 @@ import java.util.UUID;
  * The Signup Interactor.
  */
 public class SignupInteractor implements SignupInputBoundary {
-    private final SignupDataAccessInterface SignupDB;
+    private final SignupDataAccessInterface signupDB;
     private final SignupOutputBoundary userPresenter;
     private final UserFactory userFactory;
 
     public SignupInteractor(SignupDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
-        this.SignupDB = signupDataAccessInterface;
+        this.signupDB = signupDataAccessInterface;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
     }
 
     @Override
     public void signupUser(SignupInputData signupInputData) {
-        if (SignupDB.existsByEmail(signupInputData.getEmail())) {
+        if (signupDB.existsByEmail(signupInputData.getEmail())) {
             userPresenter.prepareFailView("User already exists.");
             throw new UserExistsException("User already exists");
         }
@@ -33,16 +33,17 @@ public class SignupInteractor implements SignupInputBoundary {
         }
         else {
             final User user = userFactory.create(
-                signupInputData.getUsername(), 
-                signupInputData.getPassword(), 
-                generateUserID(), 
-                signupInputData.getBirthDate(), 
-                signupInputData.getFullName(), 
-                signupInputData.getEmail(), 
-                new ArrayList<String>(), 
-                new ArrayList<String>() 
+                signupInputData.getUsername(),
+                signupInputData.getPassword(),
+                generateUserID(),
+                signupInputData.getBirthDate(),
+                signupInputData.getFullName(),
+                signupInputData.getEmail(),
+                new ArrayList<String>(),
+                new ArrayList<String>()
             );
-            SignupDB.save(user);
+            signupDB.save(user);
+            signupDB.setCurrentUser(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
             userPresenter.prepareSuccessView(signupOutputData);
@@ -55,7 +56,7 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     private String generateUserID() {
-        UUID uniqueID = UUID.randomUUID(); 
+        UUID uniqueID = UUID.randomUUID();
         return uniqueID.toString();
     }
 }

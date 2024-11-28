@@ -22,10 +22,11 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
 
     @Override
     public void deletePost(DeletePostInputData deletePostInputData) {
-        if (postDataAccessObject.existsByID(deletePostInputData.getPostId())) {
+        if (!postDataAccessObject.existsByID(deletePostInputData.getPostId())) {
             postPresenter.prepareFailView("Post with given ID doesn't exist.");
             throw new DeletePostFailedException("Post with given ID doesn't exist.");
         }
+
 
         boolean userCanDelete = canDelete(deletePostInputData);
         if (!userCanDelete) {
@@ -47,10 +48,9 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
         }
     }
 
-    private boolean canDelete(DeletePostInputData post) {
-        // Check if the user is the author of the post or a moderator of the category
+    public boolean canDelete(DeletePostInputData post) {
         final User currentUser = userRepo.getCurrentUser();
-        return currentUser.getUserID().equals(post.getPostId()) ||
+        return currentUser.getUserID().equals(post.getUserId()) ||
                 currentUser.getModerating().contains(post.getPostId());
     }
 }
