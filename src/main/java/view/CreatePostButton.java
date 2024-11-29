@@ -22,12 +22,10 @@ public class CreatePostButton {
 
     private JButton initializeButton(JPanel mainContent) {
         final JButton createPostButton = new JButton("Create New Post");
-        createPostButton.setBackground(StyleConstants.BUTTON_COLOR);
+        createPostButton.setBackground(Color.BLUE);
         createPostButton.setForeground(StyleConstants.TEXT_COLOR);
 
         createPostButton.setFont(new Font("Arial", Font.BOLD, 14));
-        createPostButton.setForeground(Color.WHITE);
-        createPostButton.setBackground(new Color(33, 150, 243));
         createPostButton.setFocusPainted(false);
         createPostButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         createPostButton.setCursor(new Cursor(Cursor.HAND_CURSOR));

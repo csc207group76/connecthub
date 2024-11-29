@@ -41,7 +41,7 @@ public class createPostView extends JPanel implements PropertyChangeListener {
 
         setSize(400, 300);
         setLayout(new BorderLayout());
-        setBackground(new Color(120, 133, 133)); // Consistent background
+        setBackground(new Color(120, 133, 133));
 
         final JLabel title = new JLabel("Creating Post");
         title.setFont(new Font("Arial", Font.BOLD, 18));
@@ -56,16 +56,34 @@ public class createPostView extends JPanel implements PropertyChangeListener {
 
         inputPanel.add(new JLabel("Title: "));
         titleField = new JTextField();
+        titleField.setFont(new Font("Arial", Font.BOLD, 16));
+        titleField.setForeground(Color.DARK_GRAY);
+        titleField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         inputPanel.add(titleField);
 
         inputPanel.add(new JLabel("Category: "));
         categoryDropdown = new JComboBox<>(new String[]{"Education", "Politics", "Sports", "Random", "Java"});
+        categoryDropdown.setFont(new Font("Arial", Font.BOLD, 16));
+        categoryDropdown.setForeground(Color.DARK_GRAY);
+        categoryDropdown.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        categoryDropdown.setBackground(Color.WHITE); // Optional: Set background color for better visibility
         inputPanel.add(categoryDropdown);
 
         inputPanel.add(new JLabel("Content: "));
         contentField = new JTextArea(5, 20);
+        contentField.setFont(new Font("Arial", Font.PLAIN, 14));
+        contentField.setForeground(Color.BLACK);
         contentField.setLineWrap(true);
         contentField.setWrapStyleWord(true);
+        contentField.setBackground(new Color(239, 241, 243));
+        contentField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
         inputPanel.add(new JScrollPane(contentField));
 
         JPanel mainPanel = new JPanel();
