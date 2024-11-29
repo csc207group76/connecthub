@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class createPostView extends JPanel implements PropertyChangeListener {
 
@@ -58,7 +59,7 @@ public class createPostView extends JPanel implements PropertyChangeListener {
         inputPanel.add(titleField);
 
         inputPanel.add(new JLabel("Category: "));
-        categoryDropdown = new JComboBox<>(new String[]{"Education", "Politics", "Sports", "Random"});
+        categoryDropdown = new JComboBox<>(new String[]{"Education", "Politics", "Sports", "Random", "Java"});
         inputPanel.add(categoryDropdown);
 
         inputPanel.add(new JLabel("Content: "));
@@ -167,8 +168,8 @@ public class createPostView extends JPanel implements PropertyChangeListener {
             int dislikes = 0; // Default value
             int likes = 0; // Default value
             String postTitle = titleField.getText();
-            List moderators = new List(); // TODO: Are these two correct
-            List comments = new List();
+            java.util.List moderators = new ArrayList<>(); // TODO: Are these two correct -> done
+            java.util.List comments = new ArrayList<>();
             String category = (String) categoryDropdown.getSelectedItem();
 
             // Validate required inputs
@@ -182,6 +183,7 @@ public class createPostView extends JPanel implements PropertyChangeListener {
             createPostController.execute(homepageController.fetchUser().getUserID(), content, attachmentPath, fileType, dislikes, likes, postTitle, (java.util.List<User>) moderators, (java.util.List<Comment>) comments, category);
             // Provide user feedback and switch to the homepage
             JOptionPane.showMessageDialog(this, "Post created successfully!");
+            this.setVisible(false);
             createPostController.switchToHomePageview();
         });
     }
