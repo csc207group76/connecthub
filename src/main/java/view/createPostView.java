@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class createPostView extends JDialog implements PropertyChangeListener {
+public class createPostView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "create post";
 
@@ -40,14 +40,18 @@ public class createPostView extends JDialog implements PropertyChangeListener {
 
         setSize(400, 300);
         setLayout(new BorderLayout());
-        setBackground(StyleConstants.BACKGROUND_COLOR);
+        setBackground(new Color(120, 133, 133)); // Consistent background
 
         final JLabel title = new JLabel("Creating Post");
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+        title.setForeground(Color.DARK_GRAY);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Input Fields
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 2));
+        inputPanel.setLayout(new GridLayout(3, 2));
+        inputPanel.setBackground(new Color(120, 133, 133)); // Match background
+
 
         inputPanel.add(new JLabel("Title: "));
         titleField = new JTextField();
@@ -59,9 +63,26 @@ public class createPostView extends JDialog implements PropertyChangeListener {
 
         inputPanel.add(new JLabel("Content: "));
         contentField = new JTextArea(5, 20);
+        contentField.setLineWrap(true);
+        contentField.setWrapStyleWord(true);
         inputPanel.add(new JScrollPane(contentField));
 
-        add(inputPanel, BorderLayout.CENTER);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(title);
+        mainPanel.add(inputPanel);
+
+        // Buttons Panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setBackground(new Color(120, 133, 133)); // Match background
+        buttonPanel.add(saveButton = new JButton("Save"));
+        buttonPanel.add(cancelButton = new JButton("Cancel"));
+
+        mainPanel.add(buttonPanel);
+
+        add(mainPanel, BorderLayout.CENTER);
+
 
         // TODO: Correct order here?, I added the button listeners as
         //  seperate functions because it got really messy here
@@ -70,12 +91,6 @@ public class createPostView extends JDialog implements PropertyChangeListener {
         addSaveButtonListener();
         addCancelButtonListener();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        this.add(inputPanel);
-        this.add(saveButton);
-        this.add(cancelButton);
     }
 
     public String getTitleInput() {
@@ -199,7 +214,7 @@ public class createPostView extends JDialog implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         final CreatePostState state = (CreatePostState) evt.getNewValue();
         if (state.getPostTitle() != null) {
-            JOptionPane.showMessageDialog(this, state.getPostTitleError());
+            JOptionPane.showMessageDialog(null, "Test");
         }
     }
 

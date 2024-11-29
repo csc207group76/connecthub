@@ -28,6 +28,7 @@ public class SignupController {
                 username, password1, password2, email, birthDate, fullName);
 
         SignupInputBoundary.signupUser(signupInputData);
+        SignupInputBoundary.switchToLoginView();
     }
 
     /**

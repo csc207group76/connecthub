@@ -9,7 +9,9 @@ public class HomepageController {
     private GetUserInteractor getUserInteractor;
 
     public HomepageController(GetPostInputBoundary getPostInteractor) {
+
         this.getPostInteractor = getPostInteractor;
+//        this.getUserInteractor = getUserInteractor;
     }
 
     public void fetchAllPosts() {
