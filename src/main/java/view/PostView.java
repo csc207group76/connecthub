@@ -127,25 +127,33 @@ public class PostView extends JPanel implements PropertyChangeListener {
             );
 
             if (result == JOptionPane.YES_OPTION) {
-                // perform the delete action
+                // Retrieve post information from PostState
                 PostState state = postViewModel.getState();
                 String postId = state.getPostID();
-                String userId = state.getAuthorID();
+                String authorId = state.getAuthorID();
 
                 if (postId == null || postId.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Post ID is missing. Cannot delete post.");
                     return;
                 }
-                if (userId == null || userId.isEmpty()) {
+                if (authorId == null || authorId.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Author ID is missing. Cannot delete post.");
                     return;
                 }
+                boolean success = deletePostController.deletePost(postId, authorId);
 
-                this.deletePostController.deletePost(postId, userId);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Post successfully deleted.");
+                    CardLayout layout = (CardLayout) this.getParent().getLayout();
+                    layout.show(this.getParent(), "Homepage");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete the post. Please try again.");
+                }
             } else {
                 System.out.println("Deletion cancelled.");
             }
         });
+
 
     }
 
