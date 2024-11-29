@@ -3,6 +3,8 @@ package view;
 import controller.signup.SignupController;
 import controller.signup.SignupState;
 import controller.signup.SignupViewModel;
+import entity.Comment;
+import entity.User;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The View for the Signup Use Case.
@@ -149,6 +152,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             final SignupState currentState = signupViewModel.getState();
 
+                            List<String> moderators = new ArrayList();
+                            List<String> comments = new ArrayList();
+
+
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getUserID(),
@@ -156,7 +163,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName(), new ArrayList<>(), new ArrayList<>()
+                                    currentState.getFullName(), moderators, comments
                             );
                         }
                     }
