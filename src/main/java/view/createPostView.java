@@ -181,7 +181,7 @@ public class createPostView extends JPanel implements PropertyChangeListener {
             // Gather input data from the user interface
             String author = homepageController.fetchUser().getUsername(); // TODO: username not name right?
             String content = contentField.getText();
-            String attachmentPath = null; // TODO: What do we use here
+            String attachmentPath = ""; // TODO: What do we use here
             String fileType = "text"; // Assume fileType is determined elsewhere
             int dislikes = 0; // Default value
             int likes = 0; // Default value
