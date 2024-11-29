@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * The View for the Signup Use Case.
@@ -59,7 +60,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         emailInfo.setForeground(Color.WHITE);
         emailInputField.setBackground(new Color(50, 50, 60));
         emailInputField.setForeground(Color.GRAY);
-        emailInputField.setText("izabelle@gmail.com");
+        emailInputField.setText("e.g. izabelle@gmail.com");
         JPanel emailPanel = new JPanel();
         emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.Y_AXIS));
         emailPanel.setBackground(new Color(50, 50, 60));
@@ -155,7 +156,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName(), currentState.getModerators(), currentState.getPosts()
+                                    currentState.getFullName(), new ArrayList<>(), new ArrayList<>()
                             );
                         }
                     }
@@ -189,7 +190,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         horizontalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Align buttons horizontally with gaps
         horizontalPanel.setBackground(new Color(50, 50, 60));
 
-        // Add "Go to Login" and "Cancel" buttons to the sub-panel
+        // Add "Go to Login" and buttons to the sub-panel
         JPanel loginSwitch = new JPanel();
         loginSwitch.add(signedUpLabel);
         loginSwitch.add(toLogin);
@@ -336,7 +337,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 //        emailErrorField.setText(state.getUsername());
 //    }
     private void setFields(SignupState state) {
-        // Populate the fields with data from the SignupState
+        if (state == null) {
+            // Handling the null case
+            usernameInputField.setText("");
+            emailInputField.setText("");
+            passwordInputField.setText("");
+            repeatPasswordInputField.setText("");
+            fullnameInputField.setText("");
+            return;
+        }
         usernameInputField.setText(state.getUsername());
         emailInputField.setText(state.getEmail());
         passwordInputField.setText(state.getPassword());
