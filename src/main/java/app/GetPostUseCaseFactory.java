@@ -26,7 +26,7 @@ public class GetPostUseCaseFactory {
                 homepageViewModel, postViewModel, postDAO);
         final DeletePostController deletePostController =
                 DeletePostUseCaseFactory.create(postDAO, userDAO);
-        return new PostView(postController, postViewModel, homepageViewModel, homepageController, deletePostController);
+        return new PostView(postController, postViewModel, homepageViewModel, homepageController, deletePostController, userDAO);
     }
 
     public static PostController createGetPostUseCase(

@@ -6,6 +6,7 @@ import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
 import controller.post.PostState;
 import controller.post.PostViewModel;
+import daos.DBUserDataAccessObject;
 import entity.Comment;
 
 import java.awt.*;
@@ -34,16 +35,19 @@ public class PostView extends JPanel implements PropertyChangeListener {
     private final JButton optionsButton = new JButton("⋮");  // had to lookup the three dots thing online
     private final JPopupMenu optionsMenu = new JPopupMenu();
     private final DeletePostController deletePostController;
+    private final DBUserDataAccessObject userRepo;
+
 
 
 
     public PostView(PostController postController, PostViewModel postViewModel,
-                    HomepageViewModel homePageViewModel, HomepageController homepageController, DeletePostController deletePostController) {
+                    HomepageViewModel homePageViewModel, HomepageController homepageController, DeletePostController deletePostController, DBUserDataAccessObject userRepo) {
         this.postController = postController;
         this.homepageController = homepageController;
         this.postViewModel = postViewModel;
         this.homePageViewModel = homePageViewModel;
         this.deletePostController = deletePostController;
+        this.userRepo = userRepo;
 
         postViewModel.addPropertyChangeListener(this);
 
@@ -127,20 +131,20 @@ public class PostView extends JPanel implements PropertyChangeListener {
             );
 
             if (result == JOptionPane.YES_OPTION) {
-                // Retrieve post information from PostState
+                String currentUserId = userRepo.getCurrentUser().getUserID();
                 PostState state = postViewModel.getState();
                 String postId = state.getPostID();
-                String authorId = state.getAuthorID();
 
                 if (postId == null || postId.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Post ID is missing. Cannot delete post.");
                     return;
                 }
-                if (authorId == null || authorId.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Author ID is missing. Cannot delete post.");
+                if (currentUserId == null || currentUserId.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Current user ID is missing. Cannot delete post.");
                     return;
                 }
-                boolean success = deletePostController.deletePost(postId, authorId);
+
+                boolean success = deletePostController.deletePost(postId, currentUserId);
 
                 if (success) {
                     JOptionPane.showMessageDialog(this, "Post successfully deleted.");
@@ -153,6 +157,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 System.out.println("Deletion cancelled.");
             }
         });
+
 
 
     }

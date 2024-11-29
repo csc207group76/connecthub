@@ -31,6 +31,7 @@ public class PostPresenter implements GetPostOutputBoundary {
         postState.setCommentsError(null);
         postState.setPostIDError(null);
         postState.setPostTitleError(null);
+        postState.setAuthorIDError(null);
 
         this.postViewModel.setState(postState);
         this.postViewModel.firePropertyChanged();
