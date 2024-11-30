@@ -39,7 +39,7 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
             final String pwd = user.getPassword();
             if (!password.equals(pwd)) {
                 loginOutput.prepareFailView("Incorrect password for \"" + email + "\".");
-                throw new IncorrectPasswordException(email + ": Account does not exist.");
+                throw new IncorrectPasswordException("Incorrect password for \"" + email + "\".");
             }
             else {
                 loginDB.setCurrentUser(user);
@@ -61,9 +61,9 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
         List<String> posts = new ArrayList<>();
         for (int i = 0; i < postsData.length(); i++){ 
             posts.add(postsData.getString(i));
-        } 
+        }
 
-        User currentUser = this.userFactory.create(
+        return this.userFactory.create(
             user.getString("username"), 
             user.getString("password"),
             user.getString("userId"),
@@ -73,8 +73,6 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
             moderating,
             posts
         );
-
-        return currentUser;
     }
 
     public void switchToSignupView(){loginOutput.switchToSignupView();}

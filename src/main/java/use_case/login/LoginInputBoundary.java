@@ -11,7 +11,13 @@ public interface LoginInputBoundary {
      */
     void LoginUser(LoginInputData loginInputData);
 
+    /**
+     * Switch to the Signup View
+     */
     void switchToSignupView();
 
+    /**
+     * Switch to the HomepageView
+     */
     void switchToHomePage();
 }

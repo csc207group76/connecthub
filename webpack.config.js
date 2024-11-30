@@ -1,6 +1,7 @@
 const path = require("path")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const webpack = require("webpack")
+const Dotenv = require("dotenv-webpack")
 
 const presets = [
   ["@babel/preset-env", { useBuiltIns: "usage", corejs: 3 }],
@@ -15,6 +16,7 @@ module.exports = {
     "js/login/app": "/js/login/main.js",
     "js/home_page/app": "/js/home_page/main.js",
     "js/create_post/app": "/js/create_post/main.js",
+    "js/post/app": "/js/post/main.js",
   },
   output: {
     path: path.resolve(__dirname, path.resolve(__dirname, 'src/main/resources/static')),
@@ -63,6 +65,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",
+    }),
+    new Dotenv({
+      path: "./.env",
     }),
   ],
 }

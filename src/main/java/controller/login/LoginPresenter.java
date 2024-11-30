@@ -29,12 +29,6 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     @Override
     public void prepareSuccessView(LoginOutputData response) {
-        // On success, switch to the homepage view.
-        // final HomepageState homepageState = homepageViewModel.getState();
-        // this.homepageViewModel.setState(homepageState);
-        // this.homepageViewModel.firePropertyChanged();
-        // this.viewManagerModel.setState(homepageViewModel.getViewName());
-        // this.viewManagerModel.firePropertyChanged();
         this.switchToHomePage();
     }
 
