@@ -8,14 +8,14 @@ public class HomepageController {
     private final GetPostInputBoundary getPostInteractor;
     private GetUserInteractor getUserInteractor;
 
-    public HomepageController(GetPostInputBoundary getPostInteractor) {
+    public HomepageController(GetPostInputBoundary getPostInteractor, GetUserInteractor getUserInteractor) {
 
         this.getPostInteractor = getPostInteractor;
-//        this.getUserInteractor = getUserInteractor;
+        this.getUserInteractor = getUserInteractor;
     }
 
     public void fetchAllPosts() {
-        this.getPostInteractor.getAllPosts(); 
+        this.getPostInteractor.getAllPosts();
     }
 
     public void switchToLoginView() {

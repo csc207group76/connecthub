@@ -26,7 +26,7 @@ public class CreatePostUseCaseFactory {
                                         PostFactory postFactory) {
 
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
-                homepageViewModel, postViewModel, postDAO);
+                homepageViewModel, postViewModel, postDAO, userRepo);
         final CreatePostController createPostController = createCreatePostUseCase(viewManagerModel,
                 createPostViewModel, postDAO, userRepo, postFactory);
         return new createPostView(createPostViewModel,createPostController, homepageController);

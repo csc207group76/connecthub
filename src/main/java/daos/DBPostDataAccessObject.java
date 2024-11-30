@@ -149,7 +149,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     
     /**
      * Inserts the given post into the database.
-     * @param user - a user in the application.
+     * @param post - a user in the application.
      */
     private void insertPostToDB(Post post) {
         try {

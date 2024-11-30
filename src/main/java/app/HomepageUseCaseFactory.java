@@ -13,6 +13,7 @@ import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.PostFactory;
 import entity.UserFactory;
+import use_case.get_user.GetUserInteractor;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -29,7 +30,7 @@ public class HomepageUseCaseFactory {
 
         final PostFactory postFactory = new PostFactory();
         final CreatePostViewModel createPostViewModel = new CreatePostViewModel();
-        final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO);
+        final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO, userRepo);
         final CreatePostController createPostController = CreatePostUseCaseFactory.createCreatePostUseCase( viewManagerModel, createPostViewModel, postDAO,  userRepo, postFactory);
         final PostController postController = GetPostUseCaseFactory.createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
         // TODO: chnage the signature here
@@ -38,12 +39,14 @@ public class HomepageUseCaseFactory {
 
     public static HomepageController createHomepageController(
         ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, PostViewModel postViewModel,
-        DBPostDataAccessObject postDAO
+        DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo
     ) {
         final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
         
         final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
+        UserFactory userFactory = new CommonUserFactory();
+        final GetUserInteractor getUserInteractor = new GetUserInteractor(userRepo, userFactory);
         
-        return new HomepageController(getPostInteractor);
+        return new HomepageController(getPostInteractor, getUserInteractor);
     }
 }
