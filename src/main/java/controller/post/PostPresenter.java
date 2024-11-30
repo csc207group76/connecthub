@@ -66,7 +66,7 @@ public class PostPresenter implements GetPostOutputBoundary, DeletePostOutputBou
     public void switchToPostView() {}
 
     public void switchToHomePageView() {
-        viewManagerModel.setState("Homepage");
+        viewManagerModel.setState(postViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
