@@ -10,6 +10,8 @@ import entity.Comment;
 import use_case.getpost.GetPostInputBoundary;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -24,6 +26,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
     private final String FONT_TYPE = "Arial";
     private final JPanel mainContent = new JPanel(new BorderLayout());
     private final JLabel postTitle = new JLabel();
+    private final JLabel commentTitle = new JLabel();
     private final JTextArea postContent = new JTextArea();
     private final JPanel commentsPanel = new JPanel();
     private final HomepageViewModel homePageViewModel;
@@ -45,18 +48,6 @@ public class PostView extends JPanel implements PropertyChangeListener {
         final JPanel navBar = new Navbar(mainContent, homePageViewModel, homepageController).getNavBar();
         add(navBar, BorderLayout.NORTH);
 
-        // Back button (won't implement this for now)
-        // JButton backButton = new JButton("Back");
-        // backButton.setFont(new Font(FONT_TYPE, Font.BOLD, 14));
-        // backButton.setBackground(new Color(200, 200, 200));
-        // backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        // backButton.addActionListener(e -> {
-        //     CardLayout layout = (CardLayout) mainContent.getLayout();
-        //     layout.show(mainContent, "Homepage");
-        // });
-
-        // titlePanel.add(backButton, BorderLayout.EAST);
-
         // Post title
         JPanel titlePanel = new JPanel(new BorderLayout());
         postTitle.setFont(new Font(FONT_TYPE, Font.BOLD, 16));
@@ -77,17 +68,40 @@ public class PostView extends JPanel implements PropertyChangeListener {
         postContent.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        
-        // Post comment
+
+
+        // Comment title panel
+        JPanel commentTitlePanel = new JPanel(new BorderLayout());
+        JLabel commentTitle = new JLabel("Comment Section");
+        commentTitle.setFont(new Font(FONT_TYPE, Font.BOLD, 16));
+        commentTitle.setForeground(Color.DARK_GRAY);
+        commentTitle.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        commentTitlePanel.add(commentTitle, BorderLayout.WEST);
+
+        // Create commentButton
+        JButton createCommentButton = new JButton("Add Comment");
+        createCommentButton.setForeground(Color.WHITE);
+        createCommentButton.setFont(new Font(FONT_TYPE, Font.BOLD, 14));
+        createCommentButton.setBackground(new Color(0, 123, 255));
+        commentTitlePanel.add(createCommentButton, BorderLayout.EAST);
+
+        // Comments Panel
         commentsPanel.setLayout(new BoxLayout(commentsPanel, BoxLayout.Y_AXIS));
         commentsPanel.setBackground(Color.WHITE);
-        commentsPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1),
-                "Comments",
-                0,
-                0,
-                new Font(FONT_TYPE, Font.BOLD, 14),
-                Color.DARK_GRAY));
+        commentsPanel.add(commentTitlePanel);
+
+        // CreateCommonButton actionListener
+        createCommentButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        postController.switchToCreateCommentView(postViewModel.getState());
+            }
+        });
+
+        /*JPanel commentControlPanel = new JPanel(new BorderLayout());
+        commentControlPanel.setBackground(Color.WHITE);*/
             
         mainContent.add(titlePanel, BorderLayout.NORTH);
         mainContent.add(new JScrollPane(postContent), BorderLayout.CENTER);
@@ -122,7 +136,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
     }
 
     private void setComments(PostState state) {
-        this.commentsPanel.removeAll();
+        //this.commentsPanel.removeAll();
 
         List<Comment> comments = state.getComments();
         for (Comment comment : comments) {
@@ -134,4 +148,5 @@ public class PostView extends JPanel implements PropertyChangeListener {
             commentsPanel.add(commentLabel);
         }
     }
+
 }

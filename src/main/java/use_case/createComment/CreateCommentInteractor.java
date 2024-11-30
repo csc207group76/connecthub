@@ -35,20 +35,21 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
             userPresenter.prepareFailView("Please fill in comment contents!");
             throw new CreateCommentFailedException("Please fill in comment contents!");
         }else {
-            /*final Comment comment = this.commentFactory.createComment(
+            final Comment comment = this.commentFactory.createComment(
                     inputData.getEntryID(),
                     inputData.getAuthor(),
                     inputData.getContent(),
                     inputData.getAttachmentPath(),
                     inputData.getFileType());
-            dataAccess.createComment(comment);
+
+            /*dataAccess.createComment(comment);
             List<String> userComments = user.getComments();
             userComments.add(comment.getEntryID());
             this.userRepo.updateUserComments(user);*/
 
             final CreateCommentOutputData outputData = new CreateCommentOutputData(
-                    inputData.getEntryID(),
-                    inputData.getAuthor(),
+                    comment.getEntryID(),
+                    comment.getAuthor(),
                     inputData.getContent(),
                     inputData.getCommentDate(),
                     true

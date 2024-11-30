@@ -5,12 +5,12 @@ import entity.User;
 public class CreateCommentOutputData {
 
     private final String entryID;
-    private final User author;
+    private final String author;
     private final String content;
     private final String commentDate;
     private final boolean creationSuccessful;
 
-    public CreateCommentOutputData(String entryID, User author, String content,
+    public CreateCommentOutputData(String entryID, String author, String content,
                                    String commentDate, boolean creationSuccessful) {
         this.entryID = entryID;
         this.author = author;
@@ -23,7 +23,7 @@ public class CreateCommentOutputData {
         return entryID;
     }
 
-    public User getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
