@@ -21,7 +21,7 @@ public class CreatePostPresenter implements CreatePostOutputBoundary {
     @Override
     public void prepareSuccessView(CreatePostOutputData response) {
         final CreatePostState createPostState = createPostViewModel.getState();
-        createPostState.setContent(response.getContent());
+        createPostState.setContent(response.getContent().getBody());
         this.createPostViewModel.setState(createPostState);
         createPostViewModel.firePropertyChanged();
 

@@ -21,7 +21,7 @@ public class SignupOutputData {
     }
 
     public boolean isSignupSuccessful() {
-        return SignupSuccessful;
+        return !SignupSuccessful;
     }
 
     public String getUserID() {
