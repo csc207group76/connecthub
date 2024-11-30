@@ -49,7 +49,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(Dotenv.configure().load().get("REACT_APP_BASE_URL"))
+                .allowedOrigins(Dotenv.configure().load().get("WEB_FRONT_END_URL"))
                 .allowedMethods("GET", "POST")
                 .allowedHeaders("*")
                 .allowCredentials(true);

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8080/api/v1",
+  baseURL: process.env.REACT_APP_DEV_API_URL || "https://connecthub-i5rz.onrender.com/api/v1",
   headers: {"ngrok-skip-browser-warning": true}
 })
