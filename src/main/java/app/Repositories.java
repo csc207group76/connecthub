@@ -27,7 +27,6 @@ public final class Repositories {
         // Connecting to the database
         Dotenv dotenv = Dotenv.configure().load();
 		String connectionString = dotenv.get("MONGO_DB_CONNECTION_STRING");
-        System.out.println(connectionString);
 
 		ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)

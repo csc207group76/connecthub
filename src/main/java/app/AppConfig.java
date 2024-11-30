@@ -3,6 +3,8 @@ package app;
 import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.mongodb.client.MongoCollection;
 
@@ -24,6 +26,7 @@ import daos.DBUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.PostFactory;
 import entity.UserFactory;
+import io.github.cdimascio.dotenv.Dotenv;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInteractor;
 import use_case.create_post.CreatePostOutputBoundary;
@@ -42,7 +45,15 @@ import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 
 @Configuration
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(Dotenv.configure().load().get("REACT_APP_BASE_URL"))
+                .allowedMethods("GET", "POST")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
     @Bean
     public Repositories repositories() {
