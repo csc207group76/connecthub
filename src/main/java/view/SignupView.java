@@ -91,7 +91,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getFullName(),
                                     null,
                                     null
-                            ); // TODO change null to the actual values
+                            );
+                            // TODO change null to the actual values
                         }
                     }
                 }

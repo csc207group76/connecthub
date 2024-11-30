@@ -195,6 +195,7 @@ public class createPostView extends JPanel implements java.beans.PropertyChangeL
             createPostController.execute(homepageController.fetchUser().getUserID(), content, attachmentPath, fileType, dislikes, likes, postTitle, moderators, comments, category);
             JOptionPane.showMessageDialog(this, "Post created successfully!");
             SwingUtilities.getWindowAncestor(this).dispose();
+            homepageController.fetchAllPosts();
             createPostController.switchToHomePageview();
         });
     }
