@@ -3,10 +3,13 @@ package controller.homepage;
 import java.util.List;
 
 import controller.ViewManagerModel;
+import controller.createComment.CreateCommentViewModel;
+import controller.post.PostState;
 import controller.post.PostViewModel;
 import entity.Post;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.getpost.GetPostOutputData;
+import view.CreateCommentView;
 
 public class HomepagePresenter implements GetPostOutputBoundary {
     private final int PER_PAGE = 10;
@@ -65,5 +68,14 @@ public class HomepagePresenter implements GetPostOutputBoundary {
     public void switchToHomePageView() {
         viewManagerModel.setState(homepageViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToCreateCommentView(PostState postState) {
+        // no need already implemented in the Post presenter
+    }
+
+    public void switchBack(CreateCommentViewModel createCommentViewModel) {
+        // no need already implemented in the Post presenter
     }
 }

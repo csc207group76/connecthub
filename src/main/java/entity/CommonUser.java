@@ -15,9 +15,10 @@ public class CommonUser implements User {
     private final String email;
     private final List<String> moderating;
     private final List<String> posts;
+    private final List<String> comments;
 
     public CommonUser(String name, String password, String userID, String birthDate, String fullName, 
-                      String email, List<String> moderating, List<String> posts) {
+                      String email, List<String> moderating, List<String> posts, List<String> comments) {
         this.username = name;
         this.password = password;
         this.userID = userID;
@@ -27,6 +28,7 @@ public class CommonUser implements User {
         this.moderating = moderating;
         this.posts = posts;
         this.accessLevel = 0;
+        this.comments = comments;
     }
 
     @Override
@@ -72,5 +74,10 @@ public class CommonUser implements User {
     @Override
     public List<String> getPosts() {
         return posts;
+    }
+
+    @Override
+    public List<String> getComments() {
+        return comments;
     }
 }

@@ -2,7 +2,11 @@ package use_case.getpost;
 
 import java.util.List;
 
+import controller.createComment.CreateCommentViewModel;
+import controller.post.PostState;
 import entity.Post;
+
+import javax.swing.plaf.nimbus.State;
 
 /**
  * The input boundary for the Get Post Use Case.
@@ -21,4 +25,8 @@ public interface GetPostInputBoundary {
     void switchToPostView();
 
     void switchToHomePageView();
+
+    void switchToCreateCommentView(PostState state);
+
+    void switchBack(CreateCommentViewModel createCommentViewModel);
 }

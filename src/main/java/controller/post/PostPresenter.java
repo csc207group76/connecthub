@@ -1,18 +1,23 @@
 package controller.post;
 
 import controller.ViewManagerModel;
+import controller.createComment.CreateCommentController;
+import controller.createComment.CreateCommentViewModel;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.getpost.GetPostOutputData;
 
 public class PostPresenter implements GetPostOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final PostViewModel postViewModel;
+    private final CreateCommentViewModel createCommentViewModel;
 
     // TODO will need a home page view model
     public PostPresenter(ViewManagerModel viewManagerModel,
-                         PostViewModel postViewModel) {
+                         PostViewModel postViewModel,
+                         CreateCommentViewModel createCommentViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.postViewModel = postViewModel;
+        this.createCommentViewModel = createCommentViewModel;
     }
     
     /**
@@ -57,4 +62,19 @@ public class PostPresenter implements GetPostOutputBoundary {
 
     public void switchToHomePageView() {}
 
+    @Override
+    public void switchToCreateCommentView(PostState postState) {
+        viewManagerModel.setState(createCommentViewModel.getViewName());
+        createCommentViewModel.setPostState(postState);
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchBack(CreateCommentViewModel createCommentViewModel) {
+        PostState postState = this.createCommentViewModel.getPostState();
+        postViewModel.setState(postState); // Update the PostViewModel with the correct post
+        postViewModel.firePropertyChanged();
+        viewManagerModel.setState("post"); // Switch to the PostView
+        viewManagerModel.firePropertyChanged();
+    }
 }

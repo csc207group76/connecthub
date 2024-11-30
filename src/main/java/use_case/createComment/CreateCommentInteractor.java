@@ -42,10 +42,10 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
                     inputData.getAttachmentPath(),
                     inputData.getFileType());
 
-            /*dataAccess.createComment(comment);
+            dataAccess.createComment(comment);
             List<String> userComments = user.getComments();
             userComments.add(comment.getEntryID());
-            this.userRepo.updateUserComments(user);*/
+            this.userRepo.updateUserComments(user);
 
             final CreateCommentOutputData outputData = new CreateCommentOutputData(
                     comment.getEntryID(),

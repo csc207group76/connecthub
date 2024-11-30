@@ -33,7 +33,9 @@ public interface User {
 
     String getFullName();
 
-    public List<String> getModerating();
+    List<String> getModerating();
 
-    public List<String> getPosts();
+    List<String> getPosts();
+
+    List<String> getComments();
 }

@@ -40,6 +40,7 @@ public class SignupInteractor implements SignupInputBoundary {
                 signupInputData.getFullName(),
                 signupInputData.getEmail(),
                 new ArrayList<String>(),
+                new ArrayList<String>(),
                 new ArrayList<String>()
             );
             signupDB.save(user);

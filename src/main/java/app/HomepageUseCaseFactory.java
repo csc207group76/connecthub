@@ -1,6 +1,7 @@
 package app;
 
 import controller.ViewManagerModel;
+import controller.createComment.CreateCommentViewModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepagePresenter;
 import controller.homepage.HomepageViewModel;
@@ -19,10 +20,10 @@ public class HomepageUseCaseFactory {
 
     public static HomePageView create(
         ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, PostViewModel postViewModel,
-        DBPostDataAccessObject postDAO
+        DBPostDataAccessObject postDAO, CreateCommentViewModel createCommentViewModel
     ) {
         final HomepageController homepageController = createHomepageController(viewManagerModel, homepageViewModel, postViewModel, postDAO);
-        final PostController postController = GetPostUseCaseFactory.createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
+        final PostController postController = GetPostUseCaseFactory.createGetPostUseCase(viewManagerModel, postViewModel, postDAO, createCommentViewModel);
         return new HomePageView(homepageController, postController, homepageViewModel);
     }
 

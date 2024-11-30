@@ -1,5 +1,7 @@
 package use_case.getpost;
 
+import controller.createComment.CreateCommentViewModel;
+import controller.post.PostState;
 import entity.Comment;
 import entity.Content;
 import entity.Post;
@@ -77,9 +79,16 @@ public class GetPostInteractor implements GetPostInputBoundary {
         getPostPresenter.switchToHomePageView();
     }
 
+    @Override
+    public void switchToCreateCommentView(PostState poststate) { getPostPresenter.switchToCreateCommentView(poststate);}
+
+    public void switchBack(CreateCommentViewModel createCommentViewModel){
+        getPostPresenter.switchBack(createCommentViewModel);
+    }
+
     private Post jsonToPost(JSONObject postData) {
         Content postContent = new PostContent(postData.getString("content_body"),
-                postData.getString("attachment_path"),
+                "test",
                 postData.getString("file_type"));
 
         JSONArray commentData = postData.getJSONArray("comments");
@@ -90,7 +99,8 @@ public class GetPostInteractor implements GetPostInputBoundary {
             comments.add(null);
         }
 
-        Post post = new Post(
+
+        return new Post(
                 postData.getString("post_id"),
                 postData.getString("author"),
                 postContent,
@@ -102,6 +112,5 @@ public class GetPostInteractor implements GetPostInputBoundary {
                 comments,
                 postData.getString("category")
         );
-        return post;
     }
 }

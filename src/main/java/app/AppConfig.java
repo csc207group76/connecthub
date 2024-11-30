@@ -1,5 +1,7 @@
 package app;
 
+import controller.createComment.CreateCommentViewModel;
+import daos.DBCommentDataAccessObject;
 import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -112,6 +114,11 @@ public class AppConfig {
         return new CreatePostViewModel();
     }
 
+    @Bean
+    public CreateCommentViewModel createCommentViewModel() {
+        return new CreateCommentViewModel();
+    }
+
     // Presenters
     @Bean
     public SignupOutputBoundary signupPresenter(ViewManagerModel viewManagerModel,
@@ -136,8 +143,9 @@ public class AppConfig {
     }
 
     @Bean GetPostOutputBoundary postPresenter(ViewManagerModel viewManagerModel,
-                                              PostViewModel postViewModel) {
-        return new PostPresenter(viewManagerModel, postViewModel);
+                                              PostViewModel postViewModel,
+                                              CreateCommentViewModel createCommentViewModel) {
+        return new PostPresenter(viewManagerModel, postViewModel, createCommentViewModel);
     }
 
     @Bean

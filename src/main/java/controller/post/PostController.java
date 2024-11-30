@@ -1,5 +1,6 @@
 package controller.post;
 
+import controller.createComment.CreateCommentViewModel;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInputData;
 
@@ -20,5 +21,14 @@ public class PostController {
         } catch (Exception ex) {
 
         }
+    }
+
+    /**
+     * Switch to the CreateComment View
+     */
+    public void switchToCreateCommentView(PostState state){getPostInteractor.switchToCreateCommentView(state);}
+
+    public void switchBack(CreateCommentViewModel createCommentViewModel) {
+        getPostInteractor.switchBack(createCommentViewModel);
     }
 }

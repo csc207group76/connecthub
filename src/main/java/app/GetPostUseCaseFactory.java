@@ -1,6 +1,7 @@
 package app;
 
 import controller.ViewManagerModel;
+import controller.createComment.CreateCommentViewModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
@@ -18,8 +19,10 @@ public class GetPostUseCaseFactory {
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO) {
-        final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO,
+                                  CreateCommentViewModel createCommentViewModel) {
+        final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO,
+                createCommentViewModel);
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
                 homepageViewModel, postViewModel, postDAO);
         return new PostView(postController, postViewModel, homepageViewModel, homepageController);
@@ -27,10 +30,11 @@ public class GetPostUseCaseFactory {
 
     public static PostController createGetPostUseCase(
         ViewManagerModel viewManagerModel, PostViewModel postViewModel, 
-        DBPostDataAccessObject postDAO
+        DBPostDataAccessObject postDAO, CreateCommentViewModel createCommentViewModel
     ) {
         // TODO add home page view model
-        final GetPostOutputBoundary getPostOutputBoundary = new PostPresenter(viewManagerModel, postViewModel);
+        final GetPostOutputBoundary getPostOutputBoundary = new PostPresenter(viewManagerModel, postViewModel,
+                createCommentViewModel);
         
         final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, getPostOutputBoundary);
         

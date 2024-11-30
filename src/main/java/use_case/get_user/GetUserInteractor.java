@@ -47,7 +47,13 @@ public class GetUserInteractor implements GetUserInputBoundary {
             posts.add(postsData.getString(i));
         }
 
-        User currentUser = this.userFactory.create(
+        JSONArray commentsData = user.getJSONArray("comments");
+        List<String> comments = new ArrayList<>();
+        for (int i = 0; i < commentsData.length(); i++){
+            comments.add(commentsData.getString(i));
+        }
+
+        return this.userFactory.create(
             user.getString("username"),
             user.getString("password"),
             user.getString("userId"),
@@ -55,9 +61,8 @@ public class GetUserInteractor implements GetUserInputBoundary {
             user.getString("full_name"),
             user.getString("email"),
             moderating,
-            posts
+            posts,
+            comments
         );
-
-        return currentUser;
     }
 }

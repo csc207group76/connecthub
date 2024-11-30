@@ -20,4 +20,5 @@ public class HomepageController {
     public void switchToHomePageView() {
         this.getPostInteractor.switchToHomePageView();
     }
+
 }

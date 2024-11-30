@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import javax.swing.*;
 
 import com.mongodb.client.MongoCollection;
+import controller.createComment.CreateCommentViewModel;
+import daos.DBCommentDataAccessObject;
 import org.bson.Document;
 
 import daos.DBPostDataAccessObject;
@@ -15,12 +17,7 @@ import controller.login.LoginViewModel;
 import controller.post.PostViewModel;
 import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
-import view.HomePageView;
-import view.PostView;
-import view.LoginView;
-import view.SignupView;
-import view.StyleConstants;
-import view.ViewManager;
+import view.*;
 
 /**
  * The version of Main with an external database used to persist user data.
@@ -39,6 +36,7 @@ public class ConnectHub {
 
 		final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userRepository);
 		final DBPostDataAccessObject postDataAccessObject = new DBPostDataAccessObject(postRepository);
+		final DBCommentDataAccessObject commentDataAccessObject = new DBCommentDataAccessObject(commentRepositroy);
 
 		// Closes the connection with the database when the program terminates
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -80,6 +78,7 @@ public class ConnectHub {
 		final LoginViewModel loginViewModel = new LoginViewModel();
 		final PostViewModel postViewModel = new PostViewModel();
 		final HomepageViewModel homepageViewModel = new HomepageViewModel();
+		final CreateCommentViewModel createCommentViewModel = new CreateCommentViewModel();
 
 		final SignupView signupView = SignupUseCaseFactory.create(viewManagerModel,
 				signupViewModel, loginViewModel, userDataAccessObject);
@@ -90,14 +89,18 @@ public class ConnectHub {
 		views.add(loginView, loginView.getViewName());
 
 		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
-				postViewModel, postDataAccessObject);
+				postViewModel, postDataAccessObject, createCommentViewModel);
 		views.add(homepageView, homepageView.getViewName());
 		
 		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel,
-				homepageViewModel, postDataAccessObject);
+				homepageViewModel, postDataAccessObject, createCommentViewModel);
 		views.add(postView, postView.getViewName());
 
-		viewManagerModel.setState(loginView.getViewName());
+		final CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(viewManagerModel, postViewModel,
+				homepageViewModel, postDataAccessObject, createCommentViewModel, userDataAccessObject, commentDataAccessObject);
+		views.add(createCommentView, createCommentView.getViewName());
+
+		viewManagerModel.setState(signupView.getViewName());
 		viewManagerModel.firePropertyChanged();
 
 		application.pack();

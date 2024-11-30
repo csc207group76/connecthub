@@ -1,5 +1,8 @@
 package use_case.getpost;
 
+import controller.createComment.CreateCommentViewModel;
+import controller.post.PostState;
+
 /**
  * The output boundary for the Get Post Use Case.
  */
@@ -20,4 +23,7 @@ public interface GetPostOutputBoundary {
 
     void switchToHomePageView();
 
+    void switchToCreateCommentView(PostState postState);
+
+    void switchBack(CreateCommentViewModel createCommentViewModel);
 }
