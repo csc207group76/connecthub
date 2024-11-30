@@ -6,10 +6,7 @@ const presets = [
   ["@babel/preset-react", { runtime: "automatic" }],
 ]
 
-const isDevelopment = process.env.NODE_ENV !== "production"
-
 module.exports = {
-  mode: isDevelopment ? "development" : "production",
   entry: {
     "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
