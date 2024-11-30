@@ -18,4 +18,6 @@ public class LogoutInteractor implements LogoutInputBoundary {
         LogoutOutputData logoutOutputData = new LogoutOutputData(userID, true);
         logoutOutput.prepareSuccessView(logoutOutputData);
     }
+
+    public void switchToSignupView(){logoutOutput.switchToSignupView();}
 }

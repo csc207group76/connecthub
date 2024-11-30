@@ -16,6 +16,7 @@ public class LogoutInteractorTest {
         LogoutInputData logoutInputData = new LogoutInputData("sam111");
         LogoutInputBoundary interactor = new LogoutInteractor(mockDataAccess, mockPresenter);
         interactor.logoutUser(logoutInputData);
+        interactor.switchToSignupView();
 
         ArgumentCaptor<LogoutOutputData> captor = ArgumentCaptor.forClass(LogoutOutputData.class);
         verify(mockPresenter).prepareSuccessView(captor.capture());
