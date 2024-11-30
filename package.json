@@ -13,7 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "java -jar target/*.jar",
     "watch": "webpack --watch --config webpack.dev.js --disable-interpret",
     "build": "webpack --config webpack.prod.js --disable-interpret",
     "test": "react-scripts test",
