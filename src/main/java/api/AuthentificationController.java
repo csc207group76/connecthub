@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import use_case.login.AccountDoesNotExistException;
@@ -19,6 +20,7 @@ import use_case.signup.SignupInputData;
 import use_case.signup.UserExistsException;
 
 @RestController
+@RequestMapping("/api/v1")
 public class AuthentificationController {
     private SignupInputBoundary signUpInteractor;
     private LoginInputBoundary loginInteractor;
