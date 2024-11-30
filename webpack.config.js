@@ -15,13 +15,13 @@ module.exports = {
   entry: {
     "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
-    "js/login/app": "/js/login/main.js",
-    "js/home_page/app": "/js/home_page/main.js",
-    "js/create_post/app": "/js/create_post/main.js",
-    "js/post/app": "/js/post/main.js",
+    "js/login/app": "./js/login/main.js",
+    "js/home_page/app": "./js/home_page/main.js",
+    "js/create_post/app": "./js/create_post/main.js",
+    "js/post/app": "./js/post/main.js",
   },
   output: {
-    path: path.resolve(__dirname, path.resolve(__dirname, 'src/main/resources/static')),
+    path: path.resolve(__dirname, 'src/main/resources/static'),
     filename: "[name].js",
   },
   module: {
