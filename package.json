@@ -15,6 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "watch": "webpack --watch --config webpack.config.js --disable-interpret",
+    "build": "webpack --config webpack.config.js --disable-interpret",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
