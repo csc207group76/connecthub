@@ -8,8 +8,10 @@ const presets = [
   ["@babel/preset-react", { runtime: "automatic" }],
 ]
 
+const isDevelopment = process.env.REACT_APP_WEBPACK_MODE !== "production"
+
 module.exports = {
-  mode: "development",
+  mode: isDevelopment ? "development" : "production" || "development",
   entry: {
     "js/styles/app": "./styles/style.css",
     "js/sign_up/app": "./js/sign_up/main.js",
