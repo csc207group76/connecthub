@@ -33,6 +33,7 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     private final String FULL_NAME = "full_name";
     private final String MODERATING = "moderating";
     private final String POSTS = "posts";
+    private final String COMMENTS = "comments";
 
     private MongoCollection<Document> userRepository;
     private User currentUser;
@@ -105,7 +106,8 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
             Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
             Updates.set(FULL_NAME, updatedContent.getFullName()),
             Updates.set(MODERATING, updatedContent.getModerating()),
-            Updates.set(POSTS, updatedContent.getPosts()) // TODO type conversion? need testing
+            Updates.set(POSTS, updatedContent.getPosts()),
+            Updates.set(COMMENTS, updatedContent.getComments())
         );
 
         // Instructs the driver to insert a new document if none match the query
@@ -132,7 +134,8 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
                 .append(BIRTH_DATE, user.getBirthDate())
                 .append(FULL_NAME, user.getFullName())
                 .append(MODERATING, user.getModerating())
-                .append(POSTS, user.getPosts());
+                .append(POSTS, user.getPosts())
+                .append(COMMENTS, user.getComments());
 
             InsertOneResult result = this.userRepository.insertOne(data);
             System.out.println("Successfully inserted user with insert id: " + result.getInsertedId());
@@ -152,5 +155,31 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
             .first();
 
         return doc;
+    }
+
+    public void updateUserComments(User updatedContent) {
+        Document query = new Document().append(USER_ID, updatedContent.getUserID());
+
+        // Probably not be neccessary to replace the entire thing, will test them
+        Bson updates = Updates.combine(
+                Updates.set(USER_ID, updatedContent.getUserID()),
+                Updates.set(USER_NAME, updatedContent.getUsername()),
+                Updates.set(PASSWORD, updatedContent.getPassword()),
+                Updates.set(EMAIL, updatedContent.getEmail()),
+                Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
+                Updates.set(FULL_NAME, updatedContent.getFullName()),
+                Updates.set(MODERATING, updatedContent.getModerating()),
+                Updates.set(POSTS, updatedContent.getPosts()),
+                Updates.set(COMMENTS, updatedContent.getComments())
+        );
+
+        // Instructs the driver to insert a new document if none match the query
+        UpdateOptions insertNewDoc = new UpdateOptions().upsert(true);
+
+        try {
+            this.userRepository.updateOne(query, updates, insertNewDoc);
+        } catch (MongoException error) {
+            // throw err?
+        }
     }
 }
