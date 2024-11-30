@@ -16,11 +16,9 @@ public interface DeletePostOutputBoundary {
      */
 
     void prepareFailView(String errorMessage);
-    /**
-     * Switches to the Post View.
-     */
 
-    void switchToDeletePostView();
-    // TODO for doing at a later date
+    void switchToHomePageView();
+
+
 
 }

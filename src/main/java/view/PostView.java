@@ -4,6 +4,7 @@ import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
 import controller.post.PostController;
+import controller.post.PostPresenter;
 import controller.post.PostState;
 import controller.post.PostViewModel;
 import daos.DBUserDataAccessObject;
@@ -30,6 +31,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
     private final JPanel commentsPanel = new JPanel();
     private final HomepageViewModel homePageViewModel;
     private final HomepageController homepageController;
+    private final PostPresenter postPresenter;
 
     // button for options
     private final JButton optionsButton = new JButton("⋮");  // had to lookup the three dots thing online
@@ -41,13 +43,17 @@ public class PostView extends JPanel implements PropertyChangeListener {
 
 
     public PostView(PostController postController, PostViewModel postViewModel,
-                    HomepageViewModel homePageViewModel, HomepageController homepageController, DeletePostController deletePostController, DBUserDataAccessObject userRepo) {
+                    HomepageViewModel homePageViewModel, HomepageController homepageController,
+                    DeletePostController deletePostController,
+                    DBUserDataAccessObject userRepo,
+                    PostPresenter postPresenter) {
         this.postController = postController;
         this.homepageController = homepageController;
         this.postViewModel = postViewModel;
         this.homePageViewModel = homePageViewModel;
         this.deletePostController = deletePostController;
         this.userRepo = userRepo;
+        this.postPresenter = postPresenter;
 
         postViewModel.addPropertyChangeListener(this);
 
@@ -114,7 +120,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
 
         optionsMenu.add(deletePostItem);
 
-        int buttonWidth = 50;
+        int buttonWidth = 30;
         int buttonHeight = 30;
         optionsButton.setBounds(POST_WIDTH - buttonWidth - 10, 10, buttonWidth, buttonHeight);
         titlePanel.add(optionsButton);
@@ -148,8 +154,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
 
                 if (success) {
                     JOptionPane.showMessageDialog(this, "Post successfully deleted.");
-                    CardLayout layout = (CardLayout) this.getParent().getLayout();
-                    layout.show(this.getParent(), "Homepage");
+                    postPresenter.switchToHomePageView();
                 } else {
                     JOptionPane.showMessageDialog(this, "Failed to delete the post. Please try again.");
                 }
@@ -159,11 +164,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
         });
 
 
-
     }
-
-
-
 
 
     public String getViewName() {

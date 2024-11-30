@@ -27,25 +27,18 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
             throw new DeletePostFailedException("Post with given ID doesn't exist.");
         }
 
-        final boolean userCanDelete = canDelete(deletePostInputData);
-        if (!userCanDelete) {
+        if (!canDelete(deletePostInputData)) {
             postPresenter.prepareFailView("User does not have permission to delete this post.");
             throw new DeletePostFailedException("User does not have permission to delete this post.");
         }
 
         try {
             postDataAccessObject.deletePost(deletePostInputData.getPostId());
-
             userRepo.removePostFromUser(deletePostInputData.getUserId(), deletePostInputData.getPostId());
 
-            final DeletePostOutputData outputData = new DeletePostOutputData(
-                    deletePostInputData.getPostId(),
-                    true
-
-            );
+            final DeletePostOutputData outputData = new DeletePostOutputData(deletePostInputData.getPostId(), true);
             postPresenter.prepareSuccessView(outputData);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             postPresenter.prepareFailView("Failed to delete the post.");
             throw new DeletePostFailedException("Failed to delete the post.");
         }
@@ -58,13 +51,17 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
      */
     public boolean canDelete(DeletePostInputData post) {
         User currentUser = userRepo.getCurrentUser();
-        return currentUser.getUserID().equals(post.getUserId())
-                || currentUser.getModerating().contains(post.getPostId());
+        if (currentUser == null) {
+            return false;
+        }
+        boolean isCreator = currentUser.getUserID().equals(post.getUserId());
+        boolean isModerator = currentUser.getModerating().contains(post.getPostId());
+
+        return isCreator || isModerator;
     }
 
-     public static void main(String[] args) {
-        final String postId = "97428153-a736-4b85-b50a-fd11b8e1420f";
-        final String userId = "306cd795-b9aa-4669-969b-62d82e580ab0";
-       final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, userId);}
-
+    @Override
+    public void switchToHomePageView() {
+        postPresenter.switchToHomePageView();
+    }
 }

@@ -39,4 +39,9 @@ public class DeletePostController {
             return false;
         }
     }
+
+    public void switchToHomePageView() {
+        deletePostUseCaseInteractor.switchToHomePageView();
+    }
+
 }

@@ -1,10 +1,14 @@
 package app;
 
+import controller.ViewManagerModel;
 import controller.delete_post.DeletePostController;
+import controller.post.PostPresenter;
+import controller.post.PostViewModel;
 import daos.DBUserDataAccessObject;
 import use_case.delete_post.DeletePostDataAccessInterface;
 import use_case.delete_post.DeletePostInputBoundary;
 import use_case.delete_post.DeletePostInteractor;
+import use_case.delete_post.DeletePostOutputBoundary;
 
 /**
  * This class contains the static factory function for creating the DeletePostController.
@@ -23,9 +27,16 @@ public final class DeletePostUseCaseFactory {
      * @return the DeletePostController created for the provided input classes
      */
     public static DeletePostController create(DeletePostDataAccessInterface postDataAccessObject,
-                                              DBUserDataAccessObject userRepo) {
+                                              DBUserDataAccessObject userRepo,
+                                              ViewManagerModel viewManagerModel,
+                                              PostViewModel postViewModel) {
 
-        return createDeletePostUseCase(postDataAccessObject, userRepo);
+        PostPresenter postPresenter = new PostPresenter(viewManagerModel, postViewModel);
+
+        DeletePostInteractor deletePostInteractor = new DeletePostInteractor(
+                postDataAccessObject, postPresenter, userRepo);
+
+        return new DeletePostController(deletePostInteractor);
     }
 
     private static DeletePostController createDeletePostUseCase(DeletePostDataAccessInterface postDataAccessObject,

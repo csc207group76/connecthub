@@ -20,13 +20,20 @@ public class GetPostUseCaseFactory {
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO, DBUserDataAccessObject userDAO) {
-        final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
-        final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
+                                  HomepageViewModel homepageViewModel,
+                                  DBPostDataAccessObject postDAO,
+                                  DBUserDataAccessObject userDAO) {
+        final PostController postController = createGetPostUseCase(viewManagerModel,
+                postViewModel, postDAO);
+        final HomepageController homepageController =
+                HomepageUseCaseFactory.createHomepageController(viewManagerModel,
                 homepageViewModel, postViewModel, postDAO);
         final DeletePostController deletePostController =
-                DeletePostUseCaseFactory.create(postDAO, userDAO);
-        return new PostView(postController, postViewModel, homepageViewModel, homepageController, deletePostController, userDAO);
+                DeletePostUseCaseFactory.create(postDAO, userDAO, viewManagerModel, postViewModel);
+        PostPresenter postPresenter = new PostPresenter(viewManagerModel, postViewModel);
+        return new PostView(postController, postViewModel, homepageViewModel,
+                homepageController, deletePostController, userDAO,
+                postPresenter);
     }
 
     public static PostController createGetPostUseCase(

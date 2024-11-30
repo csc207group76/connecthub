@@ -1,10 +1,12 @@
 package controller.post;
 
 import controller.ViewManagerModel;
+import use_case.delete_post.DeletePostOutputBoundary;
+import use_case.delete_post.DeletePostOutputData;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.getpost.GetPostOutputData;
 
-public class PostPresenter implements GetPostOutputBoundary {
+public class PostPresenter implements GetPostOutputBoundary, DeletePostOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final PostViewModel postViewModel;
 
@@ -40,6 +42,13 @@ public class PostPresenter implements GetPostOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    @Override
+    public void prepareSuccessView(DeletePostOutputData outputData) {
+        this.viewManagerModel.setState("homepage");
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+
     /**
      * Prepares the failure view for the Get Post Use Case.
      * @param errorMessage the explanation of the failure
@@ -56,6 +65,9 @@ public class PostPresenter implements GetPostOutputBoundary {
     @Override
     public void switchToPostView() {}
 
-    public void switchToHomePageView() {}
+    public void switchToHomePageView() {
+        viewManagerModel.setState("Homepage");
+        viewManagerModel.firePropertyChanged();
+    }
 
 }
