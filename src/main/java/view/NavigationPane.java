@@ -32,8 +32,10 @@ public class NavigationPane {
         JButton[] categoryButtons = {
                 new JButton("All Posts"),
                 new JButton("Java"),
-                new JButton("Category 2"),
-                new JButton("Category 3")
+                new JButton("Education"),
+                new JButton("Politics"),
+                new JButton("Sports"),
+                new JButton("Random")
         };
         for (JButton button : categoryButtons) {
             if (button.getText().equals("All Posts")) {
