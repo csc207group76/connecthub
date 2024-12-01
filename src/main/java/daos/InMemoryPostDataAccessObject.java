@@ -1,7 +1,9 @@
 package daos;
 
 import entity.Post;
+import entity.User;
 import use_case.create_post.CreatePostDataAccessInterface;
+import use_case.signup.SignupDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,3 +41,4 @@ public class InMemoryPostDataAccessObject implements CreatePostDataAccessInterfa
                 .anyMatch(post -> post.getPostTitle().equals(title));
     }
 }
+

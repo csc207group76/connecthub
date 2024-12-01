@@ -7,6 +7,7 @@ import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostViewModel;
 import daos.DBPostDataAccessObject;
+import daos.DBUserDataAccessObject;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
@@ -18,10 +19,10 @@ public class GetPostUseCaseFactory {
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO) {
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo) {
         final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
-                homepageViewModel, postViewModel, postDAO);
+                homepageViewModel, postViewModel, postDAO, userRepo);
         return new PostView(postController, postViewModel, homepageViewModel, homepageController);
     }
 

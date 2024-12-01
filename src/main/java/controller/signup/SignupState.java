@@ -1,5 +1,8 @@
 package controller.signup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The state for the Signup View Model.
  */
@@ -18,6 +21,7 @@ public class SignupState {
     private String birthdateError;
     private String fullName = "";
     private String fullNameError;
+
 
     public String getUsername() {
         return username;
@@ -139,4 +143,6 @@ public class SignupState {
     public void setFullNameError(String fullNameError) {
         this.fullNameError = fullNameError;
     }
+
+
 }

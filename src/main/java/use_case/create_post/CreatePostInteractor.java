@@ -59,8 +59,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary {
 
             final CreatePostOutputData outputData = new CreatePostOutputData(
                 post.getEntryID(),
-                post.getAuthor(),
-                    (PostContent) post.getContent(),
+                post.getAuthor(), post.getContent(),
                 post.getPostedDate(),
                 post.getLastModifiedDate(),
                 post.getLikes(),
