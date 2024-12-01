@@ -18,6 +18,7 @@ import controller.login.LoginViewModel;
  */
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
     private final LoginController loginController;
