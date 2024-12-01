@@ -21,11 +21,12 @@ public class Navbar {
     private final LogoutController logoutController;
 
     public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController, LogoutController logoutController) {
-        this.navBar = initializeNavBar(mainContent);
+        this.navBar = initializeNavBar(mainContent, logoutController);
         this.homePageViewModel = homePageViewModel;
         this.homepageController = homepageController;
         this.logoutController = logoutController;
     }
+
 
     /**
      * Creates and initializes the navigation bar panel.
@@ -33,7 +34,7 @@ public class Navbar {
      * @param mainContent the main content panel to enable navigation between views.
      * @return the initialized JPanel for the navigation bar.
      */
-    private JPanel initializeNavBar(JPanel mainContent) {
+    private JPanel initializeNavBar(JPanel mainContent, LogoutController logoutController) {
         final JPanel navBar = new JPanel(new BorderLayout());
         navBar.setBackground(StyleConstants.HEADER_COLOR);
         navBar.setPreferredSize(new Dimension(800, 50));
