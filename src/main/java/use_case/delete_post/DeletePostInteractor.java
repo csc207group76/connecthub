@@ -51,10 +51,9 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
      */
     public boolean canDelete(DeletePostInputData inputData) {
         User currentUser = userRepo.getCurrentUser();
-        String currentUserId = inputData.getCurrentUserId();
         String authorId = inputData.getAuthorId();
 
-        boolean isCreator = currentUserId.equals(authorId);
+        boolean isCreator = currentUser.getUserID().equals(authorId);
         boolean isModerator = currentUser.getModerating().contains(inputData.getPostId());
 
         return isCreator || isModerator;
