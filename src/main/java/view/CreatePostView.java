@@ -30,7 +30,7 @@ public class CreatePostView extends JPanel implements java.beans.PropertyChangeL
     private final CreatePostController createPostController;
     private final HomepageController homepageController;
 
-    public createPostView(CreatePostViewModel createPostViewModel, CreatePostController createPostController, HomepageController homepageController) {
+    public CreatePostView(CreatePostViewModel createPostViewModel, CreatePostController createPostController, HomepageController homepageController) {
         this.createPostViewModel = createPostViewModel;
         this.createPostController = createPostController;
         this.homepageController = homepageController;
