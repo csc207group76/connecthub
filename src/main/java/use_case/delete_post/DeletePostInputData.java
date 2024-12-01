@@ -1,23 +1,29 @@
 package use_case.delete_post;
 
 /**
- * Input Data for the Delete Post use-case.
+ * Input data for the Delete Post Use Case.
  */
 public class DeletePostInputData {
-    private String postId;
-    private String userId;
 
-    public DeletePostInputData(String PostId, String UserId) {
-        this.postId = PostId;
-        this.userId = UserId;
+    private final String postId;
+    private final String currentUserId;
+    private final String authorId;
+
+    public DeletePostInputData(String postId, String currentUserId, String authorId) {
+        this.postId = postId;
+        this.currentUserId = currentUserId;
+        this.authorId = authorId;
     }
 
     public String getPostId() {
         return postId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getCurrentUserId() {
+        return currentUserId;
     }
 
+    public String getAuthorId() {
+        return authorId;
+    }
 }

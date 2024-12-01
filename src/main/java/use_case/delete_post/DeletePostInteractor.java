@@ -34,7 +34,7 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
 
         try {
             postDataAccessObject.deletePost(deletePostInputData.getPostId());
-            userRepo.removePostFromUser(deletePostInputData.getUserId(), deletePostInputData.getPostId());
+            userRepo.removePostFromUser(deletePostInputData.getCurrentUserId(), deletePostInputData.getPostId());
 
             final DeletePostOutputData outputData = new DeletePostOutputData(deletePostInputData.getPostId(), true);
             postPresenter.prepareSuccessView(outputData);
@@ -46,16 +46,16 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
 
     /**
      * Check if the user can delete the post.
-     * @param post the post to be deleted
+     * @param inputData the input data
      * @return true if the user can delete the post, false otherwise
      */
-    public boolean canDelete(DeletePostInputData post) {
+    public boolean canDelete(DeletePostInputData inputData) {
         User currentUser = userRepo.getCurrentUser();
-        if (currentUser == null) {
-            return false;
-        }
-        boolean isCreator = currentUser.getUserID().equals(post.getUserId());
-        boolean isModerator = currentUser.getModerating().contains(post.getPostId());
+        String currentUserId = inputData.getCurrentUserId();
+        String authorId = inputData.getAuthorId();
+
+        boolean isCreator = currentUserId.equals(authorId);
+        boolean isModerator = currentUser.getModerating().contains(inputData.getPostId());
 
         return isCreator || isModerator;
     }
@@ -63,5 +63,10 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
     @Override
     public void switchToHomePageView() {
         postPresenter.switchToHomePageView();
+    }
+
+    @Override
+    public String getAuthorId(String postId) {
+        return postDataAccessObject.getPostAuthorId(postId);
     }
 }
