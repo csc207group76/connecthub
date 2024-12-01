@@ -164,8 +164,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
                                     currentState.getFullName(),
-                                    currentState.getFullName(), 
-                                    moderators, 
+                                    moderators,
                                     comments
                             );
                         }

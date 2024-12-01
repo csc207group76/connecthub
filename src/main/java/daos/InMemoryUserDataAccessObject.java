@@ -38,4 +38,8 @@ public class InMemoryUserDataAccessObject implements SignupDataAccessInterface{
         userPosts.putIfAbsent(user.getUsername(), new ArrayList<>()); // Initialize the user's post list
     }
 
+    @Override
+    public void setCurrentUser(User user) {
+
+    }
 }
