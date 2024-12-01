@@ -14,14 +14,14 @@ import entity.PostFactory;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInteractor;
 import use_case.create_post.CreatePostOutputBoundary;
-import view.createPostView;
+import view.CreatePostView;
 
 public class CreatePostUseCaseFactory {
     public CreatePostUseCaseFactory() {
 
     }
 
-    public static createPostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel, CreatePostViewModel createPostViewModel,
+    public static CreatePostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel, CreatePostViewModel createPostViewModel,
                                         HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo,
                                         PostFactory postFactory) {
 
@@ -29,7 +29,7 @@ public class CreatePostUseCaseFactory {
                 homepageViewModel, postViewModel, postDAO, userRepo);
         final CreatePostController createPostController = createCreatePostUseCase(viewManagerModel,
                 createPostViewModel, postDAO, userRepo, postFactory);
-        return new createPostView(createPostViewModel,createPostController, homepageController);
+        return new CreatePostView(createPostViewModel,createPostController, homepageController);
     }
 
     public static CreatePostController createCreatePostUseCase(
