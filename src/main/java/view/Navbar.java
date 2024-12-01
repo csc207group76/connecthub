@@ -2,6 +2,7 @@ package view;
 
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.logout.LogoutController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,13 @@ public class Navbar {
     private final JPanel navBar;
     private final HomepageViewModel homePageViewModel;
     private final HomepageController homepageController;
+    private final LogoutController logoutController;
 
-    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController) {
+    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController, LogoutController logoutController) {
         this.navBar = initializeNavBar(mainContent);
         this.homePageViewModel = homePageViewModel;
         this.homepageController = homepageController;
+        this.logoutController = logoutController;
     }
 
     /**
@@ -59,7 +62,7 @@ public class Navbar {
         navBar.add(searchPanel, BorderLayout.CENTER);
 
         // Add profile button
-        final JButton profileButton = ProfileButton.createProfileButton();
+        final JButton profileButton = ProfileButton.createProfileButton(logoutController);
         navBar.add(profileButton, BorderLayout.EAST);
 
         return navBar;
