@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.ArrayList;
 
-public class createPostView extends JPanel implements java.beans.PropertyChangeListener {
+public class CreatePostView extends JPanel implements java.beans.PropertyChangeListener {
 
     private final String viewName = "create post";
 
