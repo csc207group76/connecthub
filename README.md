@@ -32,6 +32,7 @@ This project is a hybrid of a Swing app and a React app with SpringBoot as the b
 - [x] Create posts online
 - [x] Manage your posts
 - [x] View posts created by others
+- [x] Filter posts by topic
 - [x] Share your or others' posts
 
 Roadmap for future:
