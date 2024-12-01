@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageState;
 import controller.homepage.HomepageViewModel;
+import controller.logout.LogoutController;
 import controller.post.PostController;
 import controller.post.PostState;
 import entity.Post;
@@ -27,22 +28,30 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     private final HomepageController homepageController;
     private final PostController postController;
     private final HomepageViewModel homepageViewModel;
+    private final LogoutController logoutController;
 
-    public HomePageView(HomepageController homepageController, PostController postController, HomepageViewModel homePageViewModel) {
+    public HomePageView(HomepageController homepageController,
+                        PostController postController,
+                        HomepageViewModel homePageViewModel,
+                        LogoutController logoutController) {
         this.homepageController = homepageController;
         this.postController = postController;
         this.homepageViewModel = homePageViewModel;
+        this.logoutController = logoutController;
+
         homePageViewModel.addPropertyChangeListener(this);
+
 
         this.homepage.setLayout(new BorderLayout());
         this.homepage.setBackground(StyleConstants.BACKGROUND_COLOR);
         
         // Add nav bar
-        final JPanel navBar = new Navbar(homepage, this.homepageViewModel, this.homepageController).getNavBar();
+        final JPanel navBar = new Navbar(homepage, this.homepageViewModel, this.homepageController, this.logoutController).getNavBar();
         mainContent.add(navBar, BorderLayout.NORTH);
 
         // Add navigation pane
-        final JPanel navigationPanel = new NavigationPane(homepage, this.homepageViewModel, this.homepageController).getNavigationPane();        homepage.add(navigationPanel, BorderLayout.WEST);
+        final JPanel navigationPanel = new NavigationPane(homepage, this.homepageViewModel, this.homepageController).getNavigationPane();
+        homepage.add(navigationPanel, BorderLayout.WEST);
 
         // Add center panel to display post previews
         this.contentArea.setLayout(new BoxLayout(contentArea, BoxLayout.Y_AXIS));

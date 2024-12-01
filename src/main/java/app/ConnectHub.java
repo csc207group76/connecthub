@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import javax.swing.*;
 
 import com.mongodb.client.MongoCollection;
+import controller.logout.LogoutController;
+import controller.logout.LogoutPresenter;
 import org.bson.Document;
 
 import daos.DBPostDataAccessObject;
@@ -15,6 +17,8 @@ import controller.login.LoginViewModel;
 import controller.post.PostViewModel;
 import controller.login.LoginViewModel;
 import controller.signup.SignupViewModel;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import view.HomePageView;
 import view.PostView;
 import view.LoginView;
@@ -90,11 +94,11 @@ public class ConnectHub {
 		views.add(loginView, loginView.getViewName());
 
 		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
-				postViewModel, postDataAccessObject);
+				postViewModel, postDataAccessObject, loginViewModel, userDataAccessObject);
 		views.add(homepageView, homepageView.getViewName());
 		
 		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel,
-				homepageViewModel, postDataAccessObject);
+				homepageViewModel, postDataAccessObject, loginViewModel, userDataAccessObject);
 		views.add(postView, postView.getViewName());
 
 		viewManagerModel.setState(loginView.getViewName());

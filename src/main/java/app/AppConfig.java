@@ -1,5 +1,6 @@
 package app;
 
+import controller.logout.LogoutPresenter;
 import org.bson.Document;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,7 @@ import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -129,6 +131,12 @@ public class AppConfig {
     }
 
     @Bean
+    public LogoutOutputBoundary logoutPresenter(ViewManagerModel viewManagerModel,
+                                              LoginViewModel loginViewModel) {
+        return new LogoutPresenter(viewManagerModel, loginViewModel);
+    }
+
+    @Bean
     public GetPostOutputBoundary homepagePresenter(ViewManagerModel viewManagerModel,
                                                    HomepageViewModel homepageViewModel,
                                                    PostViewModel postViewModel) {
@@ -187,8 +195,8 @@ public class AppConfig {
     }
 
     @Bean
-    public LogoutInputBoundary logoutInteractor(DBUserDataAccessObject userDAO) {
-        return new LogoutInteractor(userDAO);
+    public LogoutInputBoundary logoutInteractor(DBUserDataAccessObject userDAO, LogoutOutputBoundary logoutPresenter) {
+        return new LogoutInteractor(userDAO, logoutPresenter);
     }
 
     // RestAPIs

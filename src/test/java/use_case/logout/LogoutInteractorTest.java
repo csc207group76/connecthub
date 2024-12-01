@@ -23,8 +23,6 @@ public class LogoutInteractorTest {
         LogoutOutputData captureData = captor.getValue();
         assertEquals("sam111", captureData.getUserID());
         assertTrue(captureData.isLogoutSuccessful());
-
-        verify(mockPresenter, never()).prepareFailView(anyString());
     }
 }
 

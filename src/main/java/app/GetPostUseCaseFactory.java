@@ -3,6 +3,8 @@ package app;
 import controller.ViewManagerModel;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.login.LoginViewModel;
+import controller.logout.LogoutController;
 import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostViewModel;
@@ -10,6 +12,7 @@ import daos.DBPostDataAccessObject;
 import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
+import use_case.logout.LogoutDataAccessInterface;
 import view.PostView;
 
 public class GetPostUseCaseFactory {
@@ -18,11 +21,15 @@ public class GetPostUseCaseFactory {
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO) {
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO,
+                                  LoginViewModel loginViewModel,
+                                  LogoutDataAccessInterface logoutDataAccessInterface) {
         final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
                 homepageViewModel, postViewModel, postDAO);
-        return new PostView(postController, postViewModel, homepageViewModel, homepageController);
+        final LogoutController logoutController = HomepageUseCaseFactory.createLogoutController(viewManagerModel,
+                loginViewModel,logoutDataAccessInterface);
+        return new PostView(postController, postViewModel, homepageViewModel, homepageController, logoutController);
     }
 
     public static PostController createGetPostUseCase(
