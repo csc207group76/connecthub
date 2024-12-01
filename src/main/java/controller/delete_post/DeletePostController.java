@@ -23,12 +23,13 @@ public class DeletePostController {
     /**
      * Executes the Delete Post Use Case.
      * @param postId the ID of the post to be deleted
-     * @param authorId the ID of the author of the post
+     * @param currentUserId the ID of the author of the post
      * @return true if the deletion was successful, false otherwise
      */
-    public boolean deletePost(String postId, String authorId) {
+    public boolean deletePost(String postId, String currentUserId) {
+        String authorId = deletePostUseCaseInteractor.getAuthorId(postId);
         try {
-            final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, authorId);
+            final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, currentUserId, authorId);
             deletePostUseCaseInteractor.deletePost(deletePostInputData);
             return true;
         } catch (DeletePostFailedException e) {

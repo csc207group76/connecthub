@@ -62,6 +62,12 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
+    public String getPostAuthorId(String postId) {
+        Document post = queryOnePostBy(ENTRY_ID, postId);
+        return post != null ? post.getString(AUTHOR) : null;
+    }
+
+    @Override
     public void createPost(Post post) {
         this.insertPostToDB(post);
     }
@@ -109,14 +115,13 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     //     return null;
     // }
 
-   @Override
-    public void deletePost(String postID) {
-        Bson query = eq(ENTRY_ID, postID);
-        
+    @Override
+    public void deletePost(String postId) {
+        Bson query = eq(ENTRY_ID, postId);
         try {
-            this.postRepository.deleteOne(query);
+            postRepository.deleteOne(query);
         } catch (MongoException error) {
-            // TODO throw some error, depending how the rest of the group implemts stuff.
+            throw new RuntimeException("Failed to delete post with ID: " + postId, error);
         }
     }
 
@@ -149,7 +154,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     
     /**
      * Inserts the given post into the database.
-     * @param user - a user in the application.
+     * @param post - a user in the application.
      */
     private void insertPostToDB(Post post) {
         try {
