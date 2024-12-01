@@ -3,6 +3,9 @@ package controller.create_post;
 import controller.ViewManagerModel;
 import use_case.create_post.CreatePostOutputBoundary;
 import use_case.create_post.CreatePostOutputData;
+import controller.signup.SignupState;
+import use_case.create_post.CreatePostOutputBoundary;
+import use_case.create_post.CreatePostOutputData;
 ;
 
 public class CreatePostPresenter implements CreatePostOutputBoundary {
@@ -18,7 +21,7 @@ public class CreatePostPresenter implements CreatePostOutputBoundary {
     @Override
     public void prepareSuccessView(CreatePostOutputData response) {
         final CreatePostState createPostState = createPostViewModel.getState();
-        createPostState.setContent(response.getContent());
+        createPostState.setContent(response.getContent().getBody());
         this.createPostViewModel.setState(createPostState);
         createPostViewModel.firePropertyChanged();
 

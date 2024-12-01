@@ -91,11 +91,11 @@ public class ConnectHub {
 		views.add(loginView, loginView.getViewName());
 
 		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
-				postViewModel, postDataAccessObject);
+				postViewModel, postDataAccessObject, userDataAccessObject);
 		views.add(homepageView, homepageView.getViewName());
 
 		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel,
-				homepageViewModel, postDataAccessObject);
+				homepageViewModel, postDataAccessObject, userDataAccessObject);
 		views.add(postView, postView.getViewName());
 
 		viewManagerModel.setState(loginView.getViewName());

@@ -1,6 +1,7 @@
 package controller.create_post;
 
 import entity.Comment;
+import entity.Content;
 import entity.User;
 import use_case.create_post.CreatePostInputBoundary;
 import use_case.create_post.CreatePostInputData;

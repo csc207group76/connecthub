@@ -152,8 +152,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             final SignupState currentState = signupViewModel.getState();
 
-                            List<String> moderators = new ArrayList();
-                            List<String> comments = new ArrayList();
+                            List<String> moderators = new ArrayList<>();
+                            List<String> comments = new ArrayList<>();
 
 
                             signupController.execute(
@@ -163,7 +163,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getRepeatPassword(),
                                     currentState.getEmail(),
                                     currentState.getBirthdate(),
-                                    currentState.getFullName(), moderators, comments
+                                    currentState.getFullName(),
+                                    currentState.getFullName(), 
+                                    moderators, 
+                                    comments
                             );
                         }
                     }
@@ -176,6 +179,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
         // All action listersns added as helper methods
+        addEmailListener();
         addUsernameListener();
         addPasswordListener();
         addRepeatPasswordListener();
@@ -247,6 +251,33 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(mainPanel);
 
     }
+
+    private void addEmailListener() {
+        emailInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final SignupState currentState = signupViewModel.getState();
+                currentState.setEmail(emailInputField.getText()); // Update email in the state
+                signupViewModel.setState(currentState); // Set the new state in the view model
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper(); // Call the helper when text is inserted
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper(); // Call the helper when text is removed
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper(); // Call the helper for changes (though typically not used for plain text)
+            }
+        });
+    }
+
 
     private void addUsernameListener() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {

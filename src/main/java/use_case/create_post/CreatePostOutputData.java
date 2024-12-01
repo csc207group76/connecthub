@@ -19,7 +19,7 @@ public class CreatePostOutputData {
     private final String category;
     private final boolean creationSuccessful;
 
-    public CreatePostOutputData(String entryID, String author, Content content, LocalDateTime postedDate, 
+    public CreatePostOutputData(String entryID, String author, Content content, LocalDateTime postedDate,
                                 LocalDateTime lastModified, int dislikes, int likes, String postTitle, 
                                 List<Comment> comments, String category, boolean creationSuccessful) {
         this.entryID = entryID;
