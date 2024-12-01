@@ -37,12 +37,13 @@ This project is a hybrid of a Swing app and a React app with SpringBoot as the b
 
 Roadmap for future:
 * Interactions with posts such as comments or favourite them.
+* Make front end responsive for mobile
 
 Note that post filtering and deletion features is not available on the web version.
 
 ## Getting Started
 ***
-If you want to use the web version, you don't need to install anything - you can navigate here to get started: https://connecthub-i5rz.onrender.com/
+If you want to use the web version, you don't need to install anything - you can navigate here to get started: https://connecthub-i5rz.onrender.com/signup
 
 Note that it may take a while for the website to load - the server shuts down after periods of inactivity and needs to restart.
 
