@@ -146,4 +146,4 @@ This project will not be actively developed and monitored, however, if you want 
 | LL333111 | https://github.com/LL333111 |
 
 ## License
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
