@@ -5,6 +5,8 @@
 ## Overview
 ConnectHub is a forum for meaningful discussions, offering easy post management and personalized feeds based on your interests.
 
+This is a project for the course CSC207 at the University of Toronto. It aims to helps connect students together to discuss various topics, such as Java.
+
 ## Table of Contents
 1. [Description](#description)
 2. [Features](#features)
