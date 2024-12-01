@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class SignupTests {
+public class SignUpTests {
 
     @Test
     public void successTest() {
@@ -165,7 +165,7 @@ public class SignupTests {
         SignupOutputData signupOutputData = new SignupOutputData("username", false);
 
         // Assert that signup is successful
-        assertTrue(signupOutputData.isSignupSuccessful());
+        assertTrue(signupOutputData.useCaseSuccess());
     }
 
 

@@ -118,6 +118,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         repeatPasswordPanel.add(repeatPasswordInfo);
         repeatPasswordPanel.add(repeatPasswordInputField);
 
+        setupInputField(fullnameInputField, "e.g. Arjun Singh");
+        setupInputField(emailInputField, "e.g. izabelle@gmail.com");
+        setupInputField(birthdateInputField, "12/12/23");
+        setupInputField(usernameInputField, "e.g. dennis_ivy");
+
         // SIGN UP TITLE:
 
         JPanel headerPanel = new JPanel();
@@ -136,7 +141,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         // switch to login
         JLabel signedUpLabel = new JLabel("Already signed up?");
-        signedUpLabel.setForeground(Color.LIGHT_GRAY);
+        signedUpLabel.setForeground(Color.BLUE);
         signedUpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
@@ -367,6 +372,29 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
+    }
+
+    private void setupInputField(JTextField field, String exampleText) {
+        field.setText(exampleText);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (field.getText().equals(exampleText)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(exampleText);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     // TODO: is this the right way to do the follwoing for signup state - Not sure what its for.

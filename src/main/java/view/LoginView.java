@@ -201,6 +201,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         emailErrorField.setText(state.getEmailError());
     }
 
+
+
+
     private void setFields(LoginState state) {
         emailErrorField.setText(state.getEmail());
     }
