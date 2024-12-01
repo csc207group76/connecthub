@@ -6,20 +6,20 @@ package use_case.signup;
 public class SignupOutputData {
 
     private final String username;
-    private final boolean SignupSuccessful;
+    private final boolean useCaseFailed;
 
     public SignupOutputData(String username, boolean useCaseFailed) {
         this.username = username;
 
-        this.SignupSuccessful = useCaseFailed;
+        this.useCaseFailed = useCaseFailed;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public boolean isSignupSuccessful() {
-        return !SignupSuccessful;
+    public boolean useCaseSuccess() {
+        return !useCaseFailed;
     }
 
 }

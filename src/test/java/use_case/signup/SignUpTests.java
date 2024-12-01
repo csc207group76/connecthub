@@ -4,12 +4,10 @@ import daos.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 
-public class SignUpTests {
+public class SignupTests {
 
     @Test
     public void successTest() {
@@ -167,7 +165,7 @@ public class SignUpTests {
         SignupOutputData signupOutputData = new SignupOutputData("username", false);
 
         // Assert that signup is successful
-        assertTrue(signupOutputData.isSignupSuccessful());
+        assertTrue(signupOutputData.useCaseSuccess());
     }
 
 

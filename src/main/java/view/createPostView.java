@@ -13,6 +13,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.ArrayList;
 
 public class createPostView extends JPanel implements java.beans.PropertyChangeListener {
@@ -183,12 +184,12 @@ public class createPostView extends JPanel implements java.beans.PropertyChangeL
             int dislikes = 0;
             int likes = 0;
             String postTitle = titleField.getText();
-            java.util.List<User> moderators = new ArrayList<>();
-            java.util.List<Comment> comments = new ArrayList<>();
+            List moderators = new ArrayList();
+            List comments = new ArrayList();
             String category = (String) categoryDropdown.getSelectedItem();
 
-            if (postTitle.isEmpty() || content.isEmpty() || author.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Title, content, and author are required!");
+            if (postTitle.isEmpty() || content.isEmpty() || author.isEmpty() || ((String) categoryDropdown.getSelectedItem()).isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Title, content, category and author are required!");
                 return;
             }
 
