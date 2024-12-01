@@ -37,6 +37,7 @@ This project is a hybrid of a Swing app and a React app with SpringBoot as the b
 Roadmap for future:
 * Interactions with posts such as comments or favourite them.
 
+Note that post filtering and deletion features is not available on the web version.
 
 ## Getting Started
 ***
@@ -131,8 +132,6 @@ After you successfully ran the application (either swing or web), you can either
 You can also find a button to create post. The new post created will be updated in the home page. Additionally on the home page, you can filter posts by clicking on the topics on the left.
 
 You can also delete the posts you created by going to your post and clicking the delete button.
-
-Note that post filtering and deletion features is not available on the web version.
 
 
 ## Feedback
