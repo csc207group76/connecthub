@@ -63,8 +63,9 @@ public class GetPostOutputData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GetPostOutputData that = (GetPostOutputData) o;
-        return entryID.equals(that.entryID) &&
-                postContent.equals(that.postContent);
+        //Safely compares for null
+        return Objects.equals(entryID, that.entryID) &&
+                Objects.equals(postContent, that.postContent);
     }
 
     @Override

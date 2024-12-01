@@ -33,4 +33,10 @@ public interface SignupDataAccessInterface {
      * @param user the user to save
      */
     void save(User user);
+
+    /**
+     * Sets the current user.
+     * @param user - the user to set
+     */
+    void setCurrentUser(User user);
 }

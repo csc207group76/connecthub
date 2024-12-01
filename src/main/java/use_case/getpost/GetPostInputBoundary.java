@@ -18,6 +18,8 @@ public interface GetPostInputBoundary {
 
     List<Post> getAllPosts();
 
+    List<Post> getPostsByCategory(String category);
+
     void switchToPostView();
 
     void switchToHomePageView();

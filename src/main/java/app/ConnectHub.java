@@ -9,6 +9,7 @@ import org.bson.Document;
 
 import daos.DBPostDataAccessObject;
 import daos.DBUserDataAccessObject;
+import io.github.cdimascio.dotenv.Dotenv;
 import controller.ViewManagerModel;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginViewModel;
@@ -92,7 +93,7 @@ public class ConnectHub {
 		final HomePageView homepageView = HomepageUseCaseFactory.create(viewManagerModel, homepageViewModel,
 				postViewModel, postDataAccessObject, userDataAccessObject);
 		views.add(homepageView, homepageView.getViewName());
-		
+
 		final PostView postView = GetPostUseCaseFactory.create(viewManagerModel, postViewModel,
 				homepageViewModel, postDataAccessObject, userDataAccessObject);
 		views.add(postView, postView.getViewName());

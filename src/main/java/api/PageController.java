@@ -3,13 +3,14 @@ package api;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
     // bundled JavaScript files
     private final String SIGN_UP_SCRIPT = "/js/sign_up/app.js";
     private final String LOG_IN_SCRIPT = "/js/login/app.js";
-    private final String POST_SCRIPT = "";
+    private final String POST_SCRIPT = "/js/post/app.js";
     private final String CREATE_POST_SCRIPT = "/js/create_post/app.js";
     private final String HOME_PAGE_SCRIPT = "/js/home_page/app.js";
     private final String STYLES_SCRIPT = "/js/styles/app.css";
@@ -66,8 +67,8 @@ public class PageController {
         return TEMPLATE_FILE;
     }
 
-    @GetMapping("/post")
-    public String post( Model model) {
+    @GetMapping("/post/{post_id}")
+    public String post(@PathVariable("post_id") String postId, Model model) {
         model.addAttribute(PAGE_TITLE, "Home");
         model.addAttribute(SCRIPT, POST_SCRIPT);
         model.addAttribute(DIV_ID, "postDiv");

@@ -29,4 +29,11 @@ public interface GetPostDataAccessInterface {
      * @return a list of post json data
      */
     List<JSONObject> getAllPosts();
+
+    /**
+     * Retrieve all posts with a specific category.
+     * @return a list of post json data
+     */
+    List<JSONObject> getPostsByCategory(String category);
+
 }

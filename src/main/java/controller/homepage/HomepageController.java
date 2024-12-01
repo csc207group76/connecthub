@@ -18,6 +18,10 @@ public class HomepageController {
         this.getPostInteractor.getAllPosts();
     }
 
+    public void getPostsByCategory(String category) {
+        this.getPostInteractor.getPostsByCategory(category);
+    }
+
     public void switchToLoginView() {
         this.getPostInteractor.switchToPostView();
     }
