@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class SignupTests {
+public class SignUpTests {
 
     @Test
     public void successTest() {
