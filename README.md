@@ -7,6 +7,17 @@ ConnectHub is a forum for meaningful discussions, offering easy post management 
 
 ## Table of Contents
 1. [Description](#description)
+2. [Features](#features)
+3. [Using the web version](#getting-started)
+4. [Using the app locally](#dependencies)
+    * [Installing](#installing)
+    * [Running the Swing app](#running-the-swing-app)
+    * [Running the web app](#running-the-web-app)
+5. [Usage](#usage)
+6. [Feedback](#feedback)
+7. [Contributors](#contributors)
+8. [Contributing](#contributing)
+9. [License](#license)
 
 
 ## Description
@@ -126,15 +137,6 @@ Note that post filtering and deletion features is not available on the web versi
 For any suggestions or bugs, please submit on GitHub issues.
 
 
-## Contributing
-This project will not be actively developed and monitored, however, if you want to contribute, please
-1. Fork the repository
-2. Make your changes on a feature branch and sumbit a PR
-3. Clean up your code to the style checker `mystyle.xml`
-4. Keep PR titles and descriptions informative
-5. Only keep changes related to your PR
-
-
 ## Contributors
 | GitHub username | GitHub account |
 | --------------- | -------------- |
@@ -144,6 +146,16 @@ This project will not be actively developed and monitored, however, if you want 
 | izabellemarianne | https://github.com/izabellemarianne |
 | Karththigan | https://github.com/Karththigan |
 | LL333111 | https://github.com/LL333111 |
+
+
+## Contributing
+This project will not be actively developed and monitored, however, if you want to contribute, please
+1. Fork the repository
+2. Make your changes on a feature branch and sumbit a PR
+3. Clean up your code to the style checker `mystyle.xml`
+4. Keep PR titles and descriptions informative
+5. Only keep changes related to your PR
+
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
