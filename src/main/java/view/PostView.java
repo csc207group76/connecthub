@@ -9,6 +9,11 @@ import controller.post.PostState;
 import controller.post.PostViewModel;
 import daos.DBUserDataAccessObject;
 import entity.Comment;
+import entity.CommonUserFactory;
+import entity.User;
+import entity.UserFactory;
+import use_case.get_user.GetUserInputBoundary;
+import use_case.get_user.GetUserInteractor;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -137,20 +142,35 @@ public class PostView extends JPanel implements PropertyChangeListener {
             );
 
             if (result == JOptionPane.YES_OPTION) {
-                String currentUserId = userRepo.getCurrentUser().getUserID();
+                GetUserInputBoundary getUserInteractor = new GetUserInteractor(userRepo, new CommonUserFactory());
+                User currentUser = getUserInteractor.getCurrentUser();
+
+                if (currentUser == null) {
+                    JOptionPane.showMessageDialog(this, "Current user could not be retrieved. Cannot delete the post.");
+                    return;
+                }
+
+                String currentUserId = currentUser.getUserID();
                 PostState state = postViewModel.getState();
                 String postId = state.getPostID();
 
                 if (postId == null || postId.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Post ID is missing. Cannot delete post.");
+                    JOptionPane.showMessageDialog(this, "Post ID is missing. Cannot delete the post.");
                     return;
                 }
                 if (currentUserId == null || currentUserId.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Current user ID is missing. Cannot delete post.");
+                    JOptionPane.showMessageDialog(this, "Current user ID is missing. Cannot delete the post.");
                     return;
                 }
 
-                boolean success = deletePostController.deletePost(postId, currentUserId);
+                String authorId = deletePostController.getAuthorId(postId);
+
+                if (authorId == null || authorId.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Author ID could not be determined. Cannot delete the post.");
+                    return;
+                }
+
+                boolean success = deletePostController.deletePost(postId, currentUserId, authorId);
 
                 if (success) {
                     JOptionPane.showMessageDialog(this, "Post successfully deleted.");
@@ -158,14 +178,10 @@ public class PostView extends JPanel implements PropertyChangeListener {
                 } else {
                     JOptionPane.showMessageDialog(this, "Failed to delete the post. Please try again.");
                 }
-            } else {
-                System.out.println("Deletion cancelled.");
             }
         });
 
-
-    }
-
+        }
 
     public String getViewName() {
         return viewName;

@@ -27,7 +27,9 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
             throw new DeletePostFailedException("Post with given ID doesn't exist.");
         }
 
-        if (!canDelete(deletePostInputData)) {
+        if (!canDelete(deletePostInputData.getPostId(),
+                deletePostInputData.getAuthorId(),
+                deletePostInputData.getCurrentUserId())) {
             postPresenter.prepareFailView("User does not have permission to delete this post.");
             throw new DeletePostFailedException("User does not have permission to delete this post.");
         }
@@ -46,18 +48,30 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
 
     /**
      * Check if the user can delete the post.
-     * @param inputData the input data
+     * This method is private because it is part of the internal logic of the interactor.
+     * @param postId       the ID of the post
+     * @param authorId     the ID of the post's author
+     * @param currentUserId the ID of the current user
      * @return true if the user can delete the post, false otherwise
      */
-    public boolean canDelete(DeletePostInputData inputData) {
+    private boolean canDelete(String postId, String authorId, String currentUserId) {
         User currentUser = userRepo.getCurrentUser();
-        String authorId = inputData.getAuthorId();
+        boolean isCreator = currentUserId.equals(authorId);
 
-        boolean isCreator = currentUser.getUserID().equals(authorId);
-        boolean isModerator = currentUser.getModerating().contains(inputData.getPostId());
+        String category = getCategoryForPost(postId);
 
+        boolean isUserValid = currentUser != null;
+        boolean isCategoryValid = category != null;
+
+        boolean isModerator = isUserValid && isCategoryValid
+                && currentUser.getModerating().contains(category);
         return isCreator || isModerator;
     }
+
+    private String getCategoryForPost(String postId) {
+        return postDataAccessObject.getPostCategory(postId);
+    }
+
 
     @Override
     public void switchToHomePageView() {

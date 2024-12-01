@@ -13,8 +13,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "watch": "webpack --watch --config webpack.config.js --disable-interpret",
+    "start": "java -jar target/*.jar",
+    "watch": "webpack --watch --config webpack.dev.js --disable-interpret",
+    "build": "webpack --config webpack.prod.js --disable-interpret",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -41,9 +42,11 @@
     "@babel/preset-env": "^7.26.0",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
+    "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.2.0",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "webpack-dev-server": "^5.1.0",
+    "webpack-merge": "^6.0.1"
   }
 }

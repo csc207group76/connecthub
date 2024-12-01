@@ -27,4 +27,6 @@ public interface DeletePostDataAccessInterface {
      * @return the author ID of the post, or null if the post does not exist.
      */
     String getPostAuthorId(String postId);
+
+    String getPostCategory(String postId);
 }

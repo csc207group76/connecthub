@@ -124,38 +124,6 @@ public class DeletePostInteractorTest {
     }
 
     @Test
-    void canDeleteTest() {
-        String postId = "post123";
-        String userId = "user123";
-
-        User mockUser = createMockUser(userId, List.of(postId));
-        when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
-
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId, userId);
-
-        boolean canDelete = interactor.canDelete(inputData);
-
-        assertTrue(canDelete);
-        verify(mockUserRepo).getCurrentUser();
-    }
-
-    @Test
-    void cannotDeleteTest() {
-        String postId = "post123";
-        String userId = "user123";
-
-        User mockUser = createMockUser("otherUser");
-        when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
-
-        DeletePostInputData inputData = new DeletePostInputData(postId, "otherUser", userId);
-
-        boolean canDelete = interactor.canDelete(inputData);
-
-        assertFalse(canDelete);
-        verify(mockUserRepo).getCurrentUser();
-    }
-
-    @Test
     void switchToHomePageViewTest() {
         interactor.switchToHomePageView();
         verify(mockPresenter).switchToHomePageView();

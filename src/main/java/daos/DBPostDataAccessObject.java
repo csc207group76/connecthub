@@ -3,6 +3,7 @@ package daos;
 import entity.Post;
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
+import use_case.delete_post.DeletePostFailedException;
 import use_case.getpost.GetPostDataAccessInterface;
 import use_case.edit_post.EditPostDataAccessInterface;
 
@@ -68,6 +69,12 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
+    public String getPostCategory(String postId) {
+        Document post = queryOnePostBy(ENTRY_ID, postId);
+        return post != null ? post.getString(CATEGORY) : null;
+    }
+
+    @Override
     public void createPost(Post post) {
         this.insertPostToDB(post);
     }
@@ -110,18 +117,24 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return res;
     }
 
+    @Override
+    public List<JSONObject> getPostsByCategory(String category) {
+        return List.of();
+    }
+
     // @Override
     // public List<Post> getPostsByTime(int postSize) { // TODO figure out the time stamp if we want this method
     //     return null;
     // }
 
-    @Override
-    public void deletePost(String postId) {
-        Bson query = eq(ENTRY_ID, postId);
+   @Override
+    public void deletePost(String postID) {
+        Bson query = eq(ENTRY_ID, postID);
+        
         try {
-            postRepository.deleteOne(query);
+            this.postRepository.deleteOne(query);
         } catch (MongoException error) {
-            throw new RuntimeException("Failed to delete post with ID: " + postId, error);
+            throw new DeletePostFailedException("Failed to delete post with id: " + postID);
         }
     }
 
