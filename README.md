@@ -3,6 +3,8 @@
 ***
 
 ## Overview
+
+
 ConnectHub is a forum for meaningful discussions, offering easy post management and personalized feeds based on your interests.
 
 This is a project for the course CSC207 at the University of Toronto. It aims to help connect students and provide a platform for them to discuss various topics such as Java.
@@ -86,12 +88,15 @@ WEB_FRONT_END_URL=https://connecthub-i5rz.onrender.com/api/v1 # this line is not
 ### Executing the program
 
 #### Running the Swing App
+![image](https://github.com/user-attachments/assets/9b3bb95d-63d3-42bd-922c-a9190076a5f4)
+
 - In your favourite IDE, load the `pom.xml` file by right clicking on it
 - Navigate to `src/main/java/app/ConnectHub.java` in the source code and execute the script
 - A sign up or login window will pop up, you can start using the app
 - To exit the app, simply close the window
 
 #### Running the Web App
+![image|width = 50px](https://github.com/user-attachments/assets/c3600ad8-7d79-40d1-866a-70a057a4870d)
 - Open up a terminal and run the following commands
 ```
 $ npm install       # install front end dependencies
@@ -137,8 +142,8 @@ You can also delete the posts you created by going to your post and clicking the
 
 
 ## Feedback
-For any suggestions or bugs, please submit on GitHub issues.
-
+For any suggestions or bugs, please submit on GitHub issues. We consider valid feedback as that which provides clear, constructive, steps forward to improve ConnectHub.
+Feedback guidelines: Please be respective and explain your point of view in a clear manner. This project is not under active developement. Consequently, you may not receive an immediate response.
 
 ## Contributors
 | GitHub username | GitHub account |

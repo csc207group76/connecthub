@@ -2,6 +2,7 @@ package view;
 
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.logout.LogoutController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +18,15 @@ public class Navbar {
     private final JPanel navBar;
     private final HomepageViewModel homePageViewModel;
     private final HomepageController homepageController;
+    private final LogoutController logoutController;
 
-    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController) {
-        this.navBar = initializeNavBar(mainContent);
+    public Navbar(JPanel mainContent, HomepageViewModel homePageViewModel, HomepageController homepageController, LogoutController logoutController) {
+        this.navBar = initializeNavBar(mainContent, logoutController);
         this.homePageViewModel = homePageViewModel;
         this.homepageController = homepageController;
+        this.logoutController = logoutController;
     }
+
 
     /**
      * Creates and initializes the navigation bar panel.
@@ -30,7 +34,7 @@ public class Navbar {
      * @param mainContent the main content panel to enable navigation between views.
      * @return the initialized JPanel for the navigation bar.
      */
-    private JPanel initializeNavBar(JPanel mainContent) {
+    private JPanel initializeNavBar(JPanel mainContent, LogoutController logoutController) {
         final JPanel navBar = new JPanel(new BorderLayout());
         navBar.setBackground(StyleConstants.HEADER_COLOR);
         navBar.setPreferredSize(new Dimension(800, 50));
@@ -59,7 +63,7 @@ public class Navbar {
         navBar.add(searchPanel, BorderLayout.CENTER);
 
         // Add profile button
-        final JButton profileButton = ProfileButton.createProfileButton();
+        final JButton profileButton = ProfileButton.createProfileButton(logoutController);
         navBar.add(profileButton, BorderLayout.EAST);
 
         return navBar;
