@@ -153,4 +153,20 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
 
         return doc;
     }
+
+    /**
+     * Removes a post from the user's list of posts.
+     * @param userId - The ID of the user.
+     * @param postId - The ID of the post to be removed.
+     */
+    public void removePostFromUser(String userId, String postId) {
+        Bson userQuery = eq(USER_ID, userId);
+        Bson updateOperation = Updates.pull(POSTS, postId);
+
+        try {
+            this.userRepository.updateOne(userQuery, updateOperation);
+        } catch (MongoException error) {
+            System.err.println("Failed to remove post from user's post list: " + error.getMessage());
+        }
+    }
 }
