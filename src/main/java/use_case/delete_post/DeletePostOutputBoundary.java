@@ -1,9 +1,10 @@
 package use_case.delete_post;
 
 /**
- * The output boundary for the Delete Post Use Case.
+ * The output boundary for the Delete Post Use Case
  */
 public interface DeletePostOutputBoundary {
+
 
     /**
      * Prepares the success view for the Delete Post Use Case.
@@ -16,7 +17,12 @@ public interface DeletePostOutputBoundary {
      */
 
     void prepareFailView(String errorMessage);
+    /**
+     * Switches to the Post View.
+     */
 
-    void switchToHomePageView();
+    void switchToDeletePostView();
+    // TODO for doing at a later date
+
 
 }
