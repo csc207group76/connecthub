@@ -122,6 +122,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             loginController.execute(
                                     currentState.getEmail(),
                                     currentState.getPassword());
+                            emailInputField.setText("e.g. dennis_ivy@gmail.com");
+                            emailInputField.setForeground(Color.GRAY);
+                            passwordInputField.setText("");
                         }
                     }
                 }

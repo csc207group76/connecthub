@@ -1,5 +1,7 @@
 package view;
 
+import controller.logout.LogoutController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
  * The Profile button.
  */
 public class ProfileButton {
-    public static JButton createProfileButton() {
+    public static JButton createProfileButton(LogoutController logoutController) {
         final JButton profileButton = new JButton("Profile");
         profileButton.setBackground(StyleConstants.BUTTON_COLOR);
         profileButton.setForeground(Color.BLUE);
@@ -29,9 +31,7 @@ public class ProfileButton {
         // Add logout option to the dropdown menu
         final JMenuItem logoutButton = new JMenuItem("Logout");
         logoutButton.addActionListener(e -> {
-            // Dynamically get the parent window for the dialog
-            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(profileButton);
-            JOptionPane.showMessageDialog(parentFrame, "Logout clicked");
+            logoutController.execute("logout");
         });
         profileMenu.add(logoutButton);
 

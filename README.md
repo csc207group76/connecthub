@@ -3,6 +3,8 @@
 ***
 
 ## Overview
+
+
 ConnectHub is a forum for meaningful discussions, offering easy post management and personalized feeds based on your interests.
 
 This is a project for the course CSC207 at the University of Toronto. It aims to help connect students and provide a platform for them to discuss various topics such as Java.
@@ -37,12 +39,13 @@ This project is a hybrid of a Swing app and a React app with SpringBoot as the b
 
 Roadmap for future:
 * Interactions with posts such as comments or favourite them.
+* Make front end responsive for mobile
 
 Note that post filtering and deletion features is not available on the web version.
 
 ## Getting Started
 ***
-If you want to use the web version, you don't need to install anything - you can navigate here to get started: https://connecthub-i5rz.onrender.com/
+If you want to use the web version, you don't need to install anything - you can navigate here to get started: https://connecthub-i5rz.onrender.com/signup
 
 Note that it may take a while for the website to load - the server shuts down after periods of inactivity and needs to restart.
 
@@ -85,12 +88,15 @@ WEB_FRONT_END_URL=https://connecthub-i5rz.onrender.com/api/v1 # this line is not
 ### Executing the program
 
 #### Running the Swing App
+![image](https://github.com/user-attachments/assets/9b3bb95d-63d3-42bd-922c-a9190076a5f4)
+
 - In your favourite IDE, load the `pom.xml` file by right clicking on it
 - Navigate to `src/main/java/app/ConnectHub.java` in the source code and execute the script
 - A sign up or login window will pop up, you can start using the app
 - To exit the app, simply close the window
 
 #### Running the Web App
+![image|width = 50px](https://github.com/user-attachments/assets/c3600ad8-7d79-40d1-866a-70a057a4870d)
 - Open up a terminal and run the following commands
 ```
 $ npm install       # install front end dependencies
