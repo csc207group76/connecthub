@@ -1,10 +1,14 @@
+
+
 package controller.post;
 
 import controller.ViewManagerModel;
+import use_case.delete_post.DeletePostOutputBoundary;
+import use_case.delete_post.DeletePostOutputData;
 import use_case.getpost.GetPostOutputBoundary;
 import use_case.getpost.GetPostOutputData;
 
-public class PostPresenter implements GetPostOutputBoundary {
+public class PostPresenter implements GetPostOutputBoundary, DeletePostOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final PostViewModel postViewModel;
 
@@ -14,7 +18,7 @@ public class PostPresenter implements GetPostOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.postViewModel = postViewModel;
     }
-    
+
     /**
      * Prepares the success view for the Get Post Use Case.
      * @param outputData the output data
@@ -31,6 +35,7 @@ public class PostPresenter implements GetPostOutputBoundary {
         postState.setCommentsError(null);
         postState.setPostIDError(null);
         postState.setPostTitleError(null);
+        postState.setAuthorIDError(null);
 
         this.postViewModel.setState(postState);
         this.postViewModel.firePropertyChanged();
@@ -38,6 +43,13 @@ public class PostPresenter implements GetPostOutputBoundary {
         this.viewManagerModel.setState(postViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareSuccessView(DeletePostOutputData outputData) {
+        this.viewManagerModel.setState("homepage");
+        this.viewManagerModel.firePropertyChanged();
+    }
+
 
     /**
      * Prepares the failure view for the Get Post Use Case.
@@ -55,6 +67,12 @@ public class PostPresenter implements GetPostOutputBoundary {
     @Override
     public void switchToPostView() {}
 
-    public void switchToHomePageView() {}
+    public void switchToHomePageView() {
+        viewManagerModel.setState(postViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
 
 }
+
+
+

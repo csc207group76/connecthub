@@ -27,20 +27,18 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
             throw new DeletePostFailedException("Post with given ID doesn't exist.");
         }
 
-
-        boolean userCanDelete = canDelete(deletePostInputData);
-        if (!userCanDelete) {
+        if (!canDelete(deletePostInputData.getPostId(),
+                deletePostInputData.getAuthorId(),
+                deletePostInputData.getCurrentUserId())) {
             postPresenter.prepareFailView("User does not have permission to delete this post.");
             throw new DeletePostFailedException("User does not have permission to delete this post.");
         }
 
         try {
             postDataAccessObject.deletePost(deletePostInputData.getPostId());
+            userRepo.removePostFromUser(deletePostInputData.getCurrentUserId(), deletePostInputData.getPostId());
 
-            DeletePostOutputData outputData = new DeletePostOutputData(
-                    deletePostInputData.getPostId(),
-                    true
-            );
+            final DeletePostOutputData outputData = new DeletePostOutputData(deletePostInputData.getPostId(), true);
             postPresenter.prepareSuccessView(outputData);
         } catch (Exception e) {
             postPresenter.prepareFailView("Failed to delete the post.");
@@ -48,9 +46,40 @@ public class DeletePostInteractor implements DeletePostInputBoundary {
         }
     }
 
-    public boolean canDelete(DeletePostInputData post) {
-        final User currentUser = userRepo.getCurrentUser();
-        return currentUser.getUserID().equals(post.getUserId()) ||
-                currentUser.getModerating().contains(post.getPostId());
+    /**
+     * Check if the user can delete the post.
+     * This method is private because it is part of the internal logic of the interactor.
+     * @param postId       the ID of the post
+     * @param authorId     the ID of the post's author
+     * @param currentUserId the ID of the current user
+     * @return true if the user can delete the post, false otherwise
+     */
+    private boolean canDelete(String postId, String authorId, String currentUserId) {
+        User currentUser = userRepo.getCurrentUser();
+        boolean isCreator = currentUserId.equals(authorId);
+
+        String category = getCategoryForPost(postId);
+
+        boolean isUserValid = currentUser != null;
+        boolean isCategoryValid = category != null;
+
+        boolean isModerator = isUserValid && isCategoryValid
+                && currentUser.getModerating().contains(category);
+        return isCreator || isModerator;
+    }
+
+    private String getCategoryForPost(String postId) {
+        return postDataAccessObject.getPostCategory(postId);
+    }
+
+
+    @Override
+    public void switchToHomePageView() {
+        postPresenter.switchToHomePageView();
+    }
+
+    @Override
+    public String getAuthorId(String postId) {
+        return postDataAccessObject.getPostAuthorId(postId);
     }
 }

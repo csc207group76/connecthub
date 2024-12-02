@@ -46,14 +46,17 @@ public class HomepageUseCaseFactory {
     }
 
     public static HomepageController createHomepageController(
-        ViewManagerModel viewManagerModel, HomepageViewModel homepageViewModel, PostViewModel postViewModel,
-        DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo
+            ViewManagerModel viewManagerModel,
+            HomepageViewModel homepageViewModel,
+            PostViewModel postViewModel,
+            DBPostDataAccessObject postDAO,
+            DBUserDataAccessObject userDAO
     ) {
         final GetPostOutputBoundary homepagePresenter = new HomepagePresenter(viewManagerModel, homepageViewModel, postViewModel);
         
         final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, homepagePresenter);
         UserFactory userFactory = new CommonUserFactory();
-        final GetUserInteractor getUserInteractor = new GetUserInteractor(userRepo, userFactory);
+        final GetUserInteractor getUserInteractor = new GetUserInteractor(userDAO, userFactory);
         
         return new HomepageController(getPostInteractor, getUserInteractor);
     }
