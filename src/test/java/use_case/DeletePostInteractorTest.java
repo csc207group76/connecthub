@@ -2,7 +2,6 @@ package use_case;
 
 import daos.DBUserDataAccessObject;
 import entity.User;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -43,15 +42,15 @@ public class DeletePostInteractorTest {
 
     @Test
     void deletePostSuccessTest() {
-
         String postId = "post123";
         String userId = "user123";
 
-        User mockUser = createMockUser(userId, List.of(postId));
+        User mockUser = createMockUser(userId);
         when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
         when(mockPostDB.existsByID(postId)).thenReturn(true);
+        when(mockPostDB.getPostAuthorId(postId)).thenReturn(userId);
 
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
+        DeletePostInputData inputData = new DeletePostInputData(postId, userId, userId);
 
         interactor.deletePost(inputData);
 
@@ -73,7 +72,7 @@ public class DeletePostInteractorTest {
         when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
         when(mockPostDB.existsByID(postId)).thenReturn(false);
 
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
+        DeletePostInputData inputData = new DeletePostInputData(postId, userId, userId);
 
         DeletePostFailedException exception = assertThrows(DeletePostFailedException.class,
                 () -> interactor.deletePost(inputData));
@@ -91,10 +90,12 @@ public class DeletePostInteractorTest {
         User mockUser = createMockUser("otherUser"); // Different user
         when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
         when(mockPostDB.existsByID(postId)).thenReturn(true);
+        when(mockPostDB.getPostAuthorId(postId)).thenReturn(userId); // Original author's ID
 
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
+        DeletePostInputData inputData = new DeletePostInputData(postId, "otherUser", userId);
 
-        DeletePostFailedException exception = assertThrows(DeletePostFailedException.class, () -> interactor.deletePost(inputData));
+        DeletePostFailedException exception = assertThrows(DeletePostFailedException.class,
+                () -> interactor.deletePost(inputData));
         assertEquals("User does not have permission to delete this post.", exception.getMessage());
 
         verify(mockPresenter).prepareFailView("User does not have permission to delete this post.");
@@ -106,14 +107,16 @@ public class DeletePostInteractorTest {
         String postId = "post123";
         String userId = "user123";
 
-        User mockUser = createMockUser(userId, List.of(postId));
+        User mockUser = createMockUser(userId);
         when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
         when(mockPostDB.existsByID(postId)).thenReturn(true);
+        when(mockPostDB.getPostAuthorId(postId)).thenReturn(userId);
         doThrow(new RuntimeException("DB error")).when(mockPostDB).deletePost(postId);
 
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
+        DeletePostInputData inputData = new DeletePostInputData(postId, userId, userId);
 
-        DeletePostFailedException exception = assertThrows(DeletePostFailedException.class, () -> interactor.deletePost(inputData));
+        DeletePostFailedException exception = assertThrows(DeletePostFailedException.class,
+                () -> interactor.deletePost(inputData));
         assertEquals("Failed to delete the post.", exception.getMessage());
 
         verify(mockPresenter).prepareFailView("Failed to delete the post.");
@@ -121,34 +124,20 @@ public class DeletePostInteractorTest {
     }
 
     @Test
-    void canDeleteTest() {
-        String postId = "post123";
-        String userId = "user123";
-
-        User mockUser = createMockUser(userId, List.of(postId));
-        when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
-
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
-
-        boolean canDelete = interactor.canDelete(inputData);
-
-        assertTrue(canDelete);
-        verify(mockUserRepo).getCurrentUser();
+    void switchToHomePageViewTest() {
+        interactor.switchToHomePageView();
+        verify(mockPresenter).switchToHomePageView();
     }
 
     @Test
-    void cannotDeleteTest() {
+    void getAuthorIdTest() {
         String postId = "post123";
-        String userId = "user123";
+        String expectedAuthorId = "author123";
+        when(mockPostDB.getPostAuthorId(postId)).thenReturn(expectedAuthorId);
 
-        User mockUser = createMockUser("otherUser");
-        when(mockUserRepo.getCurrentUser()).thenReturn(mockUser);
+        String actualAuthorId = interactor.getAuthorId(postId);
 
-        DeletePostInputData inputData = new DeletePostInputData(postId, userId);
-
-        boolean canDelete = interactor.canDelete(inputData);
-
-        assertFalse(canDelete);
-        verify(mockUserRepo).getCurrentUser();
+        assertEquals(expectedAuthorId, actualAuthorId);
+        verify(mockPostDB).getPostAuthorId(postId);
     }
 }
