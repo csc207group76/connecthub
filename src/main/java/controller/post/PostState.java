@@ -13,25 +13,7 @@ public class PostState {
     private String postContentError;
     private List<Comment> comments = new ArrayList<>();
     private List<Comment> commentsError;
-    private String authorID = "";
-    private String authorIDError;
-
-    public String getAuthorID() {
-        return authorID;
-    }
-
-    public void setAuthorID(String authorID) {
-        this.authorID = authorID;
-    }
-
-    public String getAuthorIDError() {
-        return authorIDError;
-    }
-
-    public void setAuthorIDError(String authorIDError) {
-        this.authorIDError = authorIDError;
-    }
-
+    
     public String getPostID() {
         return postID;
     }
