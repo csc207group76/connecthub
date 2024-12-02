@@ -27,20 +27,26 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
 
     @Override
     public void LoginUser(use_case.login.LoginInputData loginInputData) {
+
         final String email = loginInputData.getEmail();
         final String password = loginInputData.getPassword();
+
+        // First check if the email exists
         if (!loginDB.existsByEmail(email)) {
             loginOutput.prepareFailView(email + ": Account does not exist.");
             throw new AccountDoesNotExistException(email + ": Account does not exist.");
         }
+        // The email exists, check if the password is correct
         else {
             final JSONObject userData = loginDB.getUserByEmail(loginInputData.getEmail());
             final User user = this.jsonObjectToUser(userData);
             final String pwd = user.getPassword();
+            // THe password is incorrect, throw exception.
             if (!password.equals(pwd)) {
                 loginOutput.prepareFailView("Incorrect password for \"" + email + "\".");
                 throw new IncorrectPasswordException("Incorrect password for \"" + email + "\".");
             }
+            // The password is correct, login the User
             else {
                 loginDB.setCurrentUser(user);
                 final LoginOutputData loginOutputData = new LoginOutputData(
