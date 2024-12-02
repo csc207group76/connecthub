@@ -1,7 +1,6 @@
 package app;
 
 import controller.ViewManagerModel;
-import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
 import controller.login.LoginViewModel;
@@ -15,32 +14,30 @@ import use_case.getpost.GetPostInputBoundary;
 import use_case.getpost.GetPostInteractor;
 import use_case.getpost.GetPostOutputBoundary;
 import view.PostView;
+
 public class GetPostUseCaseFactory {
     public GetPostUseCaseFactory() {
+
     }
 
     public static PostView create(ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-                                  HomepageViewModel homepageViewModel,
-                                  DBPostDataAccessObject postDAO,
-                                  DBUserDataAccessObject userDAO) {
+                                  HomepageViewModel homepageViewModel, DBPostDataAccessObject postDAO, DBUserDataAccessObject userRepo, LoginViewModel loginViewModel) {
         final PostController postController = createGetPostUseCase(viewManagerModel, postViewModel, postDAO);
         final HomepageController homepageController = HomepageUseCaseFactory.createHomepageController(viewManagerModel,
-                homepageViewModel, postViewModel, postDAO, userDAO);
-        final DeletePostController deletePostController = DeletePostUseCaseFactory.create(postDAO, userDAO, viewManagerModel, postViewModel);
-        PostPresenter postPresenter = new PostPresenter(viewManagerModel, postViewModel);
-
-        return new PostView(postController, postViewModel, homepageViewModel, homepageController, deletePostController, userDAO, postPresenter);
+                homepageViewModel, postViewModel, postDAO, userRepo);
+        final LogoutController logoutController = HomepageUseCaseFactory.createLogoutController(viewManagerModel, loginViewModel, userRepo);
+        return new PostView(postController, postViewModel, homepageViewModel, homepageController, logoutController);
     }
 
     public static PostController createGetPostUseCase(
-            ViewManagerModel viewManagerModel, PostViewModel postViewModel,
-            DBPostDataAccessObject postDAO
+        ViewManagerModel viewManagerModel, PostViewModel postViewModel, 
+        DBPostDataAccessObject postDAO
     ) {
         // TODO add home page view model
         final GetPostOutputBoundary getPostOutputBoundary = new PostPresenter(viewManagerModel, postViewModel);
-
+        
         final GetPostInputBoundary getPostInteractor = new GetPostInteractor(postDAO, getPostOutputBoundary);
-
+        
         return new PostController(getPostInteractor);
     }
 }

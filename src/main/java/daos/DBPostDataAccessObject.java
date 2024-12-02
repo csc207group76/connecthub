@@ -1,9 +1,9 @@
 package daos;
 
+import com.mongodb.client.model.Filters;
 import entity.Post;
 import use_case.create_post.CreatePostDataAccessInterface;
 import use_case.delete_post.DeletePostDataAccessInterface;
-import use_case.delete_post.DeletePostFailedException;
 import use_case.getpost.GetPostDataAccessInterface;
 import use_case.edit_post.EditPostDataAccessInterface;
 
@@ -63,18 +63,6 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     }
 
     @Override
-    public String getPostAuthorId(String postId) {
-        Document post = queryOnePostBy(ENTRY_ID, postId);
-        return post != null ? post.getString(AUTHOR) : null;
-    }
-
-    @Override
-    public String getPostCategory(String postId) {
-        Document post = queryOnePostBy(ENTRY_ID, postId);
-        return post != null ? post.getString(CATEGORY) : null;
-    }
-
-    @Override
     public void createPost(Post post) {
         this.insertPostToDB(post);
     }
@@ -84,21 +72,28 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return new JSONObject(queryOnePostBy(ENTRY_ID, id).toJson());
     }
 
-    // TODO used for filtering posts, not implemented yet
-    // @Override
-    // public List<JSONObject> getPostsByCategory(String category) {
-    //     List<JSONObject> posts = new ArrayList<>();
-    //     MongoCursor<Document> retrievedPosts = this.queryMultiplePostsBy(CATEGORY, category);
+    @Override
+    public List<JSONObject> getPostsByCategory(String category) {
+        List<JSONObject> posts = new ArrayList<>();
 
-    //     try {
-    //         while (retrievedPosts.hasNext()) {
-    //             String jsonStr = retrievedPosts.next().toJson();
-    //             posts.add(new JSONObject(jsonStr));
-    //         }
-    //     } finally {
-    //         retrievedPosts.close();
-    //     }
-    // }
+        // Use filter to query posts with matching category only
+        Bson filter = Filters.eq("category", category);
+        MongoCursor<Document> retrievedPosts = this.postRepository.find(filter).iterator();
+
+        try {
+            while (retrievedPosts.hasNext()) {
+                Document document = retrievedPosts.next();
+                JSONObject postJson = new JSONObject(document.toJson());
+                posts.add(postJson);
+
+                System.out.println("Category: " + postJson.getString("category"));
+            }
+        } finally {
+            retrievedPosts.close();
+        }
+        return posts;
+    }
+
 
     @Override
     public List<JSONObject> getAllPostsByUserID(String userID) {
@@ -117,11 +112,6 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         return res;
     }
 
-    @Override
-    public List<JSONObject> getPostsByCategory(String category) {
-        return List.of();
-    }
-
     // @Override
     // public List<Post> getPostsByTime(int postSize) { // TODO figure out the time stamp if we want this method
     //     return null;
@@ -134,7 +124,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
         try {
             this.postRepository.deleteOne(query);
         } catch (MongoException error) {
-            throw new DeletePostFailedException("Failed to delete post with id: " + postID);
+            // TODO throw some error, depending how the rest of the group implemts stuff.
         }
     }
 
@@ -167,7 +157,7 @@ public class DBPostDataAccessObject implements CreatePostDataAccessInterface,
     
     /**
      * Inserts the given post into the database.
-     * @param post - a user in the application.
+     * @param post - a post to be inserted in the database.
      */
     private void insertPostToDB(Post post) {
         try {
