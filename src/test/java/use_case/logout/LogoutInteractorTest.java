@@ -1,30 +1,29 @@
-// package use_case.logout;
+package use_case.logout;
 
-// import org.junit.Test;
-// import org.mockito.ArgumentCaptor;
-// import static org.junit.Assert.*;
-// import static org.mockito.Mockito.*;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-// public class LogoutInteractorTest {
-//     @Test
-//     public void LogOutSuccessTest(){
+public class LogoutInteractorTest {
 
-//         LogoutDataAccessInterface mockDataAccess = mock(LogoutDataAccessInterface.class);
-//         LogoutOutputBoundary mockPresenter = mock(LogoutOutputBoundary.class);
-//         doNothing().when(mockDataAccess).logoutUser();
+     @Test
+     public void LogOutSuccessTest(){
 
-//         LogoutInputData logoutInputData = new LogoutInputData("sam111");
-//         LogoutInputBoundary interactor = new LogoutInteractor(mockDataAccess, mockPresenter);
-//         interactor.logoutUser(logoutInputData);
+         LogoutDataAccessInterface mockDataAccess = mock(LogoutDataAccessInterface.class);
+         LogoutOutputBoundary mockPresenter = mock(LogoutOutputBoundary.class);
+         doNothing().when(mockDataAccess).logoutUser();
 
-//         ArgumentCaptor<LogoutOutputData> captor = ArgumentCaptor.forClass(LogoutOutputData.class);
-//         verify(mockPresenter).prepareSuccessView(captor.capture());
+         LogoutInputData logoutInputData = new LogoutInputData("sam111");
+         LogoutInputBoundary interactor = new LogoutInteractor(mockDataAccess, mockPresenter);
+         interactor.logoutUser(logoutInputData);
 
-//         LogoutOutputData captureData = captor.getValue();
-//         assertEquals("sam111", captureData.getUserID());
-//         assertTrue(captureData.isLogoutSuccessful());
+         ArgumentCaptor<LogoutOutputData> captor = ArgumentCaptor.forClass(LogoutOutputData.class);
+         verify(mockPresenter).prepareSuccessView(captor.capture());
 
-//         verify(mockPresenter, never()).prepareFailView(anyString());
-//     }
-// }
+         LogoutOutputData captureData = captor.getValue();
+         assertEquals("sam111", captureData.getUserID());
+         assertTrue(captureData.isLogoutSuccessful());
+     }
+}
 

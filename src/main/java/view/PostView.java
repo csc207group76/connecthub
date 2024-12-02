@@ -3,6 +3,7 @@ package view;
 import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.logout.LogoutController;
 import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostState;
@@ -52,6 +53,11 @@ public class PostView extends JPanel implements PropertyChangeListener {
                     DeletePostController deletePostController,
                     DBUserDataAccessObject userRepo,
                     PostPresenter postPresenter) {
+    private final LogoutController logoutController;
+
+    public PostView(PostController postController, PostViewModel postViewModel,
+                    HomepageViewModel homePageViewModel, HomepageController homepageController,
+                    LogoutController logoutController) {
         this.postController = postController;
         this.homepageController = homepageController;
         this.postViewModel = postViewModel;
@@ -59,6 +65,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
         this.deletePostController = deletePostController;
         this.userRepo = userRepo;
         this.postPresenter = postPresenter;
+        this.logoutController = logoutController;
 
         postViewModel.addPropertyChangeListener(this);
 
@@ -66,7 +73,7 @@ public class PostView extends JPanel implements PropertyChangeListener {
         setBackground(new Color(120, 133, 133)); // TODO change to constants HEADER
 
         // Add nav bar
-        final JPanel navBar = new Navbar(mainContent, homePageViewModel, homepageController).getNavBar();
+        final JPanel navBar = new Navbar(mainContent, homePageViewModel, homepageController, logoutController).getNavBar();
         add(navBar, BorderLayout.NORTH);
 
         // Back button (won't implement this for now)

@@ -2,6 +2,8 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
@@ -16,6 +18,7 @@ import controller.login.LoginViewModel;
  */
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
     private final LoginController loginController;
@@ -23,6 +26,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     // Input field for username and password
     private final JTextField emailInputField = new JTextField(15);
     private final JLabel emailErrorField = new JLabel();
+
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
@@ -42,7 +46,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         emailLabel.setForeground(Color.WHITE);
         emailInputField.setBackground(new Color(50, 50, 60));
         emailInputField.setForeground(Color.GRAY);
-        emailInputField.setText("e.g. dennis_ivy");
+        emailInputField.setText("e.g. dennis_ivy@gmail.com");
+        emailErrorField.setForeground(Color.WHITE);
         JPanel emailPanel = new JPanel();
         emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.Y_AXIS));
         emailPanel.setBackground(new Color(50, 50, 60));
@@ -53,7 +58,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setForeground(Color.WHITE);
         passwordInputField.setBackground(new Color(50, 50, 60));
-        passwordInputField.setForeground(Color.blue);
+        passwordInputField.setForeground(Color.WHITE);
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.Y_AXIS));
         passwordPanel.setBackground(new Color(50, 50, 60));
@@ -91,6 +96,24 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         });
 
+        emailInputField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (emailInputField.getText().equals("e.g. dennis_ivy@gmail.com")) {
+                    emailInputField.setText("");
+                    emailInputField.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (emailInputField.getText().isEmpty()) {
+                    emailInputField.setText("e.g. dennis_ivy@gmail.com");
+                    emailInputField.setForeground(Color.GRAY);
+                }
+            }
+        });
+
         logIn.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -99,6 +122,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             loginController.execute(
                                     currentState.getEmail(),
                                     currentState.getPassword());
+                            emailInputField.setText("e.g. dennis_ivy@gmail.com");
+                            emailInputField.setForeground(Color.GRAY);
+                            passwordInputField.setText("");
                         }
                     }
                 }
@@ -184,6 +210,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         mainPanel.add(loginPanel);
         this.setLayout(new GridBagLayout());
         this.add(mainPanel);
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
     }
 
     /**

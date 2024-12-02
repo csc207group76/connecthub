@@ -4,6 +4,8 @@ import controller.ViewManagerModel;
 import controller.delete_post.DeletePostController;
 import controller.homepage.HomepageController;
 import controller.homepage.HomepageViewModel;
+import controller.login.LoginViewModel;
+import controller.logout.LogoutController;
 import controller.post.PostController;
 import controller.post.PostPresenter;
 import controller.post.PostViewModel;
