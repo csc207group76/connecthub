@@ -142,8 +142,8 @@ You can also delete the posts you created by going to your post and clicking the
 
 
 ## Feedback
-For any suggestions or bugs, please submit on GitHub issues.
-
+For any suggestions or bugs, please submit on GitHub issues. We consider valid feedback as that which provides clear, constructive, steps forward to improve ConnectHub.
+Feedback guidelines: Please be respective and explain your point of view in a clear manner. This project is not under active developement. Consequently, you may not receive an immediate response.
 
 ## Contributors
 | GitHub username | GitHub account |
