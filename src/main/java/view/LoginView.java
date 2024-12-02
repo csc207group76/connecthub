@@ -76,7 +76,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         // Login button with styling
         logIn = new JButton("Login");
         logIn.setBackground(new Color(0, 123, 255));
-        logIn.setForeground(Color.WHITE);
+        logIn.setForeground(Color.BLUE);
         logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Sign-up link as a JLabel styled

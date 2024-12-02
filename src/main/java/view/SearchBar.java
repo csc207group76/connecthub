@@ -19,7 +19,7 @@ public class SearchBar {
 
         final JButton searchButton = new JButton("Search");
         searchButton.setBackground(StyleConstants.BUTTON_COLOR);
-        searchButton.setForeground(StyleConstants.TEXT_COLOR);
+        searchButton.setForeground(Color.BLUE);
 
         searchPanel.add(searchBar, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);

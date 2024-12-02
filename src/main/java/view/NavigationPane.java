@@ -52,7 +52,7 @@ public class NavigationPane {
                 });
             }
             button.setBackground(StyleConstants.BUTTON_COLOR);
-            button.setForeground(StyleConstants.TEXT_COLOR);
+            button.setForeground(Color.BLUE);
             button.setFocusPainted(false);
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             navigationPanel.add(Box.createVerticalStrut(10));

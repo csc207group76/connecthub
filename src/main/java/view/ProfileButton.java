@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -10,7 +11,7 @@ public class ProfileButton {
     public static JButton createProfileButton() {
         final JButton profileButton = new JButton("Profile");
         profileButton.setBackground(StyleConstants.BUTTON_COLOR);
-        profileButton.setForeground(StyleConstants.TEXT_COLOR);
+        profileButton.setForeground(Color.BLUE);
 
         // Create drop down menu that opens when the profile button is clicked
         final JPopupMenu profileMenu = new JPopupMenu();
