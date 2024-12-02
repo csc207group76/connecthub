@@ -55,8 +55,7 @@ public class LoginInteractor implements use_case.login.LoginInputBoundary {
         List<String> moderating = new ArrayList<>();
         for (int i = 0; i < moderatingData.length(); i++){ 
             moderating.add(moderatingData.getString(i));
-        } 
-
+        }
         JSONArray postsData = user.getJSONArray("posts");
         List<String> posts = new ArrayList<>();
         for (int i = 0; i < postsData.length(); i++){ 
