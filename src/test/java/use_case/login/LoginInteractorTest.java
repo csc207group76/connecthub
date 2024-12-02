@@ -88,6 +88,16 @@ public class LoginInteractorTest {
         verify(mockPresenter, never()).prepareSuccessView(any(LoginOutputData.class));
     }
 
+    @Test
+    public void switchTest() {
+
+        interactor.switchToHomePage();
+        verify(mockPresenter).switchToHomePage();
+
+        interactor.switchToSignupView();
+        verify(mockPresenter).switchToSignupView();
+    }
+
     private static JSONObject getJsonObject(User testUser) throws JSONException {
         JSONObject jsonUser = new JSONObject();
         jsonUser.put("username", testUser.getUsername());
