@@ -22,9 +22,9 @@ import static com.mongodb.client.model.Filters.eq;
  * MongoDB implementation of the DAO for storing user data.
  */
 public class DBUserDataAccessObject implements SignupDataAccessInterface,
-        LoginDataAccessInterface,
-        LogoutDataAccessInterface,
-        GetUserDataAccessInterface {
+                                               LoginDataAccessInterface,
+                                               LogoutDataAccessInterface,
+                                               GetUserDataAccessInterface {
     private final String USER_ID = "userId";
     private final String USER_NAME = "username";
     private final String PASSWORD = "password";
@@ -98,14 +98,14 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
 
         // Probably not be neccessary to replace the entire thing, will test them
         Bson updates = Updates.combine(
-                Updates.set(USER_ID, updatedContent.getUserID()),
-                Updates.set(USER_NAME, updatedContent.getUsername()),
-                Updates.set(PASSWORD, updatedContent.getPassword()),
-                Updates.set(EMAIL, updatedContent.getEmail()),
-                Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
-                Updates.set(FULL_NAME, updatedContent.getFullName()),
-                Updates.set(MODERATING, updatedContent.getModerating()),
-                Updates.set(POSTS, updatedContent.getPosts()) // TODO type conversion? need testing
+            Updates.set(USER_ID, updatedContent.getUserID()),
+            Updates.set(USER_NAME, updatedContent.getUsername()),
+            Updates.set(PASSWORD, updatedContent.getPassword()),
+            Updates.set(EMAIL, updatedContent.getEmail()),
+            Updates.set(BIRTH_DATE, updatedContent.getBirthDate()),
+            Updates.set(FULL_NAME, updatedContent.getFullName()),
+            Updates.set(MODERATING, updatedContent.getModerating()),
+            Updates.set(POSTS, updatedContent.getPosts()) // TODO type conversion? need testing
         );
 
         // Instructs the driver to insert a new document if none match the query
@@ -125,14 +125,14 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
     private void insertUserToDB(User user) {
         try {
             Document data = new Document()
-                    .append(USER_ID, user.getUserID())
-                    .append(USER_NAME, user.getUsername())
-                    .append(PASSWORD, user.getPassword())
-                    .append(EMAIL, user.getEmail())
-                    .append(BIRTH_DATE, user.getBirthDate())
-                    .append(FULL_NAME, user.getFullName())
-                    .append(MODERATING, user.getModerating())
-                    .append(POSTS, user.getPosts());
+                .append(USER_ID, user.getUserID())
+                .append(USER_NAME, user.getUsername())
+                .append(PASSWORD, user.getPassword())
+                .append(EMAIL, user.getEmail())
+                .append(BIRTH_DATE, user.getBirthDate())
+                .append(FULL_NAME, user.getFullName())
+                .append(MODERATING, user.getModerating())
+                .append(POSTS, user.getPosts());
 
             InsertOneResult result = this.userRepository.insertOne(data);
             System.out.println("Successfully inserted user with insert id: " + result.getInsertedId());
@@ -148,26 +148,9 @@ public class DBUserDataAccessObject implements SignupDataAccessInterface,
      */
     private Document queryOneUserBy(String field, String target) {
         Document doc = this.userRepository
-                .find(eq(field, target))
-                .first();
+            .find(eq(field, target))
+            .first();
 
         return doc;
     }
-
-    /**
-     * Removes a post from the user's list of posts.
-     * @param userId - The ID of the user.
-     * @param postId - The ID of the post to be removed.
-     */
-    public void removePostFromUser(String userId, String postId) {
-        Bson userQuery = eq(USER_ID, userId);
-        Bson updateOperation = Updates.pull(POSTS, postId);
-
-        try {
-            this.userRepository.updateOne(userQuery, updateOperation);
-        } catch (MongoException error) {
-            System.err.println("Failed to remove post from user's post list: " + error.getMessage());
-        }
-    }
 }
-
