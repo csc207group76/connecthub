@@ -94,7 +94,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     // Seperate dialog hopefully thats okay
     private void openCreatePostView() {
-        createPostView createPostView = new createPostView(createPostViewModel,createPostController,homepageController);
+        CreatePostView createPostView = new CreatePostView(createPostViewModel,createPostController,homepageController);
         JOptionPane.showMessageDialog(this, createPostView, "Create New Post", JOptionPane.PLAIN_MESSAGE);
     }
 

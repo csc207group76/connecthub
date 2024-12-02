@@ -26,8 +26,7 @@ public class DeletePostController {
      * @param currentUserId the ID of the author of the post
      * @return true if the deletion was successful, false otherwise
      */
-    public boolean deletePost(String postId, String currentUserId) {
-        String authorId = deletePostUseCaseInteractor.getAuthorId(postId);
+    public boolean deletePost(String postId, String currentUserId, String authorId) {
         try {
             final DeletePostInputData deletePostInputData = new DeletePostInputData(postId, currentUserId, authorId);
             deletePostUseCaseInteractor.deletePost(deletePostInputData);
@@ -45,4 +44,7 @@ public class DeletePostController {
         deletePostUseCaseInteractor.switchToHomePageView();
     }
 
+    public String getAuthorId(String postId) {
+        return deletePostUseCaseInteractor.getAuthorId(postId);
+    }
 }
