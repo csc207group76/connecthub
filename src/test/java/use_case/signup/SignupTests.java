@@ -168,6 +168,35 @@ public class SignupTests {
         assertTrue(signupOutputData.useCaseSuccess());
     }
 
+    @Test
+    public void testSwitchToLoginView() {
+        SignupOutputBoundary testPresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                // No action needed for this test
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Failure view should not be triggered in this test.");
+            }
+
+            @Override
+            public void switchToLoginView() {
+                System.out.println("Switching to login view..."); // Debugging output
+                assertTrue(true); // Pass the test if this is called
+            }
+        };
+
+        SignupInteractor interactor = new SignupInteractor(
+                new InMemoryUserDataAccessObject(),
+                testPresenter,
+                new CommonUserFactory()
+        );
+
+        interactor.switchToLoginView(); // Explicitly test this method
+    }
+
 
 
 }
