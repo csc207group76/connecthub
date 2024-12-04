@@ -14,16 +14,15 @@ import entity.Post;
 import entity.PostContent;
 
 public class EditPostInteractor implements EditPostInputBoundary {
+    private EditPostDataAccessInterface postDB;
+    private EditPostOutputBoundary presenter;
+    private DBUserDataAccessObject userRepo;
 
-    private EditPostDataAccessInterface editPostDB;  // Interface to access data (edit post in DB)
-    private DBUserDataAccessObject userRepo; // To get the current user
-    private EditPostOutputBoundary editPostOutput;  // Interface to handle output (views for success/fail)
-
-    // Constructor to initialize dependencies
-    public EditPostInteractor(EditPostDataAccessInterface editPostDB, DBUserDataAccessObject userRepo, 
-                              EditPostOutputBoundary editPostOutput) {
-        this.editPostDB = editPostDB;
-        this.editPostOutput = editPostOutput;
+    // Constructor that requires all three dependencies
+    public EditPostInteractor(EditPostDataAccessInterface postDB, EditPostOutputBoundary presenter, DBUserDataAccessObject userRepo) {
+        this.postDB = postDB;
+        this.presenter = presenter;
+        this.userRepo = userRepo;  // Inject the userRepo
     }
 
     // Implementing editPost method from EditPostInputBoundary
@@ -32,16 +31,16 @@ public class EditPostInteractor implements EditPostInputBoundary {
         boolean userCanEdit = this.canEdit(editPostInputData.getEditor());
 
         if (!userCanEdit) {
-            editPostOutput.prepareFailView("User does not have permission to edit this post.");
+            presenter.prepareFailView("User does not have permission to edit this post.");
             throw new EditPostFailed("You do not have permission to edit this post.");
-        } 
+        }
 
-        JSONObject postData = this.editPostDB.getPostByEntryID(editPostInputData.getEntryID());
+        JSONObject postData = this.postDB.getPostByEntryID(editPostInputData.getEntryID());
         Post post = this.jsonToPost(postData);
 
         Content updatedContent = new PostContent(editPostInputData.getEditedContent(),
-                                              editPostInputData.getAttachmentPath(),
-                                              editPostInputData.getFileType());
+                editPostInputData.getAttachmentPath(),
+                editPostInputData.getFileType());
 
         post.setContent(updatedContent);
         post.setEditDate(editPostInputData.getEditDate());
@@ -49,53 +48,54 @@ public class EditPostInteractor implements EditPostInputBoundary {
         post.setCategory(editPostInputData.getCategory());
 
         EditPostOutputData editPostOutputData = new EditPostOutputData(
-            editPostInputData.getEntryID(), 
-            editPostInputData.getEditor(), 
-            editPostInputData.getEditDate(), 
-            editPostInputData.getPostTitle(), 
-            editPostInputData.getPostContent(),
-            editPostInputData.getCategory(),
-            userCanEdit
+                editPostInputData.getEntryID(),
+                editPostInputData.getEditor(),
+                editPostInputData.getEditDate(),
+                editPostInputData.getPostTitle(),
+                editPostInputData.getPostContent(),
+                editPostInputData.getCategory(),
+                userCanEdit
         );
 
-        editPostDB.updatePost(post); 
-        editPostOutput.prepareSuccessView(editPostOutputData);  
+        postDB.updatePost(post);
+        presenter.prepareSuccessView(editPostOutputData);
     }
 
     // Implementing canEdit method from EditPostInputBoundary
     @Override
     public boolean canEdit(String userId) {
-        // Implement logic to check if the user can edit the post
-        // For example, check if the user is the author of the post or has admin privileges
-        return userId.equals(this.userRepo.getCurrentUser().getUserID());  
+        String currentUserId = this.userRepo.getCurrentUser().getUserID();
+        return userId.equals(currentUserId);
     }
 
-    private Post jsonToPost(JSONObject postData) {
-        Content postContent = new PostContent(postData.getString("content_body"),
-                                              postData.getString("attachment_path"),
-                                              postData.getString("file_type"));
+    public Post jsonToPost(JSONObject postData) {
+        try {
+            Content postContent = new PostContent(postData.optString("content_body", ""),
+                    postData.optString("attachment_path", ""),
+                    postData.optString("file_type", ""));
 
-        JSONArray commentData = postData.getJSONArray("comments");
-        List<Comment> comments = new ArrayList<>();
-        for (int i = 0; i < commentData.length(); i++){ 
-            // TODO modify when implementing the comment feature. Will likely need to change the DAO implementation
-            // Comment comment = new Comment(); 
-            comments.add(null);
-        } 
+            JSONArray commentData = postData.optJSONArray("comments");
+            List<Comment> comments = new ArrayList<>();
+            if (commentData != null) {
+                for (int i = 0; i < commentData.length(); i++) {
+                    comments.add(null); // TODO: Replace with actual Comment parsing
+                }
+            }
 
-        Post post = new Post(
-            postData.getString("post_id"), 
-            postData.getString("author"),
-            postContent,
-            LocalDateTime.parse(postData.getString("posted_date")),
-            LocalDateTime.parse(postData.getString("last_modified")),
-            postData.getInt("likes"),
-            postData.getInt("dislikes"),
-            postData.getString("title"),
-            comments,
-            postData.getString("category")
-        );
-
-        return post;
+            return new Post(
+                    postData.optString("post_id", ""),
+                    postData.optString("author", ""),
+                    postContent,
+                    LocalDateTime.parse(postData.optString("posted_date", "1970-01-01T00:00:00")),
+                    LocalDateTime.parse(postData.optString("last_modified", "1970-01-01T00:00:00")),
+                    postData.optInt("likes", 0),
+                    postData.optInt("dislikes", 0),
+                    postData.optString("title", ""),
+                    comments,
+                    postData.optString("category", "")
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse post data.", e);
+        }
     }
 }

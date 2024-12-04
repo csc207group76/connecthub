@@ -17,8 +17,8 @@ public class EditPostInputData {
     private String category;
 
     // Constructor to initialize all fields
-    public EditPostInputData(String entryID, String editor, String editedContent, String attachmentPath, 
-                             String fileType, String postTitle, Content postContent, String category) {
+    public EditPostInputData(String entryID, String editor, String editedContent, String attachmentPath,
+                             String fileType, String postTitle, String category) {
         this.entryID = entryID;
         this.editor = editor;
         this.editedContent = editedContent;
